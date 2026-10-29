@@ -2,7 +2,8 @@ import type { ApiError } from "@probity/shared";
 import type { Context } from "hono";
 import type { Env } from "../env";
 
-export type AppEnv = { Bindings: Env; Variables: { sid: string } };
+// sid: anonymous browser session (spend caps). orgId/userId: set by the tenant middleware (auth module); orgId is the demo company when nobody is signed in.
+export type AppEnv = { Bindings: Env; Variables: { sid: string; orgId: string; userId: string | null } };
 export type Ctx = Context<AppEnv>;
 
 /** Every error body is { error, code? }: plain words, never a stack or a database message. */

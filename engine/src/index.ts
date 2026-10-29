@@ -1,6 +1,9 @@
 // probity-engine: the Hono API, the check Workflow and B's scheduled sweep trigger.
 import { Hono } from "hono";
 import type { Env } from "./env";
+import { authRoutes, tenant } from "./auth";
+import { billingRoutes } from "./billing";
+import { integrationRoutes } from "./integrations";
 import { makeOpsRoutes, scheduled } from "./ops";
 import { fileRoutes } from "./routes/files";
 import { inboxRoutes } from "./routes/inbox";
@@ -12,6 +15,11 @@ import type { AppEnv } from "./routes/util";
 
 const app = new Hono<AppEnv>();
 app.use("*", session);
+app.use("*", tenant);
+// Module mounts. Each module owns everything under its prefix; this file changes only through the coordinator.
+app.route("/api", authRoutes); // C: /api/auth/*, /api/me, /api/workspaces*
+app.route("/api/billing", billingRoutes); // C
+app.route("/api", integrationRoutes); // B: /api/connections*, /api/hooks/*, /api/schedule
 app.route("/", inboxRoutes);
 app.route("/", startRoutes);
 app.route("/", uploadRoutes);

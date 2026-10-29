@@ -2,6 +2,8 @@
 // Changing a shape here is a coordinated change: engine, web and fixtures move together.
 import { z } from "zod";
 
+export * from "./workspace";
+
 export const POLICY_VERSION = "pp-2026-10-30.1";
 
 export const Verdict = z.enum(["APPROVE", "CALLBACK_VERIFY", "HOLD"]);
@@ -43,6 +45,7 @@ export const InboxItem = z.object({
   runId: z.string().nullable(), // latest run
   sweptAt: z.string().nullable(), // when the Nebius sweep last looked at it
   synthetic: z.boolean(), // true for every example request
+  source: z.enum(["seed", "upload", "gmail", "outlook"]).default("seed"), // how the request reached Probity
 });
 export type InboxItem = z.infer<typeof InboxItem>;
 
