@@ -17,6 +17,8 @@
   ],
   "triggers": { "crons": ["*/5 * * * *"] },
   "vars": {
+    "DODO_MODE": "live",
+    "DODO_BRAND_ID": "brnd_0Nqnyy64ALmi3fK2GK7ks",
     "EMAIL_FROM": "Probity <notifications@probity.larinova.com>",
     "SEC_USER_AGENT": "Probity vendor checks gabrielantony56@gmail.com",
     "APP_URL": "https://probity.pages.dev",
