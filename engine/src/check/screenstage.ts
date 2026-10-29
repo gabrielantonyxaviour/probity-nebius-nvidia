@@ -25,7 +25,7 @@ export async function screenSpans(ctx: Ctx, stepKey: string, spans: Span[]): Pro
 
 export async function screenStage(ctx: Ctx, s: import("./types").Scratch): Promise<StageOut> {
   const letterSpans: Span[] = s.lines.map((l, k) => ({ id: k + 1, source: "letter" as const, text: l.text, invisible: !!l.hidden }));
-  const spans = [...letterSpans, ...emailSpans(s.emlText, letterSpans.length + 1)].slice(0, 120);
+  const spans = [...letterSpans, ...emailSpans(s.emlText, letterSpans.length + 1, s.letterKind === "body")].slice(0, 120);
   const { flags, calls } = await screenSpans(ctx, "screen", spans);
   const flaggedLetter = new Set(flags.filter((f) => f.source === "letter").map((f) => f.text));
   const withheld = s.lines.filter((l) => flaggedLetter.has(l.text.slice(0, 400))).map((l) => l.id);

@@ -1,18 +1,15 @@
 // Step `pdf`: load the request, open the letter, find what a person cannot see, render the pages.
 import type { Run } from "@probity/shared";
 import { getRequest } from "../evidence";
-import { analyzePdf } from "../pdf";
+import { analyzePdf, type PdfAnalysis } from "../pdf";
+import { sniffImage } from "../pdf/image";
 import { phonesIn } from "../policy/normalise";
 import type { Ctx, Scratch, StageOut } from "./types";
 
 const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
 
-export async function pdfStage(ctx: Ctx): Promise<StageOut> {
-  const run = await ctx.store.get(ctx.runId);
-  const req = await getRequest(ctx.env, run.requestId);
-  const bytes = await ctx.files.get(req.letterKey);
-  if (!bytes) throw new Error("The letter file for this request is missing.");
-  const a = await analyzePdf(bytes, {
+async function pdfAnalysis(ctx: Ctx, bytes: Uint8Array): Promise<PdfAnalysis> {
+  return analyzePdf(bytes, {
     wasm: ctx.wasm,
     storePage: async (i, png) => {
       const key = `pages/${ctx.runId}/${i + 1}.png`;
@@ -20,12 +17,35 @@ export async function pdfStage(ctx: Ctx): Promise<StageOut> {
       return key;
     },
   });
+}
+
+/** A photo or screenshot: no text layer at all, so the vision model's reading is the only one. */
+async function imageAnalysis(ctx: Ctx, bytes: Uint8Array): Promise<PdfAnalysis> {
+  const info = sniffImage(bytes)!;
+  const key = `pages/${ctx.runId}/1.${info.ext}`;
+  await ctx.files.put(key, bytes, info.mime);
+  return { pageCount: 1, pageSize: [info.width || 612, info.height || 792], lines: [], hidden: [], scanned: true, truncated: false, pageKeys: [key] };
+}
+
+/** No attachment: the e-mail's own text is the letter. Nothing can be hidden in plain text, and there is no page to look at. */
+function bodyAnalysis(text: string): PdfAnalysis {
+  const lines = text.split(/\r?\n/).map((t) => t.trim()).filter(Boolean).slice(0, 200).map((t, k) => ({ id: `p1.l${k + 1}`, page: 0, text: t.slice(0, 500), y: 792 - k * 12, fontSize: 11, hidden: null, bbox: [0, 0, 0, 0] as [number, number, number, number] }));
+  return { pageCount: 1, pageSize: [612, 792], lines, hidden: [], scanned: false, truncated: false, pageKeys: [] };
+}
+
+export async function pdfStage(ctx: Ctx): Promise<StageOut> {
+  const run = await ctx.store.get(ctx.runId);
+  const req = await getRequest(ctx.env, run.requestId);
+  const bytes = await ctx.files.get(req.letterKey);
+  if (!bytes) throw new Error("The letter file for this request is missing.");
+  const kind = req.letterKey.endsWith(".txt") ? "body" : sniffImage(bytes) ? "image" : "pdf";
+  const a = kind === "body" ? bodyAnalysis(new TextDecoder().decode(bytes)) : kind === "image" ? await imageAnalysis(ctx, bytes) : await pdfAnalysis(ctx, bytes);
   const request = {
     requestId: req.requestId, vendorId: req.vendorId, vendorName: req.vendorOnFile.legalName || req.vendorName, kind: req.kind, senderEmail: req.senderEmail,
     amountAtRisk: req.amountAtRisk, nextRunAt: req.nextRunAt, email: req.email, vendorOnFile: req.vendorOnFile, receivedAt: req.receivedAt,
   };
   const scratch: Scratch = {
-    request, emlText: req.emlText, lines: a.lines, letterPhones: [...new Set(a.lines.flatMap((l) => phonesIn(l.text)))], withheld: [], claims: [], pressure: [],
+    request, emlText: req.emlText, letterKind: kind, lines: a.lines, letterPhones: [...new Set(a.lines.flatMap((l) => phonesIn(l.text)))], withheld: [], claims: [], pressure: [],
     textAccount: null, readingsDisagree: [], examiner: null, pageKeys: a.pageKeys,
   };
   await ctx.store.update(ctx.runId, (r: Run) => {

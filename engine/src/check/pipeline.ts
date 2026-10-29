@@ -6,7 +6,7 @@ import { pdfStage } from "./pdfstage";
 import { readImageStage, readTextStage } from "./readstage";
 import { scoutStage } from "./scoutstage";
 import { screenStage } from "./screenstage";
-import { notifyRunFinished } from "./stubs";
+import { notifyRunFinished } from "../integrations";
 import type { Ctx, Scratch } from "./types";
 
 /** Workflow's `step.do`, or a plain function call. Results must be JSON. */

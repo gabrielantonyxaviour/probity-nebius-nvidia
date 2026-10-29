@@ -32,6 +32,8 @@ export type RequestFacts = Pick<RequestDetail, "requestId" | "vendorId" | "vendo
 export interface Scratch {
   request: RequestFacts;
   emlText: string;
+  /** pdf | image (a photo or screenshot, read by the vision model only) | body (no attachment: the e-mail text is the letter) */
+  letterKind: "pdf" | "image" | "body";
   lines: LetterLine[];
   letterPhones: string[];
   /** ids of letter lines the screen flagged: withheld from every later prompt */

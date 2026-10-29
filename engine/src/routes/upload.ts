@@ -2,6 +2,7 @@
 import { Hono } from "hono";
 import { z } from "zod";
 import { admit, startRun } from "../check/start";
+import { parseEml } from "../check/eml";
 import { matchVendor } from "../check/vendors";
 import { actor } from "./scope";
 import { fail, type AppEnv } from "./util";
@@ -10,15 +11,6 @@ import { startFailure } from "./start";
 const MAX_PDF = 10 * 1024 * 1024;
 const MAX_EML = 512 * 1024;
 const VendorName = z.string().trim().min(2).max(120);
-
-/** From, Reply-To, Subject and the SPF/DKIM verdicts out of a raw e-mail header block. */
-export function parseEml(text: string) {
-  const head = text.replace(/\r\n/g, "\n").split(/\n\n/)[0]!.replace(/\n[ \t]+/g, " ");
-  const h = (name: string) => new RegExp(`^${name}:\\s*(.+)$`, "im").exec(head)?.[1]?.trim() ?? null;
-  const auth = (k: string) => new RegExp(`\\b${k}=([a-z]+)`, "i").exec(head)?.[1]?.toLowerCase() ?? null;
-  const from = h("From") ?? "unknown";
-  return { from, replyTo: h("Reply-To"), subject: h("Subject") ?? "(no subject)", spf: auth("spf"), dkim: auth("dkim"), sender: /<?([^<>\s"]+@[^<>\s"]+)>?\s*$/.exec(from)?.[1] ?? "unknown" };
-}
 
 export const uploadRoutes = new Hono<AppEnv>().post("/api/checks/upload", actor, async (c) => {
   const form = await c.req.parseBody().catch(() => null);

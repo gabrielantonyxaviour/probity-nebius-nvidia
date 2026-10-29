@@ -92,8 +92,8 @@ export function toBase64(bytes: Uint8Array): string {
   return btoa(bin);
 }
 
-export function imagePart(png: Uint8Array): Part {
-  return { type: "image_url", image_url: { url: `data:image/png;base64,${toBase64(png)}` } };
+export function imagePart(bytes: Uint8Array, mime: "image/png" | "image/jpeg" = "image/png"): Part {
+  return { type: "image_url", image_url: { url: `data:${mime};base64,${toBase64(bytes)}` } };
 }
 
 function body(o: ChatOptions): Record<string, unknown> {

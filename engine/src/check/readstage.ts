@@ -1,6 +1,7 @@
 // Steps `read_text` (Nemotron 3 Ultra, thinking on) and `read_image` (Nemotron 3.5 Super VL): two independent readings of the letter.
 import type { Claim, HiddenText, Run, Screen } from "@probity/shared";
 import { imagePart, type ChatOptions } from "../models/client";
+import { sniffImage } from "../pdf/image";
 import { callJson } from "../models/structured";
 import { digits, validAba } from "../policy/normalise";
 import type { Pressure } from "../policy/types";
@@ -49,7 +50,7 @@ async function readPage(ctx: Ctx, key: string, n: number, total: number, hint = 
   if (!png) throw new Error("A page image is missing.");
   const messages: ChatOptions["messages"] = [
     { role: "system", content: READER_IMAGE_SYSTEM },
-    { role: "user", content: [imagePart(png), { type: "text", text: readerImageUser(n, total) + hint }] },
+    { role: "user", content: [imagePart(png, sniffImage(png)?.mime ?? "image/png"), { type: "text", text: readerImageUser(n, total) + hint }] },
   ];
   return callJson(ctx.env, { model: "nvidia/Nemotron-3.5-Super-VL", thinking: false, agent: "letter_reader", stepKey: "read_image", maxTokens: 4000, messages }, { name: "page_reading", schema: ImageReading });
 }
@@ -83,6 +84,7 @@ export function linesMissingFromImage(s: Scratch, imageLines: string[]): HiddenT
 }
 
 export async function readImageStage(ctx: Ctx, s: Scratch): Promise<StageOut> {
+  if (s.pageKeys.length === 0) return { scratch: s, summary: "No page image: the e-mail itself is the letter", skipped: true };
   const total = s.pageKeys.length;
   let pages: Pages = await Promise.all(s.pageKeys.map((k, i) => readPage(ctx, k, i + 1, total)));
   const calls = pages.flatMap((p) => p.calls);
