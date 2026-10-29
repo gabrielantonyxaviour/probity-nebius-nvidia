@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { gate } from "../src/policy/gate";
 import { checkRationale, rationaleFacts, templateRationale } from "../src/policy/rationale";
-import { clean } from "./helpers";
+import { LABEL } from "../src/policy/types";
+import { clean, ev, EDGAR_PHONE } from "./helpers";
 
 const facts = () => {
   const i = clean();
@@ -22,6 +23,17 @@ describe("rationale number check", () => {
   });
   it("rejects offering the letter's number as the one to call", () => {
     expect(checkRationale("Call (321) 555-0100 to confirm.", facts()).failures.join()).toMatch(/letter number/);
+  });
+  it("rejects telling the clerk not to use the number to call", () => {
+    expect(checkRationale("Do not call (321) 727-9100 yet.", facts()).failures.join()).toMatch(/told not to be used/);
+    expect(checkRationale("Call (321) 727-9100, and do not use (321) 555-0100.", facts()).ok).toBe(true);
+  });
+  it("gives an approved change no number to call", () => {
+    const i = clean({ evidence: [EDGAR_PHONE, ev("ev-vendor_master-cb0001", "vendor_master", "other", LABEL.callbackConfirmed, "confirmed")] });
+    const f = rationaleFacts(i, gate(i), true);
+    expect(f.verdict).toBe("APPROVE");
+    expect(f.callThisNumber).toBeNull();
+    expect(f.doNotCall).toEqual([]);
   });
   it("rejects more than three sentences and accusing words", () => {
     const f = facts();

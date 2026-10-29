@@ -12,7 +12,11 @@
   "kv_namespaces": [{ "binding": "CACHE", "id": "00000000000000000000000000000000" }],
   "r2_buckets": [{ "binding": "FILES", "bucket_name": "probity-files" }],
   "workflows": [{ "name": "probity-check", "binding": "CHECK", "class_name": "CheckWorkflow" }],
-  "triggers": { "crons": ["0 18 * * MON-FRI"] },
-  "vars": { "SEC_USER_AGENT": "Probity hackathon demo probity-demo@example.com" },
+  "triggers": { "crons": ["0 18 * * SUN,MON,TUE,WED,THU"] },
+  "vars": {
+    "SEC_USER_AGENT": "Probity vendor checks gabrielantony56@gmail.com",
+    "APP_URL": "https://probity.pages.dev",
+    "NEBIUS_PROJECT_ID": "project-e04yk83jbc00bwhyv60mbp"
+  },
   "observability": { "enabled": true }
 }

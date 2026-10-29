@@ -5,6 +5,7 @@ const NAME_NOISE = new Set(["inc", "incorporated", "llc", "ltd", "limited", "cor
 export function nameNorm(s: string): string {
   return s
     .toLowerCase()
+    .replace(/\([^)]*\)/g, " ") // "(formerly Vectrus, Inc.)" is not part of the name
     .replace(/&/g, " and ")
     .replace(/[^a-z0-9 ]+/g, " ")
     .split(/\s+/)

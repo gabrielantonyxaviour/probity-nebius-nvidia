@@ -5,6 +5,7 @@ describe("normalise", () => {
   it("matches company names across suffixes and punctuation", () => {
     expect(sameName("L3Harris Technologies, Inc.", "L3HARRIS TECHNOLOGIES INC")).toBe(true);
     expect(sameName("Booz Allen Hamilton Inc", "Booz Allen Hamilton Holding")).toBe(false);
+    expect(sameName("V2X, Inc. (formerly Vectrus, Inc.)", "V2X, Inc.")).toBe(true);
   });
   it("finds the domain a sender imitates", () => {
     expect(lookalikeOf("boozallen-payments.example", ["boozallen.example"])).toBe("boozallen.example");

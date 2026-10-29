@@ -28,9 +28,10 @@ export function rationaleFacts(i: GateInput, d: Decision, confirmed: boolean): R
     amountAtRisk: money(i.request.amountAtRisk.cents),
     nextPaymentRun: i.request.nextRunAt ? i.request.nextRunAt.slice(0, 10) : null,
     reasons: d.reasons.filter((r) => r.severity !== "info").slice(0, 4).map((r) => r.text),
-    callThisNumber: d.callCard.phone,
-    numberSource: src ? src.label : null,
-    doNotCall: d.callCard.letterPhones,
+    // Once a call-back has confirmed it there is nothing left to dial, and the note must not send the clerk to the phone.
+    callThisNumber: d.verdict === "APPROVE" ? null : d.callCard.phone,
+    numberSource: d.verdict === "APPROVE" ? null : src ? src.label : null,
+    doNotCall: d.verdict === "APPROVE" ? [] : d.callCard.letterPhones,
     callbackAlreadyConfirmed: confirmed,
   };
 }
@@ -55,7 +56,12 @@ export function checkRationale(text: string, facts: RationaleFacts): CheckResult
   const doNot = new Set(facts.doNotCall.map(digits));
   for (const p of phonesIn(text)) {
     const k = digits(p);
-    if (k === callKey) continue;
+    if (k === callKey) {
+      const sentence = text.split(/(?<=[.!?])\s+/).find((s) => digits(s).includes(k)) ?? "";
+      const negated = new RegExp(`\\b(do not|don't|never|avoid)\\b[^.]*${p.replace(/[()]/g, "\\$&")}`, "i");
+      if (negated.test(sentence)) failures.push(`the number to call (${p}) is told not to be used`);
+      continue;
+    }
     if (doNot.has(k)) {
       const sentence = text.split(/(?<=[.!?])\s+/).find((s) => s.includes(p.slice(-8)) || digits(s).includes(k)) ?? "";
       if (!/\b(not|never|instead|ignore|rather than|crossed)\b/i.test(sentence)) failures.push(`letter number ${p} offered as a number to call`);

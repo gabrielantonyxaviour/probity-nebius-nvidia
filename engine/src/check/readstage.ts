@@ -1,17 +1,24 @@
 // Steps `read_text` (Nemotron 3 Ultra, thinking on) and `read_image` (Nemotron 3.5 Super VL): two independent readings of the letter.
-import type { Claim, HiddenText, Run } from "@probity/shared";
+import type { Claim, HiddenText, Run, Screen } from "@probity/shared";
 import { imagePart, type ChatOptions } from "../models/client";
 import { callJson } from "../models/structured";
 import { digits, validAba } from "../policy/normalise";
 import type { Pressure } from "../policy/types";
 import { READER_IMAGE_SYSTEM, READER_TEXT_SYSTEM, readerImageUser, readerTextUser } from "../prompts/reader";
+import { screenSpans } from "./screenstage";
 import { accountOf, collapseRuns, sameClaimValue, toClaims } from "./claims";
 import { ImageReading, TextReading, type RawClaim } from "./schemas";
 import type { Ctx, Scratch, StageOut } from "./types";
 
 const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
 const words = (s: string) => (s.toLowerCase().match(/[a-z0-9]{3,}/g) ?? []) as string[];
-const dedupePressure = (a: Pressure[]) => a.filter((p, i) => a.findIndex((q) => q.kind === p.kind && words(q.quote).join() === words(p.quote).join()) === i);
+const URGENT = /urgent|immediate|asap|today|right away|without delay|not be delayed|avoid(?:ing)? delay|deadline|as soon as|time[- ]sensitive/i;
+/** Only a short quote that really pushes for speed counts as urgency; models over-quote. */
+const sane = (p: Pressure) => p.quote.length <= 240 && (p.kind !== "urgency" || URGENT.test(p.quote));
+const dedupePressure = (all: Pressure[]): Pressure[] => {
+  const kept = all.filter(sane);
+  return kept.filter((p, i) => kept.findIndex((q) => q.kind === p.kind && words(q.quote).join() === words(p.quote).join()) === i);
+};
 
 export async function readTextStage(ctx: Ctx, s: Scratch): Promise<StageOut> {
   const run = await ctx.store.get(ctx.runId);
@@ -98,12 +105,20 @@ export async function readImageStage(ctx: Ctx, s: Scratch): Promise<StageOut> {
   for (const i of imgClaims) if (!merged.some((c) => c.field === i.field && sameClaimValue(c.field, i.value, c.value))) merged.push(i);
 
   const missing = scanned ? [] : linesMissingFromImage(s, imageLines);
+  // A scan has no text layer to screen, so the lines read from the picture are screened instead.
+  let extraFlags: Screen["flags"] = [];
+  if (scanned && imageLines.length) {
+    const screened = await screenSpans(ctx, "read_image", imageLines.slice(0, 80).map((text, k) => ({ id: k + 1, source: "letter" as const, text })));
+    extraFlags = screened.flags;
+    calls.push(...screened.calls);
+  }
   const pressure = scanned || s.pressure.length === 0 ? dedupePressure([...s.pressure, ...pages.flatMap((p) => p.data.pressure)]) : s.pressure;
   await ctx.store.update(ctx.runId, (r: Run) => {
     if (r.letter) {
       r.letter.claims = merged;
       r.letter.hidden = [...r.letter.hidden, ...missing];
     }
+    if (scanned && r.screen) r.screen = { spansScreened: r.screen.spansScreened + Math.min(imageLines.length, 80), flags: [...r.screen.flags, ...extraFlags] };
   });
   const seen = merged.filter((c) => c.inImage).length;
   const summary = `${seen} of ${merged.length} claims also seen on the page image${missing.length ? `; ${plural(missing.length, "text line", "text lines")} not on the page` : ""}${disagree.length ? `; the two readings disagree on the ${disagree.join(" and ")}` : ""}`;

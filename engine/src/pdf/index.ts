@@ -1,5 +1,6 @@
 // One entry point for the `pdf` step: text layer, hidden-text detection, page images.
 import type { HiddenText } from "@probity/shared";
+import { inspectPages } from "unpdf";
 import { extractPages, PdfError, type PageText } from "./extract";
 import { buildLines, classify, hiddenFromLines, type LetterLine, type Verdict } from "./hidden";
 import { encodePng } from "./png";
@@ -43,7 +44,10 @@ export async function analyzePdf(bytes: Uint8Array, opts: AnalyzeOptions): Promi
   const maxPages = opts.maxPages ?? MAX_PAGES;
   const pages: PageText[] = await withTimeout(extractPages(bytes), PARSE_TIMEOUT_MS);
   const visibleChars = pages.reduce((n, p) => n + p.items.reduce((m, it) => m + (it.fontSize >= 3 && it.fill !== "#ffffff" ? it.str.replace(/\s/g, "").length : 0), 0), 0);
-  const scanned = visibleChars < SCAN_CHARS;
+  // A scan is a page that is mostly one picture, with at most a watermark's worth of text on it.
+  const insp = await inspectPages(bytes.slice()).catch(() => null);
+  const pictureOnly = !!insp && insp.pages.length > 0 && insp.pages.every((p) => p.imageCoverage > 0.6 && p.textLength < 200);
+  const scanned = visibleChars < SCAN_CHARS || pictureOnly;
 
   const lines: LetterLine[] = [];
   const pageKeys: string[] = [];

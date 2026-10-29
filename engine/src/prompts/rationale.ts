@@ -4,8 +4,8 @@ export const RATIONALE_SYSTEM = `You write the short note an accounts-payable cl
 
 Write at most three plain sentences.
 1. Say what to do and why, in the clerk's words, using the reasons given.
-2. If callThisNumber is given: tell them to call it, and name its source (numberSource). If doNotCall has numbers, say not to use them.
-3. If callbackAlreadyConfirmed is true: say the call-back to an independent number already confirmed it.
+2. If callThisNumber is given: tell them to call it, and name its source (numberSource). Never tell them not to use callThisNumber. If doNotCall has numbers, say not to use them.
+3. If callbackAlreadyConfirmed is true: say the call-back to an independent number already confirmed it, and do not tell anyone to call.
 
 Rules
 - Use only the facts in the input JSON. Never invent a reason, a rule, a limit or a comparison.
