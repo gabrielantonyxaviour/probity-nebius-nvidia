@@ -6,6 +6,7 @@ import { api } from "@/lib/api";
 import { dateTime, money, moneyShort, until } from "@/lib/format";
 import { useData } from "@/lib/use-data";
 import { ErrorBox, Skeleton } from "./states";
+import { DemoBanner } from "./demo-banner";
 import { SweepCard } from "./sweep-card";
 import { VerdictChip } from "./verdict";
 
@@ -23,7 +24,8 @@ export function Inbox() {
   const hidden = items.find((i) => i.requestId === "BCR-2026-0407");
 
   return (
-    <div className="wrap" style={{ paddingTop: 28 }}>
+    <div className="wrap" style={{ paddingTop: 22 }}>
+      <DemoBanner />
       <section style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.6fr) minmax(0, 1fr)", gap: 20, alignItems: "end" }} className="hero">
         <div>
           <p className="label" style={{ margin: 0 }}>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AccountMenu } from "./account-menu";
 import { NavLinks } from "./nav-links";
 
 export function SiteHeader() {
@@ -17,11 +18,14 @@ export function SiteHeader() {
           </Link>
           <NavLinks />
         </div>
-        <span className="label hdr-tag" style={{ fontSize: 10.5 }} title="Every model call runs on NVIDIA Nemotron through Nebius Token Factory">
-          NVIDIA Nemotron · Nebius
-        </span>
+        <div className="row" style={{ gap: 14 }}>
+          <span className="label hdr-tag" style={{ fontSize: 10.5 }} title="Every model call runs on NVIDIA Nemotron through Nebius Token Factory">
+            NVIDIA Nemotron · Nebius
+          </span>
+          <AccountMenu />
+        </div>
       </div>
-      <style>{`@media (max-width: 600px) { .hdr-tag { display: none; } .hdr-left { gap: 10px !important; width: 100%; justify-content: space-between; } }`}</style>
+      <style>{`@media (max-width: 600px) { .hdr-tag { display: none; } .hdr-left { gap: 10px !important; } } @media (max-width: 900px) { .hdr-tag { display: none; } }`}</style>
     </header>
   );
 }

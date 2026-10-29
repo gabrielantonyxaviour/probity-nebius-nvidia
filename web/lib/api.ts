@@ -1,6 +1,7 @@
 import { z } from "zod";
 import {
-  ApiError, InboxItem, Limits, RequestDetail, Run, SweepReport,
+  ApiError, Billing, Connection, InboxItem, Limits, Me, RequestDetail, Run, Schedule, SweepReport,
+  type Billing as BillingT, type Connection as ConnectionT, type Me as MeT, type Provider as ProviderT, type Schedule as ScheduleT,
   type InboxItem as InboxItemT, type Limits as LimitsT, type RequestDetail as RequestDetailT,
   type Run as RunT, type SweepReport as SweepReportT,
 } from "@probity/shared";
@@ -43,6 +44,30 @@ export const api = {
     call(`/api/runs/${runId}/outcome`, Run, json({ result, note })),
   upload: (form: FormData) =>
     call("/api/checks/upload", z.object({ runId: z.string(), requestId: z.string() }), { method: "POST", body: form }),
+};
+
+const put = (body: unknown): RequestInit => ({
+  method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify(body),
+});
+const Url = z.object({ url: z.string() });
+
+/** Account, workspace, connections, schedule and billing. Sign-in goes through Better Auth's e-mail code endpoints. */
+export const account = {
+  me: (): Promise<MeT> => call("/api/me", Me),
+  sendCode: (email: string) => call("/api/auth/email-otp/send-verification-otp", z.unknown(), json({ email, type: "sign-in" })),
+  signIn: (email: string, otp: string) => call("/api/auth/sign-in/email-otp", z.unknown(), json({ email, otp })),
+  signOut: () => call("/api/auth/sign-out", z.unknown(), json({})),
+  createWorkspace: (name: string): Promise<MeT> => call("/api/workspaces", Me, json({ name })),
+  switchWorkspace: (orgId: string): Promise<MeT> => call("/api/workspaces/switch", Me, json({ orgId })),
+  connections: (): Promise<ConnectionT[]> => call("/api/connections", z.array(Connection)),
+  connect: (provider: ProviderT) => call(`/api/connections/${provider}/start`, z.object({ redirectUrl: z.string() }), json({})),
+  disconnect: (provider: ProviderT): Promise<ConnectionT[]> => call(`/api/connections/${provider}/disconnect`, z.array(Connection), json({})),
+  schedule: (): Promise<ScheduleT> => call("/api/schedule", Schedule),
+  saveSchedule: (s: Omit<ScheduleT, "nextRecheckAt">): Promise<ScheduleT> => call("/api/schedule", Schedule, put(s)),
+  billing: (): Promise<BillingT> => call("/api/billing", Billing),
+  checkout: () => call("/api/billing/checkout", Url, json({})),
+  portal: () => call("/api/billing/portal", Url, json({})),
+  redeem: (code: string): Promise<BillingT> => call("/api/billing/redeem", Billing, json({ code })),
 };
 
 export const fileUrl = (key: string) => `/api/files/${key.split("/").map(encodeURIComponent).join("/")}`;

@@ -76,6 +76,11 @@ button { font: inherit; color: inherit; }
 .chip.callback { color: var(--callback); background: var(--callback-bg); border-color: var(--callback-border); }
 .chip.approve { color: var(--approve); background: var(--approve-bg); border-color: var(--approve-border); }
 
+.field { min-height: 44px; padding: 0 12px; border-radius: 8px; border: 1px solid var(--rule-strong); background: var(--field); color: var(--fg); font: inherit; width: 100%; }
+.field:focus { outline: 2px solid var(--ring); outline-offset: 1px; }
+select.field { appearance: auto; }
+.linkish { background: none; border: 0; padding: 0; color: var(--fg-2); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; font-size: 14px; }
+
 .tablewrap { overflow-x: auto; }
 table.t { width: 100%; border-collapse: collapse; font-size: 14px; }
 table.t th { text-align: left; font-family: var(--mono); font-weight: 400; font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
