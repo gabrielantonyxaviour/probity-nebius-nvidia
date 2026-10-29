@@ -1,8 +1,7 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import { Me } from "@probity/shared";
 import { Client, lastCode, makeApp, makeTestEnv } from "./helpers";
 
-afterEach(() => vi.unstubAllGlobals());
 const fresh = () => { const env = makeTestEnv(); return new Client(makeApp(), env); };
 
 describe("sign-in by e-mail code", () => {
@@ -98,14 +97,18 @@ describe("sign-in by e-mail code", () => {
     expect((await send(4)).status).toBe(429);
   });
 
-  it("in production (https APP_URL) the mail goes through Resend, the cookie is Secure with the __Secure- prefix and still resolves the tenant", async () => {
-    let mailed = "";
-    vi.stubGlobal("fetch", async (_u: string, init: RequestInit) => { mailed = String(init.body); return Response.json({ id: "em_1" }); });
-    const env = makeTestEnv({ APP_URL: "https://probity.pages.dev", RESEND_API_KEY: "re_test", EMAIL_FROM: "Probity <signin@probity.example>" });
+  const FROM = "Probity <notifications@probity.larinova.com>";
+  const prod = (EMAIL?: SendEmail, EMAIL_FROM?: string) => makeTestEnv({ APP_URL: "https://probity.pages.dev", EMAIL, EMAIL_FROM });
+
+  it("in production (https APP_URL) the mail goes through the Email Service binding, the cookie is Secure with the __Secure- prefix and still resolves the tenant", async () => {
+    const mailed: { text: string; to: string[] }[] = [];
+    const EMAIL = { send: async (m: { text: string; to: string[] }) => { mailed.push(m); return { messageId: "em_1" }; } } as unknown as SendEmail;
+    const env = prod(EMAIL, FROM);
     const c = new Client(makeApp(), env);
     const send = await c.req("/api/auth/email-otp/send-verification-otp", { body: { email: "controller@acmefreight.example", type: "sign-in" } });
     expect(send.status).toBe(200);
-    const code = JSON.parse(mailed).text.match(/code is (\d{6})/)[1];
+    expect(mailed[0]!.to).toEqual(["controller@acmefreight.example"]);
+    const code = mailed[0]!.text.match(/code is (\d{6})/)![1];
     const res = await c.req("/api/auth/sign-in/email-otp", { body: { email: "controller@acmefreight.example", otp: code } });
     const cookie = res.headers.getSetCookie().join(";");
     expect(cookie).toMatch(/__Secure-probity\.session_token=/);
@@ -117,10 +120,9 @@ describe("sign-in by e-mail code", () => {
     expect((await env.DB.prepare("SELECT COUNT(*) AS n FROM email_outbox").first<{ n: number }>())!.n).toBe(0);
   });
 
-  it("in production without EMAIL_FROM the code request fails with email_unconfigured and nothing is stored or shown", async () => {
-    const env = makeTestEnv({ APP_URL: "https://probity.pages.dev", RESEND_API_KEY: "re_test" });
-    const c = new Client(makeApp(), env);
-    const send = await c.json("/api/auth/email-otp/send-verification-otp", { body: { email: "controller@acmefreight.example", type: "sign-in" } });
+  it("in production without the binding or EMAIL_FROM the code request fails with email_unconfigured and nothing is stored or shown", async () => {
+    const env = prod();
+    const send = await new Client(makeApp(), env).json("/api/auth/email-otp/send-verification-otp", { body: { email: "controller@acmefreight.example", type: "sign-in" } });
     expect(send.status).toBe(503);
     expect(send.body).toEqual({ error: "E-mail sending isn't set up yet.", code: "email_unconfigured" });
     expect((await env.DB.prepare("SELECT COUNT(*) AS n FROM email_outbox").first<{ n: number }>())!.n).toBe(0);
@@ -128,8 +130,8 @@ describe("sign-in by e-mail code", () => {
   });
 
   it("in production a refused send surfaces as email_failed", async () => {
-    vi.stubGlobal("fetch", async () => Response.json({ message: "The domain is not verified." }, { status: 403 }));
-    const env = makeTestEnv({ APP_URL: "https://probity.pages.dev", RESEND_API_KEY: "re_test", EMAIL_FROM: "Probity <signin@probity.example>" });
+    const EMAIL = { send: async () => { throw Object.assign(new Error("nope"), { code: "E_SENDER_NOT_VERIFIED" }); } } as unknown as SendEmail;
+    const env = prod(EMAIL, FROM);
     const send = await new Client(makeApp(), env).json("/api/auth/email-otp/send-verification-otp", { body: { email: "controller@acmefreight.example", type: "sign-in" } });
     expect(send.status).toBe(503);
     expect(send.body).toMatchObject({ code: "email_failed" });

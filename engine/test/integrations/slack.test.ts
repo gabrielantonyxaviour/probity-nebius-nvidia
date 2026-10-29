@@ -61,16 +61,17 @@ describe("slack", () => {
     env.d1.prepare("INSERT INTO runs (id, request_id, status, live, json, created_at, updated_at, org_id) VALUES ('run-1','BCR-2026-0412','done',1,?1,'2026-10-30T00:00:00Z','2026-10-30T00:00:00Z','org_acme')").bind(JSON.stringify(run())).run();
     env.d1.prepare("INSERT INTO connections (org_id, provider, status, account, meta, updated_at) VALUES ('org_acme','slack','connected','#ap',?1,'2026-10-30T00:00:00Z')").bind(JSON.stringify({ teamName: "Acme", channelId: "C123", channelName: "#ap", token: await (await import("../../src/integrations/util")).seal("slack-secret", "xoxb-1") })).run();
     env.d1.exec("INSERT INTO schedules (org_id, timezone, runs_json, recheck_minutes_before, notify_emails_json, updated_at) VALUES ('org_acme','America/New_York','[]',120,'[\"ap@acme.test\"]','2026-10-30T00:00:00Z')");
-    Object.assign(env, { RESEND_API_KEY: "re_test", EMAIL_FROM: "Probity <alerts@probity.test>" });
-    const log = stubFetch([(u) => (u.pathname === "/api/chat.postMessage" ? { ok: true, ts: "1700000000.0001" } : undefined), (u) => (u.hostname === "api.resend.com" ? { id: "em_1" } : undefined)]);
+    const mails: { to: string[]; subject: string; text: string }[] = [];
+    Object.assign(env, { EMAIL: { send: async (m: (typeof mails)[number]) => { mails.push(m); return { messageId: "em_1" }; } }, EMAIL_FROM: "Probity <alerts@probity.test>" });
+    const log = stubFetch([(u) => (u.pathname === "/api/chat.postMessage" ? { ok: true, ts: "1700000000.0001" } : undefined)]);
     await notifyRunFinished(env as never, "org_acme", "run-1");
     const post = log.find((l) => l.url.endsWith("/chat.postMessage"));
     expect(post?.body.channel).toBe("C123");
     expect((await env.d1.prepare("SELECT ts FROM slack_posts WHERE run_id = 'run-1'").first<{ ts: string }>())?.ts).toBe("1700000000.0001");
-    const mail = log.find((l) => l.url === "https://api.resend.com/emails");
-    expect(mail?.body.to).toEqual(["ap@acme.test"]);
-    expect(mail?.body.subject).toContain("Hold: Booz Allen Hamilton Inc");
-    expect(mail?.body.text).toContain("(703) 902-5000");
+    const mail = mails[0];
+    expect(mail?.to).toEqual(["ap@acme.test"]);
+    expect(mail?.subject).toContain("Hold: Booz Allen Hamilton Inc");
+    expect(mail?.text).toContain("(703) 902-5000");
   });
 
   it("verifies Slack request signatures", async () => {

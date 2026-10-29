@@ -60,13 +60,14 @@ describe("runDueRechecks", () => {
     const env = makeEnv({ seed: true });
     makePro(env, "org_acme");
     seedDue(env, "org_acme");
-    Object.assign(env, { RESEND_API_KEY: "re_test", EMAIL_FROM: "Probity <alerts@probity.test>" });
-    const log = stubFetch([(u) => (u.hostname === "api.resend.com" ? { id: "em_1" } : undefined)]);
+    const mails: { subject: string }[] = [];
+    Object.assign(env, { EMAIL: { send: async (m: (typeof mails)[number]) => { mails.push(m); return { messageId: "em_1" }; } }, EMAIL_FROM: "Probity <alerts@probity.test>" });
+    stubFetch([]);
     const now = Date.parse("2026-10-30T16:01:00Z");
     expect(await runDueRechecks(env as never, now)).toEqual({ ran: ["org_acme"], failed: [] });
     const next = await env.d1.prepare("SELECT next_recheck_at, last_recheck_at FROM schedules WHERE org_id = 'org_acme'").first<Record<string, string>>();
     expect(next?.next_recheck_at).toBe("2026-11-06T17:00:00.000Z");
-    expect(log.find((l) => l.url === "https://api.resend.com/emails")?.body.subject).toContain("payment run");
+    expect(mails[0]?.subject).toContain("payment run");
     expect(await env.d1.prepare("SELECT COUNT(*) AS n FROM sweep_reports").first<{ n: number }>()).toEqual({ n: 1 });
     expect(await runDueRechecks(env as never, now)).toEqual({ ran: [], failed: [] }); // not due again
   });

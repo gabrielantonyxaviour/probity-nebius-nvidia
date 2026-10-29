@@ -1,44 +1,52 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
-import { holdAlertEmail, preRunSummaryEmail, sendEmail, signInCodeEmail } from "../../src/email";
+import { describe, expect, it } from "vitest";
+import { holdAlertEmail, parseFrom, preRunSummaryEmail, sendEmail, signInCodeEmail } from "../../src/email";
 import { makeTestEnv } from "../auth/helpers";
 
-afterEach(() => vi.unstubAllGlobals());
+type Sent = { from: unknown; to: string[]; subject: string; text: string; html?: string };
+function binding(impl?: (m: Sent) => Promise<{ messageId: string }>) {
+  const sent: Sent[] = [];
+  const EMAIL = { send: async (m: Sent) => { sent.push(m); return impl ? impl(m) : { messageId: "em_123" }; } } as unknown as SendEmail;
+  return { EMAIL, sent };
+}
+const FROM = "Probity <notifications@probity.larinova.com>";
 
 describe("sendEmail", () => {
-  it("writes to the outbox and reports not delivered when no sending domain is configured", async () => {
-    const env = makeTestEnv({ RESEND_API_KEY: "re_test" });
+  it("writes to the outbox and reports not delivered when the binding or sender is missing (local)", async () => {
+    const env = makeTestEnv({ EMAIL: binding().EMAIL });
     const r = await sendEmail(env, { to: ["ap@acmefreight.example", "cfo@acmefreight.example"], subject: "Hello", text: "Body" });
     expect(r).toEqual({ ok: true, delivered: false });
     const rows = await env.DB.prepare("SELECT to_addr, status FROM email_outbox ORDER BY id").all();
     expect(rows.results).toEqual([{ to_addr: "ap@acmefreight.example", status: "outbox" }, { to_addr: "cfo@acmefreight.example", status: "outbox" }]);
   });
-  it("posts to Resend with the sender, key and recipients", async () => {
-    const seen: { url: string; init: RequestInit }[] = [];
-    vi.stubGlobal("fetch", async (url: string, init: RequestInit) => { seen.push({ url, init }); return Response.json({ id: "em_123" }); });
-    const env = makeTestEnv({ RESEND_API_KEY: "re_test", EMAIL_FROM: "Probity <alerts@probity.example>" });
+  it("sends through the Cloudflare binding with a named sender", async () => {
+    const b = binding();
+    const env = makeTestEnv({ EMAIL: b.EMAIL, EMAIL_FROM: FROM });
     const r = await sendEmail(env, { to: "ap@acmefreight.example", subject: "Hold", text: "T", html: "<p>T</p>" });
     expect(r).toEqual({ ok: true, delivered: true, id: "em_123" });
-    expect(seen[0]!.url).toBe("https://api.resend.com/emails");
-    expect((seen[0]!.init.headers as Record<string, string>).Authorization).toBe("Bearer re_test");
-    expect(JSON.parse(String(seen[0]!.init.body))).toEqual({ from: "Probity <alerts@probity.example>", to: ["ap@acmefreight.example"], subject: "Hold", text: "T", html: "<p>T</p>" });
+    expect(b.sent).toEqual([{ from: { name: "Probity", email: "notifications@probity.larinova.com" }, to: ["ap@acmefreight.example"], subject: "Hold", text: "T", html: "<p>T</p>" }]);
     expect((await env.DB.prepare("SELECT COUNT(*) AS n FROM email_outbox").first<{ n: number }>())!.n).toBe(0);
   });
-  it("keeps a copy and reports failure when Resend refuses or is unreachable", async () => {
-    const env = makeTestEnv({ RESEND_API_KEY: "re_test", EMAIL_FROM: "Probity <alerts@probity.example>" });
-    vi.stubGlobal("fetch", async () => Response.json({ message: "The domain is not verified." }, { status: 403 }));
-    expect(await sendEmail(env, { to: "ap@acmefreight.example", subject: "S", text: "T" })).toEqual({ ok: false, delivered: false, error: "The domain is not verified.", code: "email_failed" });
-    vi.stubGlobal("fetch", async () => { throw new Error("down"); });
-    expect((await sendEmail(env, { to: "ap@acmefreight.example", subject: "S", text: "T" })).ok).toBe(false);
-    const st = await env.DB.prepare("SELECT status FROM email_outbox ORDER BY id").all();
-    expect(st.results).toEqual([{ status: "failed_403" }, { status: "failed_network" }]);
+  it("keeps a copy and reports failure when the binding throws", async () => {
+    const b = binding(async () => { throw Object.assign(new Error("Sender domain not verified."), { code: "E_SENDER_NOT_VERIFIED" }); });
+    const env = makeTestEnv({ EMAIL: b.EMAIL, EMAIL_FROM: FROM });
+    expect(await sendEmail(env, { to: "ap@acmefreight.example", subject: "S", text: "T" })).toEqual({ ok: false, delivered: false, error: "Sender domain not verified.", code: "email_failed" });
+    expect((await env.DB.prepare("SELECT status FROM email_outbox").all()).results).toEqual([{ status: "failed_e_sender_not_verified" }]);
   });
-  it("a deployed app without a sender returns email_unconfigured and stores nothing", async () => {
-    const env = makeTestEnv({ APP_URL: "https://probity.pages.dev", RESEND_API_KEY: "re_test" });
-    expect(await sendEmail(env, { to: "ap@acmefreight.example", subject: "S", text: "T" })).toEqual({ ok: false, delivered: false, error: "E-mail sending isn't set up yet.", code: "email_unconfigured" });
-    expect((await env.DB.prepare("SELECT COUNT(*) AS n FROM email_outbox").first<{ n: number }>())!.n).toBe(0);
+  it("a deployed app without the binding or sender returns email_unconfigured and stores nothing", async () => {
+    for (const over of [{ EMAIL_FROM: FROM }, { EMAIL: binding().EMAIL }, {}]) {
+      const env = makeTestEnv({ APP_URL: "https://probity.pages.dev", ...over });
+      expect(await sendEmail(env, { to: "ap@acmefreight.example", subject: "S", text: "T" })).toEqual({ ok: false, delivered: false, error: "E-mail sending isn't set up yet.", code: "email_unconfigured" });
+      expect((await env.DB.prepare("SELECT COUNT(*) AS n FROM email_outbox").first<{ n: number }>())!.n).toBe(0);
+    }
   });
   it("refuses an empty recipient list", async () => {
     expect((await sendEmail(makeTestEnv(), { to: [" "], subject: "S", text: "T" })).ok).toBe(false);
+  });
+  it("parses sender forms", () => {
+    expect(parseFrom("Probity <notifications@probity.larinova.com>")).toEqual({ name: "Probity", email: "notifications@probity.larinova.com" });
+    expect(parseFrom("\"Probity Alerts\" <a@probity.larinova.com>")).toEqual({ name: "Probity Alerts", email: "a@probity.larinova.com" });
+    expect(parseFrom("a@probity.larinova.com")).toBe("a@probity.larinova.com");
+    expect(parseFrom("<a@probity.larinova.com>")).toBe("a@probity.larinova.com");
   });
 });
 

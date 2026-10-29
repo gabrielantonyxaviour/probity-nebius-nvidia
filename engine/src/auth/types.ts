@@ -5,8 +5,9 @@ export interface ProductVars {
   /** Public origin of the app, e.g. https://probity.pages.dev. Requests reach the engine through the web Worker's proxy, so this is not the engine's own URL. */
   APP_URL: string;
   BETTER_AUTH_SECRET: string;
-  RESEND_API_KEY?: string;
-  /** "Probity <alerts@your-domain>"; unset until a sending domain is verified, in which case mail goes to the e-mail outbox table. */
+  /** Cloudflare Email Service send binding (wrangler `send_email`, name EMAIL). Absent until the sending domain is onboarded. */
+  EMAIL?: SendEmail;
+  /** "Probity <notifications@probity.larinova.com>"; must belong to an onboarded Email Service domain. Unset: local mail goes to the outbox table, deployed mail fails with email_unconfigured. */
   EMAIL_FROM?: string;
   DODO_PAYMENTS_API_KEY?: string;
   DODO_PAYMENTS_LIVE_API_KEY?: string;

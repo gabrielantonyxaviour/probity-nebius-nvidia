@@ -116,7 +116,7 @@ authRoutes.post("/workspaces/switch", async (c) => {
 // Local development only: read the latest mail written to the outbox (sign-in codes) when no sending domain is set up.
 authRoutes.get("/dev/outbox", async (c) => {
   const env = cenv(c);
-  if (!(env.APP_URL.startsWith("http://localhost") || env.APP_URL === LOCAL_ORIGIN) || env.RESEND_API_KEY && env.EMAIL_FROM) return c.json({ error: "Not found.", code: "not_found" }, 404);
+  if (!(env.APP_URL.startsWith("http://localhost") || env.APP_URL === LOCAL_ORIGIN) || (env.EMAIL && env.EMAIL_FROM)) return c.json({ error: "Not found.", code: "not_found" }, 404);
   const to = c.req.query("to") ?? "";
   const rows = await env.DB.prepare("SELECT to_addr, subject, text, created_at FROM email_outbox WHERE to_addr = ? ORDER BY id DESC LIMIT 5").bind(to).all();
   return c.json({ messages: rows.results });
