@@ -12,7 +12,7 @@
   "kv_namespaces": [{ "binding": "CACHE", "id": "4d7773f643c3448b8cd43406c2937fc7" }],
   "r2_buckets": [{ "binding": "FILES", "bucket_name": "probity-files" }],
   "workflows": [{ "name": "probity-check", "binding": "CHECK", "class_name": "CheckWorkflow" }],
-  "triggers": { "crons": ["0 18 * * SUN,MON,TUE,WED,THU"] },
+  "triggers": { "crons": ["*/5 * * * *"] },
   "vars": {
     "SEC_USER_AGENT": "Probity vendor checks gabrielantony56@gmail.com",
     "APP_URL": "https://probity.pages.dev",
