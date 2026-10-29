@@ -15,7 +15,7 @@ const LIMITS = [
   "Web lookups share a small free budget. Results are cached, and each visitor gets three new lookups.",
   "Live checks are capped per day and per visitor so the demo stays up through judging. Recorded checks are free to open.",
   "Handwritten letters and poor scans have not been tested. Super VL reads one page image per call.",
-  "The overnight sweep re-runs a full check only when a registry fact has changed; otherwise it screens and re-checks the reasoning.",
+  "The pre-run re-check runs a full check again only when a registry fact has changed; otherwise it screens and re-checks the reasoning.",
 ];
 
 export default function HowPage() {
@@ -47,15 +47,32 @@ export default function HowPage() {
 
       <section style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 18, alignItems: "start" }}>
         <div className="card pad" style={{ display: "grid", gap: 8 }}>
-          <p className="label" style={{ margin: 0 }}>Overnight, before the run</p>
+          <p className="label" style={{ margin: 0 }}>Before every payment run</p>
           <p style={{ margin: 0, fontSize: 16 }}>
-            Every weekday at 02:00 the app starts a <b>Nebius AI Cloud Serverless Job</b>. It runs <b>NVIDIA NeMo Guardrails</b> over every open request: an input rail screens each line of each letter, e-mail and web page, and an output rail checks each written reason against its evidence. Both rails run Nemotron 3.5 Lightning on Token Factory.
+            Each company sets its payment runs and cut-offs. Before each one, Probity checks every open request again: registry facts are refreshed, a full check runs again where anything changed, and the <b>NVIDIA NeMo Guardrails</b> rails screen every line of every letter, e-mail and web page and test each written reason against its evidence. The summary goes to Slack and by e-mail.
           </p>
           <p className="muted" style={{ margin: 0, fontSize: 14 }}>
-            The job signs its results and posts them back; the inbox shows what it found and its job id. Nothing runs between sweeps, so nothing bills by the hour.
+            On schedule, the rails run inside the app on Nemotron 3.5 Lightning through Token Factory, from the same rail definitions. The full NeMo Guardrails library runs on a <b>Nebius AI Cloud Serverless Job</b>, started from the command line for the measured evaluation and bulk re-screens; it posts signed results back, and its job id shows here. Nothing runs between checks, so nothing bills by the hour.
           </p>
         </div>
         <LiveNumbers />
+      </section>
+
+      <section>
+        <p className="label" style={{ margin: "0 0 12px" }}>Works where your team already works</p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 14 }}>
+          {[
+            ["Gmail and Outlook", "Connect the AP mailbox. Every vendor e-mail asking to change bank or remittance details is checked within minutes; other mail is ignored and never stored. Connected through Composio."],
+            ["Xero", "Your real vendor list with the bank details on file, and open bills, so the money at risk is exact. A hold adds a note to the vendor in Xero."],
+            ["Slack", "Each verdict lands in your AP channel with the number to call and buttons to log the call. Holds alert the controller."],
+            ["Upload", "Any letter, any time, from the web."],
+          ].map(([t, d]) => (
+            <div key={t} className="card pad" style={{ display: "grid", gap: 6, alignContent: "start" }}>
+              <b style={{ fontWeight: 500 }}>{t}</b>
+              <span className="muted" style={{ fontSize: 14 }}>{d}</span>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section>
