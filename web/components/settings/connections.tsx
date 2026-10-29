@@ -4,6 +4,7 @@ import type { Connection, Provider } from "@probity/shared";
 import { account, ApiFailure } from "@/lib/api";
 import { useData } from "@/lib/use-data";
 import { ErrorBox, Skeleton } from "../states";
+import { ProviderLogo } from "./provider-logo";
 
 const INFO: Record<Provider, { name: string; group: "mail" | "books" | "team"; what: string; mark: string }> = {
   gmail: { name: "Gmail", group: "mail", mark: "M", what: "Every new vendor e-mail asking to change bank or remittance details is checked within minutes. Other mail is ignored and never stored." },
@@ -71,7 +72,7 @@ function Row({ p, c, busy, canEdit, onConnect, onDisconnect, compact }: {
   const status = c?.status ?? "not_connected";
   return (
     <div className="card" style={{ display: "grid", gridTemplateColumns: "40px 1fr auto", gap: 14, alignItems: "center", padding: "14px 16px" }}>
-      <span aria-hidden="true" className="serif" style={{ width: 40, height: 40, borderRadius: 10, display: "grid", placeItems: "center", background: "var(--surface-2)", fontSize: 20 }}>{info.mark}</span>
+      <ProviderLogo provider={p} />
       <div style={{ minWidth: 0 }}>
         <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
           <b style={{ fontWeight: 500 }}>{info.name}</b>
