@@ -53,7 +53,7 @@ describe("vendor master and inbox (real migration and seed)", () => {
   it("reads the latest run's final verdict", async () => {
     const e2 = makeEnv({ seed: true });
     const run = JSON.stringify({ decision: { finalVerdict: "HOLD" } });
-    e2.d1.exec(`INSERT INTO runs VALUES ('run-1','BCR-2026-0412','done',1,'${run}','2026-10-29T00:00:00Z','2026-10-29T00:00:00Z'); UPDATE requests SET latest_run_id='run-1', status='checked' WHERE id='BCR-2026-0412'`);
+    e2.d1.exec(`INSERT INTO runs (id, request_id, status, live, json, created_at, updated_at) VALUES ('run-1','BCR-2026-0412','done',1,'${run}','2026-10-29T00:00:00Z','2026-10-29T00:00:00Z'); UPDATE requests SET latest_run_id='run-1', status='checked' WHERE id='BCR-2026-0412'`);
     const item = (await listInbox(e2)).find((i) => i.requestId === "BCR-2026-0412");
     expect(item?.verdict).toBe("HOLD");
     expect(item?.status).toBe("checked");

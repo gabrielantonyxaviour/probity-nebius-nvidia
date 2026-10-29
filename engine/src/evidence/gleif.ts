@@ -33,10 +33,10 @@ async function find(name: string): Promise<Stored | null> {
   return rec.success ? { rec: rec.data.data.attributes } : null;
 }
 
-export async function lookupGleif(env: EvidenceEnv, q: { name: string }): Promise<ToolResult> {
+export async function lookupGleif(env: EvidenceEnv, q: { name: string }, opts: { fresh?: boolean } = {}): Promise<ToolResult> {
   try {
     const key = `gleif:v1:${q.name.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim()}`;
-    const res = await cachedLookup(env, key, REGISTRY_TTL_S, () => find(q.name));
+    const res = await cachedLookup(env, key, REGISTRY_TTL_S, () => find(q.name), opts.fresh);
     if (!res) return unavailable("GLEIF", "the registry did not answer");
     if ("none" in res.value) return { evidence: [], summary: `GLEIF has no legal entity identifier matching "${q.name}".` };
     const { rec } = res.value;

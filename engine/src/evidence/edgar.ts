@@ -51,13 +51,13 @@ async function atomCandidates(env: EvidenceEnv, name: string): Promise<string[]>
 }
 
 type Fetched = { value: Submission; at: string; cached: boolean };
-async function submission(env: EvidenceEnv, cik: string): Promise<Fetched | null> {
+async function submission(env: EvidenceEnv, cik: string, fresh = false): Promise<Fetched | null> {
   return cachedLookup(env, `edgar:sub:v1:${cik}`, REGISTRY_TTL_S, async () => {
     await secThrottle();
     const raw = await fetchJson(`https://data.sec.gov/submissions/CIK${cik}.json`, { headers: headers(env) });
     const parsed = Submission.safeParse(raw);
     return parsed.success ? parsed.data : null;
-  });
+  }, fresh);
 }
 
 function describe(s: Submission): Array<{ field: Evidence["field"]; label: string; value: string }> {
@@ -77,7 +77,8 @@ function describe(s: Submission): Array<{ field: Evidence["field"]; label: strin
   return out;
 }
 
-export async function lookupEdgar(env: EvidenceEnv, q: { name?: string; cik?: string }): Promise<ToolResult> {
+/** `fresh` skips the 24 h cache (the pre-run re-check wants today's facts). */
+export async function lookupEdgar(env: EvidenceEnv, q: { name?: string; cik?: string }, opts: { fresh?: boolean } = {}): Promise<ToolResult> {
   try {
     let candidates: string[] = [];
     if (q.cik && /\d/.test(q.cik)) candidates = [pad(q.cik)];
@@ -89,7 +90,7 @@ export async function lookupEdgar(env: EvidenceEnv, q: { name?: string; cik?: st
     let found: Fetched | null = null;
     let bestScore = -1;
     for (const cik of candidates) {
-      const s = await submission(env, cik);
+      const s = await submission(env, cik, opts.fresh);
       if (!s) continue;
       const score = q.name ? Math.max(nameScore(q.name, s.value.name), ...s.value.formerNames.map((f) => nameScore(q.name ?? "", f.name))) : 1;
       if (score > bestScore) { found = s; bestScore = score; }

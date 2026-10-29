@@ -1,6 +1,6 @@
 // Test doubles for the Workers bindings: D1 on node:sqlite (real SQL, the real migration and seed), an in-memory KV and R2.
 import { DatabaseSync } from "node:sqlite";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -36,12 +36,12 @@ export class FakeR2 {
   async get(key: string): Promise<{ text(): Promise<string> } | null> { const v = this.store.get(key); return v === undefined ? null : { text: async () => v }; }
 }
 
-export type FakeEnv = { DB: D1Database; CACHE: KVNamespace; FILES: R2Bucket; SEC_USER_AGENT: string; TAVILY_API_KEY: string; NEBIUS_API_KEY: string; NEBIUS_SA_CREDENTIALS: string; JOB_CALLBACK_SECRET: string; d1: FakeD1; kv: FakeKV; r2: FakeR2 };
+export type FakeEnv = { DB: D1Database; CACHE: KVNamespace; FILES: R2Bucket; SEC_USER_AGENT: string; TAVILY_API_KEY: string; NEBIUS_API_KEY: string; NEBIUS_SA_CREDENTIALS: string; JOB_CALLBACK_SECRET: string; APP_URL: string; COMPOSIO_API_KEY: string; SLACK_CLIENT_ID: string; SLACK_CLIENT_SECRET: string; SLACK_SIGNING_SECRET: string; XERO_CLIENT_ID: string; XERO_CLIENT_SECRET: string; d1: FakeD1; kv: FakeKV; r2: FakeR2 };
 
 /** A fresh environment with the schema applied; `seed: true` also loads the vendor master and the inbox. */
 export function makeEnv(opts: { seed?: boolean } = {}): FakeEnv {
   const d1 = new FakeD1();
-  d1.exec(readFileSync(join(engineRoot, "migrations/0001_init.sql"), "utf8"));
+  for (const f of readdirSync(join(engineRoot, "migrations")).filter((n) => n.endsWith(".sql")).sort()) d1.exec(readFileSync(join(engineRoot, "migrations", f), "utf8"));
   if (opts.seed) d1.exec(readFileSync(join(engineRoot, "seed/seed.sql"), "utf8"));
   const kv = new FakeKV();
   const r2 = new FakeR2();
@@ -49,5 +49,5 @@ export function makeEnv(opts: { seed?: boolean } = {}): FakeEnv {
     const fixtures = join(engineRoot, "../fixtures/requests");
     r2.store.set("BCR-2026-0412.headers.eml", readFileSync(join(fixtures, "BCR-2026-0412/headers.eml"), "utf8"));
   }
-  return { DB: d1 as unknown as D1Database, CACHE: kv as unknown as KVNamespace, FILES: r2 as unknown as R2Bucket, SEC_USER_AGENT: "Probity vendor checks test@example.com", TAVILY_API_KEY: "tvly-test", NEBIUS_API_KEY: "test", NEBIUS_SA_CREDENTIALS: "{}", JOB_CALLBACK_SECRET: "test-secret", d1, kv, r2 };
+  return { DB: d1 as unknown as D1Database, CACHE: kv as unknown as KVNamespace, FILES: r2 as unknown as R2Bucket, SEC_USER_AGENT: "Probity vendor checks test@example.com", TAVILY_API_KEY: "tvly-test", NEBIUS_API_KEY: "test", NEBIUS_SA_CREDENTIALS: "{}", JOB_CALLBACK_SECRET: "test-secret", APP_URL: "https://probity.test", COMPOSIO_API_KEY: "ck_test", SLACK_CLIENT_ID: "111.222", SLACK_CLIENT_SECRET: "slack-secret", SLACK_SIGNING_SECRET: "slack-signing", XERO_CLIENT_ID: "xero-id", XERO_CLIENT_SECRET: "xero-secret", d1, kv, r2 };
 }

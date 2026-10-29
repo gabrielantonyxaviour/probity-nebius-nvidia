@@ -13,6 +13,10 @@ const Extract = z.object({ results: z.array(z.object({ url: z.string(), raw_cont
 const AGGREGATORS = ["linkedin.", "facebook.", "twitter.", "x.com", "instagram.", "youtube.", "yelp.", "zoominfo.", "dnb.com", "bloomberg.", "wikipedia.", "glassdoor.", "indeed.", "mapquest.", "yellowpages.", "crunchbase.", "opencorporates.", "manta.", "bbb.org", "sec.gov", "usaspending.gov", "sam.gov", "gleif.org", "reddit.", "pitchbook.", "rocketreach.", "cbinsights.", "buzzfile.", "chamberofcommerce.", "mapquest.", "google.", "bing.", "tiktok.", "dandb.com", "opengovus."];
 const PHONE = /(?:\+?1[\s.-]?)?\(?\b([2-9]\d{2})\)?[\s.-]?([2-9]\d{2})[\s.-]?(\d{4})\b/g;
 
+const RESERVED_TLD = /\.(example|test|invalid|localhost|local|internal)$/i;
+/** A domain hint on a reserved TLD (the demo's .example addresses) makes Tavily reject the whole search: drop it. */
+export const usableHint = (hint?: string): string | undefined => (hint && !RESERVED_TLD.test(hint.trim()) ? hint.trim() : undefined);
+
 export type TavilyStored = { domain: string | null; pageUrl: string | null; phones: string[]; snippets: string[]; flags: string[]; creditsOnFetch: number };
 export type TavilyResult = ToolResult & { creditsUsed: number; snippets: string[] };
 
@@ -65,7 +69,9 @@ async function fetchFresh(env: EvidenceEnv, company: string, hint?: string): Pro
   let credits = search.usage?.credits ?? 1;
   const pick = pickDomain(company, search.results, hint);
   const snippets = search.results.slice(0, 5).map((r) => `${r.title} (${hostOf(r.url) ?? r.url}): ${r.content}`.slice(0, 600));
-  const flags = search.results.filter((r) => /scam|fraud|phish|impersonat|spoof/i.test(`${r.title} ${r.content}`)).map((r) => `${hostOf(r.url) ?? r.url}: ${r.content.slice(0, 220)}`).slice(0, 2);
+  // News evidence needs a result that is about this company AND about fraud, and is not a careers or jobs page.
+  const lead = nameTokens(company)[0];
+  const flags = search.results.filter((r) => lead !== undefined && !/career|jobs?\b|recruit|hiring/i.test(r.url) && new RegExp(lead, "i").test(`${r.title} ${r.content}`) && /(scam|fraud|phish|impersonat|spoof)\w*.{0,80}\b(payment|bank|vendor|invoice|email|e-mail|remit)|\b(payment|bank|vendor|invoice|email|e-mail|remit)\w*.{0,80}(scam|fraud|phish|impersonat|spoof)/i.test(`${r.title} ${r.content}`)).map((r) => `${hostOf(r.url) ?? r.url}: ${r.content.slice(0, 220)}`).slice(0, 2);
   if (!pick) return { stored: { domain: null, pageUrl: null, phones: [], snippets, flags, creditsOnFetch: credits }, credits };
   const page = pickContactPage(pick.host, search.results) ?? `https://${pick.host}/contact`;
   const extract = await post(env, "extract", { urls: [page], extract_depth: "basic", format: "text", include_usage: true }, Extract);
@@ -91,7 +97,8 @@ export async function tavilyContact(env: EvidenceEnv, q: { company: string; doma
   const none = (summary: string): TavilyResult => ({ evidence: [], summary, creditsUsed: 0, snippets: [] });
   try {
     if (!env.TAVILY_API_KEY) return none("Web lookup is not configured; no web lookup was made.");
-    const key = `tavily:v1:${normaliseName(q.company)}|${normaliseName(q.domainHint ?? "")}`;
+    const hint = usableHint(q.domainHint);
+    const key = `tavily:v1:${normaliseName(q.company)}|${normaliseName(hint ?? "")}`;
     // A cache read costs nothing and needs no budget; only a miss passes the gate.
     const peek = await env.CACHE.get<{ at: string; value: TavilyStored }>(key, "json").catch(() => null);
     if (peek) return toResult(peek.value, q.company, peek.at, true, 0);
@@ -100,7 +107,7 @@ export async function tavilyContact(env: EvidenceEnv, q: { company: string; doma
     if (!gate.ok) return none(gate.why === "budget" ? "Web lookup budget used up; no web lookup was made." : "This session has used its 3 new web lookups; no web lookup was made.");
     let spent = 0;
     const res = await cachedLookup(env, key, TTL_S, async () => {
-      const fresh = await fetchFresh(env, q.company, q.domainHint);
+      const fresh = await fetchFresh(env, q.company, hint);
       if (fresh) spent = fresh.credits;
       return fresh?.stored ?? null;
     });

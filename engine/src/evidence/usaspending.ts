@@ -35,10 +35,10 @@ async function find(name: string, uei?: string): Promise<Stored | null> {
 }
 
 /** `uei` (optional, from the vendor master) picks the matching record when several recipients share a name. */
-export async function lookupUsaspending(env: EvidenceEnv, q: { name: string; uei?: string }): Promise<ToolResult> {
+export async function lookupUsaspending(env: EvidenceEnv, q: { name: string; uei?: string }, opts: { fresh?: boolean } = {}): Promise<ToolResult> {
   try {
     const key = `usaspending:v1:${q.name.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim()}${q.uei ? `:${q.uei}` : ""}`;
-    const res = await cachedLookup(env, key, REGISTRY_TTL_S, () => find(q.name, q.uei));
+    const res = await cachedLookup(env, key, REGISTRY_TTL_S, () => find(q.name, q.uei), opts.fresh);
     if (!res) return unavailable("USAspending", "the registry did not answer");
     if ("none" in res.value) return { evidence: [], summary: `USAspending has no federal award recipient matching "${q.name}".` };
     const { id, profile: p } = res.value;

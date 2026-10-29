@@ -3,7 +3,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { tavilyContact } from "../../src/evidence";
-import { extractPhones, isAggregator, pickContactPage, pickDomain } from "../../src/evidence/tavily";
+import { extractPhones, isAggregator, pickContactPage, pickDomain, usableHint } from "../../src/evidence/tavily";
 import { getLimits } from "../../src/ops/guard";
 import { makeEnv } from "./fake-env";
 
@@ -31,6 +31,29 @@ describe("tavily helpers", () => {
   });
   it("finds US phone numbers in many formats", () => {
     expect(extractPhones("Call 703-902-5000 or (703) 902-5000, fax +1 703.902.5001. Year 2026-10-30 is not a phone.")).toEqual(["(703) 902-5000", "(703) 902-5001"]);
+  });
+});
+
+describe("tavily hints and news", () => {
+  it("drops a domain hint on a reserved TLD (it makes Tavily reject the whole search)", () => {
+    expect(usableHint("boozallen-payments.example")).toBeUndefined();
+    expect(usableHint("vendor.test")).toBeUndefined();
+    expect(usableHint("boozallen.com")).toBe("boozallen.com");
+    expect(usableHint(undefined)).toBeUndefined();
+  });
+
+  it("does not turn a careers page into a fraud finding, but keeps a real warning about the company", async () => {
+    const env = makeEnv({ seed: true });
+    const results = [
+      { url: "https://www.acmefreight.com/careers/fraud-awareness", title: "Acme Freight careers: avoid recruitment scams", content: "Acme Freight never asks candidates for payment. Report fraud." },
+      { url: "https://news.example.org/acme-freight-impersonation", title: "Acme Freight vendors targeted in invoice fraud", content: "Criminals impersonating Acme Freight emailed customers asking them to change the bank account for payment." },
+      { url: "https://www.acmefreight.com/contact", title: "Contact Acme Freight", content: "Call (703) 555-0100." },
+    ];
+    vi.stubGlobal("fetch", vi.fn(async (u: string | URL | Request) => String(u).endsWith("/search") ? json({ results, usage: { credits: 1 } }) : json({ results: [{ url: "https://www.acmefreight.com/contact", raw_content: "Phone (703) 555-0100" }], usage: { credits: 0 } })));
+    const r = await tavilyContact(env, { company: "Acme Freight LLC", sessionId: "sess-news01" });
+    const news = r.evidence.filter((e) => e.field === "news");
+    expect(news).toHaveLength(1);
+    expect(news[0]!.value).toContain("news.example.org");
   });
 });
 
@@ -62,7 +85,7 @@ describe("tavilyContact", () => {
   it("stops at the monthly budget with no call", async () => {
     const calls = stub();
     const env = makeEnv({ seed: true });
-    env.d1.exec(`INSERT INTO usage VALUES ('${new Date().toISOString().slice(0, 7)}','*','tavily_credit',149)`);
+    env.d1.exec(`INSERT INTO usage (day, session_id, kind, n) VALUES ('${new Date().toISOString().slice(0, 7)}','*','tavily_credit',149)`);
     const r = await tavilyContact(env, { company: "Leidos Holdings", sessionId: "sess-aaaaaa" });
     expect(calls).toHaveLength(0);
     expect(r.summary).toContain("budget used up");

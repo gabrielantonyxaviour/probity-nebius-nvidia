@@ -28,8 +28,9 @@ export async function fetchText(url: string, init: RequestInit = {}, ms = LOOKUP
 type Stored<T> = { at: string; value: T };
 
 /** Read-through KV cache. `produce` returns null for "source unavailable", which is never cached. */
-export async function cachedLookup<T>(env: Pick<EvidenceEnv, "CACHE">, key: string, ttlSeconds: number, produce: () => Promise<T | null>): Promise<{ value: T; at: string; cached: boolean } | null> {
+export async function cachedLookup<T>(env: Pick<EvidenceEnv, "CACHE">, key: string, ttlSeconds: number, produce: () => Promise<T | null>, fresh = false): Promise<{ value: T; at: string; cached: boolean } | null> {
   try {
+    if (fresh) throw new Error("fresh");
     const hit = await env.CACHE.get<Stored<T>>(key, "json");
     if (hit) return { value: hit.value, at: hit.at, cached: true };
   } catch {
