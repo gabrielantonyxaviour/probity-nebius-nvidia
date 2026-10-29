@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import type { Me } from "@probity/shared";
 import { account } from "@/lib/api";
@@ -11,10 +11,12 @@ export function AccountMenu() {
   const [me, setMe] = useState<Me | null>(null);
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const path = usePathname();
 
+  // Re-read on every navigation: signing in, creating or switching a workspace all change it.
   useEffect(() => {
     account.me().then(setMe).catch(() => setMe(null));
-  }, []);
+  }, [path]);
   useEffect(() => {
     const close = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false); };
     document.addEventListener("click", close);
