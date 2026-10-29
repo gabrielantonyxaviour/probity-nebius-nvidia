@@ -15,7 +15,8 @@ export interface Env {
   APP_URL: string;
   // Sign-in, e-mail and billing (auth, email and billing modules).
   BETTER_AUTH_SECRET: string;
-  RESEND_API_KEY?: string;
+  /** Cloudflare Email Service binding (sending domain probity.larinova.com). */
+  EMAIL?: SendEmail;
   EMAIL_FROM?: string;
   DODO_PAYMENTS_API_KEY?: string;
   DODO_PAYMENTS_LIVE_API_KEY?: string;
