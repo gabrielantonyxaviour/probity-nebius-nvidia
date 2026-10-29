@@ -5,7 +5,13 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 type Ctx = { params: Promise<{ path: string[] }> };
 type Engine = { fetch: (req: Request) => Promise<Response> };
 
-const PASS_HEADERS = ["content-type", "cookie", "accept", "x-session", "x-probity-timestamp", "x-probity-signature"];
+// Signature headers must pass untouched: Standard Webhooks (Composio, Dodo), Slack, and our own sweep HMAC.
+const PASS_HEADERS = [
+  "content-type", "cookie", "accept", "x-session", "origin", "user-agent",
+  "x-probity-timestamp", "x-probity-signature",
+  "webhook-id", "webhook-timestamp", "webhook-signature",
+  "x-slack-signature", "x-slack-request-timestamp",
+];
 
 async function forward(req: Request, { params }: Ctx): Promise<Response> {
   const { path } = await params;
@@ -52,3 +58,6 @@ function clean(res: Response): Response {
 
 export const GET = forward;
 export const POST = forward;
+export const PUT = forward;
+export const DELETE = forward;
+export const PATCH = forward;
