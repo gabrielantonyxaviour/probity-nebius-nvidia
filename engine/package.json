@@ -12,6 +12,7 @@
   "dependencies": {
     "@hyzyla/pdfium": "3.0.0",
     "@probity/shared": "*",
+    "better-auth": "1.7.14",
     "hono": "^4.13.14",
     "unpdf": "2.0.0",
     "zod": "^3.25.76",
