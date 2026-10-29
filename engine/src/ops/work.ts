@@ -30,8 +30,17 @@ async function letterText(env: Pick<OpsEnv, "FILES" | "CACHE">, key: string): Pr
 
 type RunShape = { decision?: { rationale?: string } | null; evidence?: Array<{ id: string; label: string; value: string }>; letter?: { claims?: Array<{ field: string; value: string }> } | null };
 
-export async function sweepWork(env: Pick<OpsEnv, "DB" | "FILES" | "CACHE">): Promise<WorkItem[]> {
-  const rows = await env.DB.prepare("SELECT r.id, r.letter_key, r.json, r.latest_run_id, u.json AS run_json FROM requests r LEFT JOIN runs u ON u.id = r.latest_run_id WHERE r.status != 'closed' ORDER BY r.next_run_at, r.received_at").all<Row>();
+const WORK_SQL = "SELECT r.id, r.letter_key, r.json, r.latest_run_id, u.json AS run_json FROM requests r LEFT JOIN runs u ON u.id = r.latest_run_id WHERE r.status != 'closed'";
+
+/** Open requests with their untrusted text. `orgId` limits it to one company once requests carry an org_id column. */
+export async function sweepWork(env: Pick<OpsEnv, "DB" | "FILES" | "CACHE">, orgId?: string): Promise<WorkItem[]> {
+  let rows: { results: Row[] };
+  try {
+    rows = orgId ? await env.DB.prepare(`${WORK_SQL} AND r.org_id = ?1 ORDER BY r.next_run_at, r.received_at`).bind(orgId).all<Row>() : await env.DB.prepare(`${WORK_SQL} ORDER BY r.next_run_at, r.received_at`).all<Row>();
+  } catch {
+    if (orgId) return [];
+    throw new Error("work query failed");
+  }
   const items: WorkItem[] = [];
   for (const r of rows.results) {
     const extra = JSON.parse(r.json) as { email?: { from?: string; subject?: string } };

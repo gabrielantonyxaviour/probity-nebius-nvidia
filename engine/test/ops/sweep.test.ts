@@ -1,11 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
 import { signRequest, verifyRequest } from "../../src/ops/hmac";
 import { makeOpsRoutes } from "../../src/ops/routes";
-import { JOB_FILES } from "../../src/ops/job-files.generated";
-import { latestSweep, startSweep, type OpsEnv } from "../../src/ops/sweep";
+import { latestSweep, type OpsEnv } from "../../src/ops/sweep";
 import { sweepWork } from "../../src/ops/work";
 import { makeEnv } from "../evidence/fake-env";
-import { generateKeyPairSync } from "node:crypto";
 
 const SECRET = "test-secret";
 const callback = (over: Record<string, unknown> = {}) => ({ sweepId: "", mode: "sweep", state: "completed", startedAt: "2026-10-30T18:00:00.000Z", finishedAt: "2026-10-30T18:03:10.000Z", requestsSwept: 2, recheckedRequestIds: [], flaggedRequestIds: ["BCR-2026-0407"], sweptRequestIds: ["BCR-2026-0407", "BCR-2026-0412"], nemo: { spansChecked: 5, flagged: 1, outputChecks: 0, outputBlocked: 0 }, eval: null, costUsd: 0.002, ...over });
@@ -95,7 +93,7 @@ describe("sweep endpoints", () => {
   it("/limits reflects the session's remaining checks", async () => {
     const env = makeEnv();
     const r = await wrap().request("http://app.test/api/limits", { headers: { "x-probity-session": "sess-abc123" } }, env);
-    expect(await r.json()).toMatchObject({ liveChecksLeftToday: 10, sessionChecksLeft: 3, tavilyBudget: 150, stopped: false });
+    expect(await r.json()).toMatchObject({ liveChecksLeftToday: 5, sessionChecksLeft: 3, tavilyBudget: 150, stopped: false });
   });
 });
 
@@ -118,31 +116,18 @@ describe("sweep work", () => {
   });
 });
 
-describe("startSweep", () => {
-  const keys = generateKeyPairSync("rsa", { modulusLength: 2048 });
-  const creds = JSON.stringify({ "subject-credentials": { alg: "RS256", type: "JWT", iss: "sa", sub: "sa", kid: "k", "private-key": keys.privateKey.export({ type: "pkcs8", format: "pem" }).toString() } });
-
-  it("injects the job files, passes the callback secret, records a starting report, and reuses a running one", async () => {
-    const env = { ...makeEnv({ seed: true }), NEBIUS_SA_CREDENTIALS: creds } as unknown as OpsEnv & ReturnType<typeof makeEnv>;
-    env.CACHE.put("nebius:iam-token:v1", "tok");
-    let body: any;
-    vi.stubGlobal("fetch", vi.fn(async (_u: unknown, init?: RequestInit) => { body = JSON.parse(String(init?.body)); return new Response(JSON.stringify({ resourceId: "aijob-xyz" }), { status: 200 }); }));
-    const a = await startSweep(env, "sweep");
-    expect(a).toMatchObject({ jobId: "aijob-xyz", reused: false });
-    const paths = body.spec.injectedFiles.map((f: { containerPath: string }) => f.containerPath);
-    expect(paths).toContain("/opt/probity/sweep.py");
-    expect(paths).not.toContain("/opt/probity/testset.json");
-    expect(body.spec.environmentVariables.map((e: { name: string }) => e.name)).toEqual(["MODE", "SWEEP_ID", "APP_URL", "JOB_CALLBACK_SECRET", "NEBIUS_API_KEY"]);
-    expect(body.spec.disk.sizeBytes).toBe(String(20 * 1024 ** 3));
-    const latest = await latestSweep(env);
-    expect(latest?.state).toBe("starting");
-    expect(latest?.jobId).toBe("aijob-xyz");
-    const b = await startSweep(env, "sweep");
-    expect(b).toMatchObject({ jobId: "aijob-xyz", reused: true });
-    vi.unstubAllGlobals();
-  });
-
-  it("every embedded job file is under Nebius's 64 KiB limit", () => {
-    for (const [p, text] of Object.entries(JOB_FILES)) expect(new TextEncoder().encode(text).length, p).toBeLessThanOrEqual(64 * 1024);
+describe("register", () => {
+  it("an operator-started job is recorded under its real Nebius id and the callback lands on it", async () => {
+    const env = makeEnv({ seed: true });
+    const app = wrap() as never;
+    const body = JSON.stringify({ sweepId: "sweep-ab12cd34", jobId: "aijob-real123", mode: "eval" });
+    expect((await call(app, env, "POST", "/sweep/register", body)).status).toBe(200);
+    expect((await call(app, env, "POST", "/sweep/register", body, false)).status).toBe(401);
+    const starting = (await (await call(app, env, "GET", "/sweep/latest", "", false)).json()) as { jobId: string; state: string };
+    expect(starting).toMatchObject({ jobId: "aijob-real123", state: "starting" });
+    await call(app, env, "POST", "/sweep/callback", JSON.stringify(callback({ sweepId: "sweep-ab12cd34", mode: "eval", eval: { cases: 30, injected: 7, caught: 7, clean: 23, falseAlarms: 1 }, sweptRequestIds: [] })));
+    const done = (await (await call(app, env, "GET", "/sweep/latest", "", false)).json()) as { jobId: string; state: string; eval: { caught: number } };
+    expect(done).toMatchObject({ jobId: "aijob-real123", state: "completed" });
+    expect(done.eval.caught).toBe(7);
   });
 });

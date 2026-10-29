@@ -3,12 +3,11 @@ import { Hono, type Context } from "hono";
 import { z } from "zod";
 import { getLimits, type GuardEnv } from "./guard";
 import { verifyRequest } from "./hmac";
-import { probeNebius } from "./nebius";
-import { CallbackBody, latestSweep, startSweep, storeCallback, type OpsEnv } from "./sweep";
+import { CallbackBody, latestSweep, registerJob, storeCallback, type OpsEnv } from "./sweep";
 import { sweepWork } from "./work";
 
 type Ctx = Context<{ Bindings: OpsEnv }>;
-const StartBody = z.object({ mode: z.enum(["sweep", "eval"]).default("sweep") });
+const RegisterBody = z.object({ sweepId: z.string().min(4).max(64), jobId: z.string().min(4).max(80), mode: z.enum(["sweep", "eval"]).default("sweep") });
 const safeJson = (t: string): unknown => { try { return JSON.parse(t); } catch { return null; } };
 const fail = (c: Ctx, status: 400 | 401 | 500 | 502, error: string, code: string): Response => c.json({ error, code }, status);
 
@@ -50,23 +49,14 @@ export function makeOpsRoutes(sessionOf: (c: Ctx) => string = defaultSessionId):
     return c.json(await storeCallback(c.env, parsed.data));
   });
 
-  app.post("/sweep/diag", async (c) => {
-    if (!(await signed(c, await c.req.text()))) return fail(c, 401, "Signature missing or invalid.", "unauthorized");
-    return c.json({ hops: await probeNebius() });
-  });
-
-  app.post("/sweep/start", async (c) => {
+  // An operator who started the Nebius job from the CLI registers its real job id here, so the callback lands on that job.
+  app.post("/sweep/register", async (c) => {
     const raw = await c.req.text();
     if (!(await signed(c, raw))) return fail(c, 401, "Signature missing or invalid.", "unauthorized");
-    const parsed = StartBody.safeParse(raw ? safeJson(raw) : {});
-    if (!parsed.success) return fail(c, 400, "Body must be {\"mode\":\"sweep\"|\"eval\"}.", "bad_request");
-    try {
-      return c.json(await startSweep(c.env, parsed.data.mode));
-    } catch (e) {
-      // Reached only with a valid signature, so the cause may be shown to the operator.
-      const detail = e instanceof Error ? `${e.name}: ${e.message}`.slice(0, 300) : "unknown";
-      return c.json({ error: "The sweep job could not be started.", code: "job_start_failed", detail }, 502);
-    }
+    const parsed = RegisterBody.safeParse(safeJson(raw));
+    if (!parsed.success) return fail(c, 400, "Body must be {sweepId, jobId, mode}.", "bad_request");
+    await registerJob(c.env, parsed.data);
+    return c.json({ ok: true });
   });
 
   return app;
