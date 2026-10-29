@@ -11,6 +11,7 @@ import { SweepCard } from "./sweep-card";
 import { VerdictChip } from "./verdict";
 
 const RANK = { HOLD: 0, CALLBACK_VERIFY: 1, null: 2, APPROVE: 3 } as const;
+const SOURCE: Record<InboxItem["source"], string> = { seed: "", upload: "Uploaded · ", gmail: "Gmail · ", outlook: "Outlook · " };
 const KIND = { bank_change: "New bank account", remit_change: "New remit address" };
 
 export function Inbox() {
@@ -63,7 +64,14 @@ export function Inbox() {
           <div className="card pad stack">{[0, 1, 2, 3].map((i) => <Skeleton key={i} h={44} />)}</div>
         )}
         {inbox.data && items.length === 0 && (
-          <div className="card pad muted">No bank-change requests are waiting. New ones arrive from the AP mailbox.</div>
+          <div className="card" style={{ padding: "30px 24px", display: "grid", gap: 10, justifyItems: "start" }}>
+            <p className="serif" style={{ fontSize: 24, margin: 0 }}>No bank-change requests yet.</p>
+            <p className="muted" style={{ margin: 0, maxWidth: 560 }}>Connect your AP mailbox and every vendor e-mail asking to change bank or remittance details is checked as it arrives. You can also check a letter by hand.</p>
+            <div className="row" style={{ gap: 10, flexWrap: "wrap" }}>
+              <Link href="/settings" className="btn primary">Connect a mailbox</Link>
+              <Link href="/new" className="btn">Check a letter</Link>
+            </div>
+          </div>
         )}
         {items.length > 0 && <Table items={items} />}
       </section>
@@ -87,7 +95,7 @@ function Table({ items }: { items: InboxItem[] }) {
                 <td><VerdictChip verdict={i.verdict} /></td>
                 <td>
                   <Link href={`/r/${i.requestId}`} style={{ textDecoration: "none", fontWeight: 500 }}>{i.vendorName}</Link>
-                  <div className="mono muted" style={{ fontSize: 12 }}>{i.requestId} · {i.senderEmail}</div>
+                  <div className="mono muted" style={{ fontSize: 12 }}>{SOURCE[i.source]}{i.requestId} · {i.senderEmail}</div>
                 </td>
                 <td>{KIND[i.kind]}</td>
                 <td className="num" style={{ textAlign: "right", whiteSpace: "nowrap" }}>{money(i.amountAtRisk)}</td>
