@@ -3,6 +3,7 @@ import { Hono, type Context } from "hono";
 import { z } from "zod";
 import { getLimits, type GuardEnv } from "./guard";
 import { verifyRequest } from "./hmac";
+import { probeNebius } from "./nebius";
 import { CallbackBody, latestSweep, startSweep, storeCallback, type OpsEnv } from "./sweep";
 import { sweepWork } from "./work";
 
@@ -47,6 +48,11 @@ export function makeOpsRoutes(sessionOf: (c: Ctx) => string = defaultSessionId):
     const parsed = CallbackBody.safeParse(json);
     if (!parsed.success) return fail(c, 400, "Report does not match the expected shape.", "bad_request");
     return c.json(await storeCallback(c.env, parsed.data));
+  });
+
+  app.post("/sweep/diag", async (c) => {
+    if (!(await signed(c, await c.req.text()))) return fail(c, 401, "Signature missing or invalid.", "unauthorized");
+    return c.json({ hops: await probeNebius() });
   });
 
   app.post("/sweep/start", async (c) => {
