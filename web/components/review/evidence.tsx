@@ -20,16 +20,17 @@ export function EvidenceTab({ run, focus }: { run: Run; focus: string | null }) 
   const sweep = useData(() => api.sweep(), []);
   const d = run.decision!;
   const bySource = ORDER.map((s) => [s, run.evidence.filter((e) => e.source === s)] as const).filter(([, list]) => list.length > 0);
-  const cited = new Map<string, string[]>();
-  d.reasons.forEach((r) => r.evidenceIds.forEach((id) => cited.set(id, [...(cited.get(id) ?? []), r.text])));
+  const cited = new Map<string, number[]>();
+  d.reasons.forEach((r, n) => r.evidenceIds.forEach((id) => cited.set(id, [...(cited.get(id) ?? []), n + 1])));
 
   return (
     <div id="evidence-top" style={{ display: "grid", gap: 20 }}>
       <section className="card pad">
         <p className="label" style={{ margin: "0 0 10px" }}>Every finding · policy {d.policyVersion}</p>
         <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "grid", gap: 8 }}>
-          {d.reasons.map((r) => (
-            <li key={r.code + r.text} className="row" style={{ alignItems: "baseline", gap: 10 }}>
+          {d.reasons.map((r, n) => (
+            <li key={r.code + r.text} id={`finding-${n + 1}`} className="row" style={{ alignItems: "baseline", gap: 10 }}>
+              <span className="mono muted num" style={{ fontSize: 12, width: 16, textAlign: "right" }}>{n + 1}</span>
               <span className={`chip ${r.severity === "info" ? "" : r.severity}`} style={{ minWidth: 74, justifyContent: "center" }}>{r.severity === "callback" ? "call" : r.severity}</span>
               <span style={{ flex: 1 }}>{r.text}</span>
               <span className="mono muted" style={{ fontSize: 12 }}>{r.code}</span>
@@ -83,7 +84,7 @@ export function EvidenceTab({ run, focus }: { run: Run; focus: string | null }) 
   );
 }
 
-function Fact({ e, focus, usedBy }: { e: Evidence; focus: boolean; usedBy?: string[] }) {
+function Fact({ e, focus, usedBy }: { e: Evidence; focus: boolean; usedBy?: number[] }) {
   return (
     <div id={e.id} style={{ display: "contents" }}>
       <dt className="muted" style={{ fontSize: 14 }}>{e.label}</dt>
@@ -91,7 +92,12 @@ function Fact({ e, focus, usedBy }: { e: Evidence; focus: boolean; usedBy?: stri
         {e.value}
         {e.url && <> · <a href={e.url} target="_blank" rel="noreferrer" className="muted" style={{ fontSize: 12.5 }}>source ↗</a></>}
         {e.cached && <span className="muted" style={{ fontSize: 12 }}> · cached</span>}
-        {usedBy && <span className="muted" style={{ display: "block", fontSize: 12.5 }}>Used for: {usedBy[0]}</span>}
+        {usedBy && (
+          <span className="muted" style={{ fontSize: 12.5 }}>
+            {" · supports finding "}
+            {usedBy.map((n, i) => <span key={n}>{i > 0 && ", "}<a href={`#finding-${n}`} className="muted">{n}</a></span>)}
+          </span>
+        )}
       </dd>
     </div>
   );

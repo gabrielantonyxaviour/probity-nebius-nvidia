@@ -5,7 +5,7 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 type Ctx = { params: Promise<{ path: string[] }> };
 type Engine = { fetch: (req: Request) => Promise<Response> };
 
-const PASS_HEADERS = ["content-type", "cookie", "accept", "x-session"];
+const PASS_HEADERS = ["content-type", "cookie", "accept", "x-session", "x-probity-timestamp", "x-probity-signature"];
 
 async function forward(req: Request, { params }: Ctx): Promise<Response> {
   const { path } = await params;
