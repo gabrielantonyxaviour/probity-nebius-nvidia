@@ -1,6 +1,7 @@
 // Run bookkeeping: a fresh Run, step transitions, running totals.
 import type { AgentKey, ModelCall, Run, Step } from "@probity/shared";
 import { ModelError } from "../models/client";
+import { recordCalls } from "../ops/spend";
 import type { Ctx, Scratch, StageOut } from "./types";
 
 export const STEP_DEFS: Array<{ key: string; agent: AgentKey | null; label: string }> = [
@@ -54,6 +55,16 @@ export function plainError(e: unknown): string {
   return e instanceof Error && e.message && e.message.length < 140 ? e.message : "The check stopped because of an internal error.";
 }
 
+/** Every Token Factory call counts toward the all-time Nebius budget. A bookkeeping failure never fails a check. */
+async function spend(ctx: Ctx, calls: ModelCall[] | undefined): Promise<void> {
+  if (!calls?.length) return;
+  try {
+    await recordCalls(ctx.env, ctx.orgId, ctx.runId, calls);
+  } catch {
+    /* the run matters more than its ledger line */
+  }
+}
+
 /** Runs one step: marks it running, runs it, records its calls and summary. Failure marks the step failed and rethrows. */
 export async function runStep(ctx: Ctx, key: string, fn: () => Promise<StageOut>): Promise<Scratch> {
   await ctx.store.update(ctx.runId, (r) => {
@@ -66,12 +77,14 @@ export async function runStep(ctx: Ctx, key: string, fn: () => Promise<StageOut>
       if (out.calls?.length) addCalls(r, out.calls);
       setStep(r, key, { status: out.skipped ? "skipped" : "done", finishedAt: new Date().toISOString(), summary: out.summary });
     });
+    await spend(ctx, out.calls);
     return out.scratch;
   } catch (e) {
     await ctx.store.update(ctx.runId, (r) => {
       if (e instanceof ModelError && e.calls.length) addCalls(r, e.calls);
       setStep(r, key, { status: "failed", finishedAt: new Date().toISOString(), summary: plainError(e) });
     });
+    if (e instanceof ModelError) await spend(ctx, e.calls);
     throw e;
   }
 }

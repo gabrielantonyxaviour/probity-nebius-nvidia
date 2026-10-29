@@ -8,13 +8,13 @@ import pdfiumWasm from "@hyzyla/pdfium/pdfium.wasm";
 import { D1RunStore, setRequestState } from "./d1store";
 import { r2Files } from "./files";
 
-export const CheckParams = z.object({ runId: z.string().min(1).max(64), sessionId: z.string().min(1).max(64) });
+export const CheckParams = z.object({ runId: z.string().min(1).max(64), sessionId: z.string().min(1).max(64), orgId: z.string().min(1).max(64).default("org_demo") });
 export type CheckParams = z.infer<typeof CheckParams>;
 
 export class CheckWorkflow extends WorkflowEntrypoint<Env, CheckParams> {
   async run(event: WorkflowEvent<CheckParams>, step: WorkflowStep): Promise<void> {
-    const { runId, sessionId } = CheckParams.parse(event.payload);
-    const ctx: Ctx = { env: this.env, runId, sessionId, store: new D1RunStore(this.env.DB), files: r2Files(this.env.FILES), wasm: pdfiumWasm };
+    const { runId, sessionId, orgId } = CheckParams.parse(event.payload);
+    const ctx: Ctx = { env: this.env, runId, sessionId, orgId, store: new D1RunStore(this.env.DB), files: r2Files(this.env.FILES), wasm: pdfiumWasm };
     const steps: Steps = {
       do: <T>(name: string, fn: () => Promise<T>) =>
         step.do(name, { retries: { limit: 1, delay: "3 seconds", backoff: "constant" }, timeout: "5 minutes" }, fn as never) as Promise<T>,

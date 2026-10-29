@@ -22,11 +22,11 @@ export class D1RunStore implements RunStore {
   }
 }
 
-export async function insertRun(db: D1Database, run: Run): Promise<void> {
+export async function insertRun(db: D1Database, run: Run, orgId: string): Promise<void> {
   const now = new Date().toISOString();
   await db
-    .prepare("INSERT INTO runs (id, request_id, status, live, json, created_at, updated_at) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?6)")
-    .bind(run.id, run.requestId, run.status, run.live ? 1 : 0, JSON.stringify(run), now)
+    .prepare("INSERT INTO runs (id, request_id, status, live, json, created_at, updated_at, org_id) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?6, ?7)")
+    .bind(run.id, run.requestId, run.status, run.live ? 1 : 0, JSON.stringify(run), now, orgId)
     .run();
 }
 

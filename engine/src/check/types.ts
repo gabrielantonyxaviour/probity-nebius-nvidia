@@ -20,6 +20,7 @@ export interface Ctx {
   env: Env;
   runId: string;
   sessionId: string;
+  orgId: string;
   store: RunStore;
   files: FileStore;
   wasm: PdfiumWasm;

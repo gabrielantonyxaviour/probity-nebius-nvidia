@@ -106,7 +106,7 @@ describe("sweep work", () => {
     env.r2.store.set("BCR-2026-0407.letter.pdf", "x");
     (env.FILES as unknown as { get: unknown }).get = async () => ({ arrayBuffer: async () => letter.buffer.slice(letter.byteOffset, letter.byteOffset + letter.byteLength) });
     const run = JSON.stringify({ decision: { rationale: "Hold: the letter asks to pay Norfolk." }, evidence: [{ id: "ev-1", label: "Remit address on file", value: "7722 Alderwood Trl, Norfolk, VA" }], letter: { claims: [{ field: "bank_name", value: "Harborline Savings" }] } });
-    env.d1.exec(`INSERT INTO runs VALUES ('run-1','BCR-2026-0407','done',1,'${run}','2026-10-29T00:00:00Z','2026-10-29T00:00:00Z'); UPDATE requests SET latest_run_id='run-1' WHERE id='BCR-2026-0407'`);
+    env.d1.exec(`INSERT INTO runs (id, request_id, status, live, json, created_at, updated_at) VALUES ('run-1','BCR-2026-0407','done',1,'${run}','2026-10-29T00:00:00Z','2026-10-29T00:00:00Z'); UPDATE requests SET latest_run_id='run-1' WHERE id='BCR-2026-0407'`);
     const items = await sweepWork(env);
     expect(items).toHaveLength(16);
     const sable = items.find((i) => i.requestId === "BCR-2026-0407")!;

@@ -11,6 +11,15 @@ import { screenSpans } from "./screenstage";
 import type { Ctx, Scratch, StageOut } from "./types";
 
 export const MAX_TOOL_CALLS = 8;
+
+const RESERVED_TLD = new Set(["example", "test", "invalid", "localhost", "local", "internal"]);
+/** Tavily rejects a whole search when include_domains holds a domain it cannot resolve (400), so only a real-looking domain is passed as a hint. */
+export function webHint(domain: string | null): string | undefined {
+  if (!domain) return undefined;
+  const d = domain.trim().toLowerCase().replace(/^www\./, "");
+  const tld = d.split(".").pop() ?? "";
+  return /^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(d) && !RESERVED_TLD.has(tld) ? d : undefined;
+}
 const MAX_ROUNDS = 6;
 const NameArgs = z.object({ name: z.string().min(1).max(200) });
 
@@ -40,7 +49,7 @@ async function dispatch(ctx: Ctx, s: Scratch, name: string, rawArgs: string): Pr
     }
     case "web_contact_lookup":
       // Always the vendor of record and its domain on file, whatever name the model (or the letter) suggested.
-      return tavilyContact(ctx.env, { company: s.request.vendorName, ...(s.request.vendorOnFile.domain ? { domainHint: s.request.vendorOnFile.domain } : {}), sessionId: ctx.sessionId });
+      return tavilyContact(ctx.env, { company: s.request.vendorName, ...(webHint(s.request.vendorOnFile.domain) ? { domainHint: webHint(s.request.vendorOnFile.domain) } : {}), sessionId: ctx.sessionId });
     default:
       return { evidence: [], summary: `Unknown tool ${name}.` };
   }

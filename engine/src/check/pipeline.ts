@@ -6,6 +6,7 @@ import { pdfStage } from "./pdfstage";
 import { readImageStage, readTextStage } from "./readstage";
 import { scoutStage } from "./scoutstage";
 import { screenStage } from "./screenstage";
+import { notifyRunFinished } from "./stubs";
 import type { Ctx, Scratch } from "./types";
 
 /** Workflow's `step.do`, or a plain function call. Results must be JSON. */
@@ -31,10 +32,20 @@ export async function runCheck(ctx: Ctx, steps: Steps): Promise<void> {
     s = await next("rationale", rationaleStage);
     await steps.do("finish", async () => {
       await finishRun(ctx);
+      try {
+        await notifyRunFinished(ctx.env, ctx.orgId, ctx.runId);
+      } catch {
+        /* a notification problem never changes a finished check */
+      }
       return true;
     });
   } catch (e) {
     await failRun(ctx, e);
+    try {
+      await notifyRunFinished(ctx.env, ctx.orgId, ctx.runId);
+    } catch {
+      /* ignored */
+    }
     throw e;
   }
 }

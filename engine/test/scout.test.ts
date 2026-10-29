@@ -24,7 +24,7 @@ vi.mock("../src/evidence", async () => {
 });
 vi.mock("../src/check/ledger", () => ({ ledgerEvidence: async () => ledger }));
 
-const { scoutStage } = await import("../src/check/scoutstage");
+const { scoutStage, webHint } = await import("../src/check/scoutstage");
 
 function memoryStore(run: Run): RunStore {
   return { get: async () => structuredClone(run), update: async (_id, fn) => (fn(run), structuredClone(run)) };
@@ -87,10 +87,21 @@ describe("scout: the web lookup always happens", () => {
     expect(calls.filter((c) => c.name === "web_contact_lookup")).toHaveLength(1);
   });
 
-  it("always searches for the vendor of record and its domain on file, whatever the model passes", async () => {
+  it("always searches for the vendor of record, hinting its domain on file only when the domain is real", async () => {
     const { ctx } = setup([["vendor_master"], []]);
-    await scoutStage(ctx, scratch());
-    expect(calls.find((c) => c.name === "web_contact_lookup")!.args).toMatchObject({ company: "Booz Allen Hamilton Inc", domainHint: "boozallen.example", sessionId: "s1" });
+    const s = scratch();
+    s.request.vendorOnFile.domain = "boozallen.com";
+    await scoutStage(ctx, s);
+    expect(calls.find((c) => c.name === "web_contact_lookup")!.args).toMatchObject({ company: "Booz Allen Hamilton Inc", domainHint: "boozallen.com", sessionId: "s1" });
+  });
+
+  it("does not pass a reserved-TLD domain as a hint (Tavily answers 400 to the whole search)", async () => {
+    const { ctx } = setup([["vendor_master"], []]);
+    await scoutStage(ctx, scratch()); // boozallen.example
+    const args = calls.find((c) => c.name === "web_contact_lookup")!.args as Record<string, unknown>;
+    expect(args.company).toBe("Booz Allen Hamilton Inc");
+    expect(args).not.toHaveProperty("domainHint");
+    expect([webHint("a.example"), webHint("x.test"), webHint("localhost"), webHint(null), webHint("WWW.L3Harris.com"), webHint("bad domain.com")]).toEqual([undefined, undefined, undefined, undefined, "l3harris.com", undefined]);
   });
 
   it("asks a registry when the model asked none", async () => {
