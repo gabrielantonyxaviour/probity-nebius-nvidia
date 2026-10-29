@@ -25,6 +25,14 @@ describe("client", () => {
     expect(r.call).toMatchObject({ requestId: "chatcmpl-9", promptTokens: 100, cachedTokens: 50, completionTokens: 10, toolCalls: ["vendor_master"], thinking: false });
     expect(r.call.costUsd).toBeCloseTo((50 * 0.06 + 50 * 0.03 + 10 * 0.24) / 1e6, 10);
   });
+  it("reads cached tokens from prompt_tokens_details, or from prompt_cache_hit_tokens when only that one is set", async () => {
+    const mk = (usage: object) => (async () => new Response(JSON.stringify({ id: "c", choices: [{ message: { content: "x" } }], usage }), { status: 200 })) as typeof fetch;
+    const a = await chat({ NEBIUS_API_KEY: "k", fetchImpl: mk({ prompt_tokens: 7111, completion_tokens: 5, prompt_tokens_details: { cached_tokens: 4192 } }) }, base);
+    const b = await chat({ NEBIUS_API_KEY: "k", fetchImpl: mk({ prompt_tokens: 7111, completion_tokens: 5, prompt_tokens_details: { cached_tokens: 0 }, prompt_cache_hit_tokens: 4192 }) }, base);
+    const c = await chat({ NEBIUS_API_KEY: "k", fetchImpl: mk({ prompt_tokens: 100, completion_tokens: 5, prompt_tokens_details: null }) }, base);
+    expect([a.call.cachedTokens, b.call.cachedTokens, c.call.cachedTokens]).toEqual([4192, 4192, 0]);
+    expect(a.call.costUsd).toBeLessThan(costUsd("nvidia/Nemotron-3_5-Lightning", { promptTokens: 7111, cachedTokens: 0, completionTokens: 5 }));
+  });
   it("retries 429 and 5xx, but not 400", async () => {
     let n = 0;
     const flaky = (async () => (++n < 3 ? new Response("busy", { status: n === 1 ? 429 : 503 }) : ok("fine"))) as typeof fetch;

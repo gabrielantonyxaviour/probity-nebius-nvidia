@@ -115,6 +115,23 @@ describe("call card", () => {
     expect(d.reasons.map((r) => r.code)).toContain("C10");
   });
 
+  it("cites the web as a second source when its phone agrees with SEC EDGAR, and when its domain agrees with the vendor master", () => {
+    const webPhone = ev("ev-tavily-ph0001", "tavily", "phone", "Phone on the official website", "321-727-9100");
+    const webDomain = ev("ev-tavily-dm0001", "tavily", "domain", "Official website (web)", "www.l3harris.example");
+    const other = ev("ev-tavily-dm0002", "tavily", "domain", "Official website (web)", "l3harris-payments.example");
+    const d = gate(clean({ evidence: [DOMAINONLY(), EDGAR_PHONE, webPhone, webDomain, other] }));
+    expect(d.callCard.phone).toBe("(321) 727-9100");
+    const cited = d.callCard.sources.map((s) => s.evidenceId);
+    expect(cited).toEqual(expect.arrayContaining([EDGAR_PHONE.id, "ev-tavily-ph0001", "ev-tavily-dm0001"]));
+    expect(cited).not.toContain("ev-tavily-dm0002");
+    expect(d.callCard.sources.some((s) => s.source === "tavily")).toBe(true);
+  });
+
+  it("does not cite a web domain when no phone could be chosen", () => {
+    const webDomain = ev("ev-tavily-dm0001", "tavily", "domain", "Official website (web)", "l3harris.example");
+    expect(gate(clean({ evidence: [DOMAINONLY(), webDomain] })).callCard.sources).toEqual([]);
+  });
+
   it("prefers SEC EDGAR over the web", () => {
     const web = ev("ev-tavily-web001", "tavily", "phone", "Phone on the official website", "(321) 999-0000");
     expect(gate(clean({ evidence: [DOMAINONLY(), web, EDGAR_PHONE] })).callCard.phone).toBe("(321) 727-9100");

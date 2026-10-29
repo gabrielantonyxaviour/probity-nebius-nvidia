@@ -45,6 +45,15 @@ export interface CheckResult {
   failures: string[];
 }
 
+const NEGATION = /\b(do not|don't|dont|never|avoid|should not|shouldn't|must not|mustn't|cannot|can't|not to|no need|rather than|instead of|ignore|disregard)\b|\bnot\b/i;
+/** True when a clause that holds `phone` also says not to call or use it ("Do not call (555) 010-0000", "(555) 010-0000 should not be used"). */
+export function toldNotToCall(text: string, phone: string): boolean {
+  const key = digits(phone);
+  for (const sentence of text.split(/(?<=[.!?])\s+/))
+    for (const clause of sentence.split(/\s*[;,:]\s*|\s+(?:but|and|then|instead)\s+/i)) if (digits(clause).includes(key) && NEGATION.test(clause)) return true;
+  return false;
+}
+
 /** Every digit run and every phone number in the note must come from the facts; no other decision word; at most 3 sentences. */
 export function checkRationale(text: string, facts: RationaleFacts): CheckResult {
   const failures: string[] = [];
@@ -57,9 +66,7 @@ export function checkRationale(text: string, facts: RationaleFacts): CheckResult
   for (const p of phonesIn(text)) {
     const k = digits(p);
     if (k === callKey) {
-      const sentence = text.split(/(?<=[.!?])\s+/).find((s) => digits(s).includes(k)) ?? "";
-      const negated = new RegExp(`\\b(do not|don't|never|avoid)\\b[^.]*${p.replace(/[()]/g, "\\$&")}`, "i");
-      if (negated.test(sentence)) failures.push(`the number to call (${p}) is told not to be used`);
+      if (toldNotToCall(text, p)) failures.push(`the number to call (${p}) is told not to be used`);
       continue;
     }
     if (doNot.has(k)) {

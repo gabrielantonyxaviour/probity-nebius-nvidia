@@ -1,7 +1,7 @@
 // The call card: who to call, never from the request itself, and what to ask.
 // A number the letter also prints is fine when an independent source (SEC, the vendor master from before the request) has it too.
 import type { CallCard, Evidence } from "@probity/shared";
-import { digits, formatPhone, phoneKey, phonesIn } from "./normalise";
+import { digits, formatPhone, phoneKey, phonesIn, registrable } from "./normalise";
 import { claimedNames } from "./rules";
 import { LABEL, type GateInput } from "./types";
 
@@ -26,6 +26,12 @@ export function buildCallCard(i: GateInput): CallCard {
   const sources = best
     ? candidates.filter((c) => digits(c.phone) === digits(best.phone)).map((c) => ({ evidenceId: c.e.id, source: c.e.source, label: c.e.label }))
     : [];
+  // Where the web's website domain agrees with a registry's or the vendor master's, that agreement is cited too.
+  const domains = i.evidence.filter((e) => e.field === "domain");
+  const agreeing = best
+    ? domains.filter((w) => w.source === "tavily" && domains.some((o) => o.source !== "tavily" && o.source !== "request" && registrable(o.value) === registrable(w.value)))
+    : [];
+  for (const w of agreeing) if (!sources.some((s) => s.evidenceId === w.id)) sources.push({ evidenceId: w.id, source: w.source, label: w.label });
   return { phone: best?.phone ?? null, sources: sources.filter((s) => s.source !== "request"), letterPhones: i.letterPhones.filter((p) => !best || digits(p) !== digits(best.phone)), ask: askList(i) };
 }
 

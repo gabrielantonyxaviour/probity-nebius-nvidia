@@ -172,7 +172,8 @@ function toResult(o: ChatOptions, w: z.infer<typeof Wire>, startedAt: string, ms
     function: { name: t.function.name, arguments: t.function.arguments },
   }));
   const promptTokens = w.usage?.prompt_tokens ?? 0;
-  const cachedTokens = w.usage?.prompt_tokens_details?.cached_tokens ?? w.usage?.prompt_cache_hit_tokens ?? 0;
+  // Token Factory reports cache hits in prompt_tokens_details.cached_tokens; some deployments also send prompt_cache_hit_tokens.
+  const cachedTokens = Math.max(w.usage?.prompt_tokens_details?.cached_tokens ?? 0, w.usage?.prompt_cache_hit_tokens ?? 0);
   const completionTokens = w.usage?.completion_tokens ?? 0;
   const call: ModelCall = {
     id: `mc-${crypto.randomUUID().slice(0, 8)}`,

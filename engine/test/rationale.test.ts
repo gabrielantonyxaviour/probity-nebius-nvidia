@@ -28,6 +28,24 @@ describe("rationale number check", () => {
     expect(checkRationale("Do not call (321) 727-9100 yet.", facts()).failures.join()).toMatch(/told not to be used/);
     expect(checkRationale("Call (321) 727-9100, and do not use (321) 555-0100.", facts()).ok).toBe(true);
   });
+  it.each([
+    "Do not call (321) 727-9100.",
+    "Do not call (321) 727-9100 from the phone on file.",
+    "(321) 727-9100 should not be used for the call-back.",
+    "Skip the call; no need to ring (321) 727-9100.",
+    "Never use (321) 727-9100, call (321) 555-0100 instead.",
+  ])("rejects a clause that says not to call the card's phone: %s", (note) => {
+    const r = checkRationale(note, facts());
+    expect(r.failures.join()).toMatch(/told not to be used|letter number/);
+    expect(r.ok).toBe(false);
+  });
+  it.each([
+    "Call (321) 727-9100, the registered business phone from the SEC, and do not use (321) 555-0100.",
+    "Do not use (321) 555-0100; call (321) 727-9100 instead.",
+    "Call (321) 727-9100 before paying.",
+  ])("accepts a note that tells the clerk to call the card's phone: %s", (note) => {
+    expect(checkRationale(note, facts()).failures.filter((f) => /told not/.test(f))).toEqual([]);
+  });
   it("gives an approved change no number to call", () => {
     const i = clean({ evidence: [EDGAR_PHONE, ev("ev-vendor_master-cb0001", "vendor_master", "other", LABEL.callbackConfirmed, "confirmed")] });
     const f = rationaleFacts(i, gate(i), true);

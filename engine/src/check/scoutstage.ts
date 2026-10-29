@@ -38,11 +38,9 @@ async function dispatch(ctx: Ctx, s: Scratch, name: string, rawArgs: string): Pr
       const a = NameArgs.safeParse(args);
       return a.success ? lookupGleif(ctx.env, a.data) : { evidence: [], summary: "gleif_lookup needs a name." };
     }
-    case "web_contact_lookup": {
-      const a = z.object({ company: z.string().min(1).max(200), domainHint: z.string().max(200).optional() }).safeParse(args);
-      if (!a.success) return { evidence: [], summary: "web_contact_lookup needs a company name." };
-      return tavilyContact(ctx.env, { ...a.data, sessionId: ctx.sessionId });
-    }
+    case "web_contact_lookup":
+      // Always the vendor of record and its domain on file, whatever name the model (or the letter) suggested.
+      return tavilyContact(ctx.env, { company: s.request.vendorName, ...(s.request.vendorOnFile.domain ? { domainHint: s.request.vendorOnFile.domain } : {}), sessionId: ctx.sessionId });
     default:
       return { evidence: [], summary: `Unknown tool ${name}.` };
   }
@@ -98,8 +96,9 @@ export async function scoutStage(ctx: Ctx, s: Scratch): Promise<StageOut> {
     messages.push({ role: "assistant", content: r.content || null, tool_calls: r.toolCalls });
     for (const t of r.toolCalls) {
       const over = toolCount >= MAX_TOOL_CALLS;
-      const out = over ? "The limit of 8 tool calls is used up." : await run(t.function.name, t.function.arguments);
-      if (!over) used.push(t.function.name);
+      const again = t.function.name === "web_contact_lookup" && used.includes("web_contact_lookup");
+      const out = over ? "The limit of 8 tool calls is used up." : again ? "The web lookup was already done for this vendor." : await run(t.function.name, t.function.arguments);
+      if (!over && !again) used.push(t.function.name);
       messages.push({ role: "tool", tool_call_id: t.id, content: out });
     }
   }
@@ -108,9 +107,17 @@ export async function scoutStage(ctx: Ctx, s: Scratch): Promise<StageOut> {
     await run("vendor_master", "{}");
     used.push("vendor_master");
   }
-  if (used.length === 1) {
+  // A check never runs on our own record alone: a registry is always asked.
+  if (!used.some((n) => ["edgar_lookup", "usaspending_lookup", "gleif_lookup"].includes(n))) {
     await run("edgar_lookup", JSON.stringify({ name: s.request.vendorName }));
     used.push("edgar_lookup");
+  }
+  // The web lookup is the second independent source for the call card, so it never depends on the model's mood.
+  let webByCode = false;
+  if (!used.includes("web_contact_lookup")) {
+    await run("web_contact_lookup", "{}");
+    used.push("web_contact_lookup");
+    webByCode = true;
   }
   const ledger = await ledgerEvidence(ctx.env, s);
   for (const e of ledger) evidence.set(e.id, e);
@@ -119,5 +126,5 @@ export async function scoutStage(ctx: Ctx, s: Scratch): Promise<StageOut> {
   const by = new Map<string, number>();
   for (const e of evidence.values()) by.set(e.source, (by.get(e.source) ?? 0) + 1);
   const detail = [...by.entries()].map(([k, n]) => `${n} from ${k.replace("_", " ")}`).join(", ");
-  return { scratch: s, summary: `${toolCount} lookups; ${evidence.size} facts${detail ? ` (${detail})` : ""}`, calls };
+  return { scratch: s, summary: `${toolCount} lookups; ${evidence.size} facts${detail ? ` (${detail})` : ""}${webByCode ? "; web lookup run by code" : ""}`, calls };
 }
