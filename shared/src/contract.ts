@@ -212,6 +212,8 @@ export const SweepReport = z.object({
   requestsSwept: z.number().int(),
   recheckedRequestIds: z.array(z.string()), // full checks started because registry facts changed
   nemo: z.object({ spansChecked: z.number().int(), flagged: z.number().int(), outputChecks: z.number().int(), outputBlocked: z.number().int() }),
+  /** Present after an `eval` run over the labelled test letters: measured, never estimated. */
+  eval: z.object({ cases: z.number().int(), injected: z.number().int(), caught: z.number().int(), clean: z.number().int(), falseAlarms: z.number().int() }).nullable().default(null),
   costUsd: z.number(),
 });
 export type SweepReport = z.infer<typeof SweepReport>;
