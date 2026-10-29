@@ -1,0 +1,28 @@
+{
+  "name": "@probity/engine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "smoke:live": "tsx test/smoke-live.ts"
+  },
+  "dependencies": {
+    "@hyzyla/pdfium": "3.0.0",
+    "@probity/shared": "*",
+    "hono": "^4.13.14",
+    "unpdf": "2.0.0",
+    "zod": "^3.25.76",
+    "zod-to-json-schema": "^3.24.6"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261029.1",
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0",
+    "wrangler": "^4.155.0"
+  }
+}
