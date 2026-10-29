@@ -26,11 +26,16 @@ describe("sendEmail", () => {
   it("keeps a copy and reports failure when Resend refuses or is unreachable", async () => {
     const env = makeTestEnv({ RESEND_API_KEY: "re_test", EMAIL_FROM: "Probity <alerts@probity.example>" });
     vi.stubGlobal("fetch", async () => Response.json({ message: "The domain is not verified." }, { status: 403 }));
-    expect(await sendEmail(env, { to: "ap@acmefreight.example", subject: "S", text: "T" })).toEqual({ ok: false, delivered: false, error: "The domain is not verified." });
+    expect(await sendEmail(env, { to: "ap@acmefreight.example", subject: "S", text: "T" })).toEqual({ ok: false, delivered: false, error: "The domain is not verified.", code: "email_failed" });
     vi.stubGlobal("fetch", async () => { throw new Error("down"); });
     expect((await sendEmail(env, { to: "ap@acmefreight.example", subject: "S", text: "T" })).ok).toBe(false);
     const st = await env.DB.prepare("SELECT status FROM email_outbox ORDER BY id").all();
     expect(st.results).toEqual([{ status: "failed_403" }, { status: "failed_network" }]);
+  });
+  it("a deployed app without a sender returns email_unconfigured and stores nothing", async () => {
+    const env = makeTestEnv({ APP_URL: "https://probity.pages.dev", RESEND_API_KEY: "re_test" });
+    expect(await sendEmail(env, { to: "ap@acmefreight.example", subject: "S", text: "T" })).toEqual({ ok: false, delivered: false, error: "E-mail sending isn't set up yet.", code: "email_unconfigured" });
+    expect((await env.DB.prepare("SELECT COUNT(*) AS n FROM email_outbox").first<{ n: number }>())!.n).toBe(0);
   });
   it("refuses an empty recipient list", async () => {
     expect((await sendEmail(makeTestEnv(), { to: [" "], subject: "S", text: "T" })).ok).toBe(false);

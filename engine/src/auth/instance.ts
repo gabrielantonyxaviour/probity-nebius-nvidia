@@ -1,13 +1,12 @@
 // Better Auth, built per request because the D1 binding only exists inside a handler.
 import { betterAuth } from "better-auth";
 import { emailOTP, organization } from "better-auth/plugins";
-import { sendEmail } from "../email";
+import { sendEmail, type SendResult } from "../email";
 import { signInCodeEmail } from "../email/templates";
 import { LOCAL_ORIGIN, type CEnv } from "./types";
 
-type Bg = (p: Promise<unknown>) => void;
-
-export function makeAuth(env: CEnv, background: Bg = () => {}) {
+/** `sink.failure` is set when the sign-in code could not be sent; Better Auth swallows errors thrown from sendVerificationOTP, so the route reads this instead. */
+export function makeAuth(env: CEnv, sink: { failure?: SendResult } = {}) {
   const secure = env.APP_URL.startsWith("https://");
   return betterAuth({
     database: env.DB,
@@ -47,8 +46,9 @@ export function makeAuth(env: CEnv, background: Bg = () => {}) {
         storeOTP: "hashed",
         async sendVerificationOTP({ email, otp, type }) {
           if (type !== "sign-in") return;
-          const mail = signInCodeEmail(otp);
-          background(sendEmail(env, { to: email, ...mail }));
+          // Awaited inside the request (no background handler is set), so a missing or refused sender is known before the response.
+          const sent = await sendEmail(env, { to: email, ...signInCodeEmail(otp), noOutbox: true });
+          if (!sent.ok) sink.failure = sent;
         },
       }),
       organization({

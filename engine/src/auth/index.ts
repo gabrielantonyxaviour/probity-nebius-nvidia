@@ -2,6 +2,7 @@
 import { Hono, type MiddlewareHandler } from "hono";
 import { DEMO_ORG_ID, Me } from "@probity/shared";
 import { z } from "zod";
+import type { SendResult } from "../email";
 import { effectivePlan, getProfile } from "../billing/plans";
 import type { AppEnv, Ctx } from "../routes/util";
 import { deny, getResolved, parseRole, setResolved, type Resolved, type Role } from "./guards";
@@ -13,13 +14,7 @@ export { getPlan, checksLeft, consumeCheck } from "../billing/plans";
 
 const SESSION_COOKIE = /(?:^|;\s*)(?:__Secure-)?probity\.session_token=/;
 const cenv = (c: Ctx) => c.env as CEnv;
-function background(c: Ctx) {
-  return (p: Promise<unknown>) => {
-    const safe = p.catch(() => undefined);
-    try { c.executionCtx.waitUntil(safe); } catch { /* no execution context (tests): the promise still runs */ }
-  };
-}
-const authFor = (c: Ctx) => makeAuth(cenv(c), background(c));
+const authFor = (c: Ctx, sink?: { failure?: SendResult }) => makeAuth(cenv(c), sink);
 
 type DbUser = { id: string; email: string; name: string };
 async function resolve(c: Ctx): Promise<Resolved> {
@@ -64,7 +59,22 @@ const SwitchBody = z.object({ orgId: z.string().min(1).max(100) });
 
 export const authRoutes = new Hono<AppEnv>();
 
-authRoutes.all("/auth/*", (c) => authFor(c).handler(c.req.raw));
+// Better Auth answers errors as { code, message }; the app's contract is { error, code }, so add the one we use.
+authRoutes.all("/auth/*", async (c) => {
+  const sink: { failure?: SendResult } = {};
+  const res = await authFor(c, sink).handler(c.req.raw);
+  if (sink.failure) {
+    const unset = sink.failure.code === "email_unconfigured";
+    return c.json({ error: unset ? "E-mail sending isn't set up yet." : "We couldn't send the code. Try again in a moment.", code: unset ? "email_unconfigured" : "email_failed" }, 503);
+  }
+  if (res.status < 400 || !(res.headers.get("content-type") ?? "").includes("application/json")) return res;
+  const body = (await res.clone().json().catch(() => null)) as { message?: string; code?: string } | null;
+  if (!body || typeof body !== "object" || !body.message) return res;
+  const code = typeof body.code === "string" ? body.code.toLowerCase() : undefined;
+  const headers = new Headers(res.headers);
+  headers.delete("content-length");
+  return new Response(JSON.stringify({ error: body.message, ...(code ? { code } : {}) }), { status: res.status, headers });
+});
 
 authRoutes.get("/me", async (c) => {
   const r = getResolved(c);
