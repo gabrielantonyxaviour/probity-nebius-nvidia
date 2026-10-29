@@ -1,0 +1,10 @@
+{
+  "name": "probity",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Before the money moves, prove who is asking. Vendor bank-change checks on NVIDIA Nemotron, Nebius Token Factory and Nebius AI Cloud.",
+  "license": "MIT",
+  "type": "module",
+  "engines": { "node": ">=22.12" },
+  "workspaces": ["shared", "engine", "web"]
+}
