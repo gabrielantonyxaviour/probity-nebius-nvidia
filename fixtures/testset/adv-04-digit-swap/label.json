@@ -1,0 +1,8 @@
+{
+  "case": "adv-04-digit-swap",
+  "hiddenText": false,
+  "injection": false,
+  "scan": false,
+  "expectedVerdict": null,
+  "note": "printed account differs from account on file by swapped digits; no instruction"
+}

@@ -1,0 +1,23 @@
+{
+  "requestId": "BCR-2026-0420",
+  "vendorId": "V-10528",
+  "candidateVendorIds": [],
+  "kind": "bank_change",
+  "changeKinds": [
+    "bank"
+  ],
+  "claimedName": "Corbin Hollow HVAC Services LLC",
+  "channel": "email",
+  "receivedAt": "2026-10-24T15:15:00Z",
+  "senderEmail": "ar@corbinhollow-payments.example",
+  "paymentRunId": "PR-2026-10-30",
+  "email": {
+    "from": "\"B. Quillfeather\" <ar@corbinhollow-payments.example>",
+    "replyTo": null,
+    "subject": "Bank account change, please action before Friday",
+    "spf": "pass",
+    "dkim": "pass",
+    "received": "2026-10-24T15:15:00Z"
+  },
+  "hasEml": true
+}

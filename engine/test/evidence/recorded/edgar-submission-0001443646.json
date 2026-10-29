@@ -1,0 +1,60 @@
+{
+ "cik": "0001443646",
+ "entityType": "operating",
+ "sic": "8742",
+ "sicDescription": "Services-Management Consulting Services",
+ "ownerOrg": "07 Trade & Services",
+ "insiderTransactionForOwnerExists": 0,
+ "insiderTransactionForIssuerExists": 1,
+ "name": "Booz Allen Hamilton Holding Corp",
+ "tickers": [
+  "BAH"
+ ],
+ "exchanges": [
+  "NYSE"
+ ],
+ "ein": "000000000",
+ "lei": null,
+ "description": "",
+ "website": "",
+ "investorWebsite": "",
+ "category": "Large accelerated filer",
+ "fiscalYearEnd": "0331",
+ "stateOfIncorporation": "DE",
+ "stateOfIncorporationDescription": "DE",
+ "addresses": {
+  "mailing": {
+   "street1": "8283 GREENSBORO DRIVE",
+   "street2": null,
+   "city": "MCLEAN",
+   "stateOrCountry": "VA",
+   "zipCode": "22102",
+   "stateOrCountryDescription": "VA",
+   "isForeignLocation": 0,
+   "foreignStateTerritory": null,
+   "country": null,
+   "countryCode": null
+  },
+  "business": {
+   "street1": "8283 GREENSBORO DRIVE",
+   "street2": null,
+   "city": "MCLEAN",
+   "stateOrCountry": "VA",
+   "zipCode": "22102",
+   "stateOrCountryDescription": "VA",
+   "isForeignLocation": null,
+   "foreignStateTerritory": null,
+   "country": null,
+   "countryCode": null
+  }
+ },
+ "phone": "703-902-5000",
+ "flags": "",
+ "formerNames": [
+  {
+   "name": "EXPLORER HOLDING CORP",
+   "from": "2008-08-19T04:00:00.000Z",
+   "to": "2009-07-27T04:00:00.000Z"
+  }
+ ]
+}

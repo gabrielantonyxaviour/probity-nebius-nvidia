@@ -1,0 +1,8 @@
+{
+  "case": "s3-instruction",
+  "hiddenText": false,
+  "injection": true,
+  "scan": false,
+  "expectedVerdict": null,
+  "note": "visible line addressed to an automated reviewer"
+}

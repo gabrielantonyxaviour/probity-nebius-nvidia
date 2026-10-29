@@ -1,0 +1,38 @@
+{
+ "data": [
+  {
+   "type": "fuzzycompletions",
+   "attributes": {
+    "value": "BOOZ ALLEN HAMILTON INC."
+   },
+   "relationships": {
+    "lei-records": {
+     "data": {
+      "type": "lei-records",
+      "id": "549300D7XCH2480XU542"
+     },
+     "links": {
+      "related": "https://api.gleif.org/api/v1/lei-records/549300D7XCH2480XU542"
+     }
+    }
+   }
+  },
+  {
+   "type": "fuzzycompletions",
+   "attributes": {
+    "value": "BOOZ ALLEN & HAMILTON INTERNATIONAL (UK) LIMITED SUPPLEMENTARY BENEFITS PLAN FOR MR RICHARD FOSTER"
+   },
+   "relationships": {
+    "lei-records": {
+     "data": {
+      "type": "lei-records",
+      "id": "21380083OOXDR1O6R189"
+     },
+     "links": {
+      "related": "https://api.gleif.org/api/v1/lei-records/21380083OOXDR1O6R189"
+     }
+    }
+   }
+  }
+ ]
+}

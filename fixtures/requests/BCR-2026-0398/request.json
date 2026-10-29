@@ -1,0 +1,23 @@
+{
+  "requestId": "BCR-2026-0398",
+  "vendorId": "V-10198",
+  "candidateVendorIds": [],
+  "kind": "bank_change",
+  "changeKinds": [
+    "bank"
+  ],
+  "claimedName": "L3Harris Technologies, Inc.",
+  "channel": "email",
+  "receivedAt": "2026-10-20T14:05:00Z",
+  "senderEmail": "treasury@l3harris.example",
+  "paymentRunId": "PR-2026-10-30",
+  "email": {
+    "from": "\"K. Albrecht\" <treasury@l3harris.example>",
+    "replyTo": null,
+    "subject": "Change of bank account",
+    "spf": "pass",
+    "dkim": "pass",
+    "received": "2026-10-20T14:05:00Z"
+  },
+  "hasEml": true
+}

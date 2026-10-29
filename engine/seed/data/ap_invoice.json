@@ -1,0 +1,1378 @@
+[
+  {
+    "invoice_no": "INV-ARM-23711",
+    "vendor_id": "V-10617",
+    "amount_usd": 13704.89,
+    "invoice_date": "2026-09-26",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-ARM-96210",
+    "vendor_id": "V-10617",
+    "amount_usd": 1314.20,
+    "invoice_date": "2026-08-15",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-BAH-17404",
+    "vendor_id": "V-10027",
+    "amount_usd": 207499.68,
+    "invoice_date": "2026-09-20",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-BAH-20931",
+    "vendor_id": "V-10027",
+    "amount_usd": 612400.00,
+    "invoice_date": "2026-09-21",
+    "status": "scheduled",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-BAH-20944",
+    "vendor_id": "V-10027",
+    "amount_usd": 431150.00,
+    "invoice_date": "2026-09-15",
+    "status": "scheduled",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-BAH-20967",
+    "vendor_id": "V-10027",
+    "amount_usd": 241000.00,
+    "invoice_date": "2026-09-19",
+    "status": "scheduled",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-BAH-28436",
+    "vendor_id": "V-10027",
+    "amount_usd": 561191.28,
+    "invoice_date": "2026-09-01",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-BAH-47417",
+    "vendor_id": "V-10027",
+    "amount_usd": 119378.00,
+    "invoice_date": "2026-09-27",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-BAH-55469",
+    "vendor_id": "V-10027",
+    "amount_usd": 182537.35,
+    "invoice_date": "2026-10-04",
+    "status": "open",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-BAH-71664",
+    "vendor_id": "V-10027",
+    "amount_usd": 159214.00,
+    "invoice_date": "2026-09-15",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-BAH-90891",
+    "vendor_id": "V-10027",
+    "amount_usd": 246438.80,
+    "invoice_date": "2026-09-19",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-BPM-21017",
+    "vendor_id": "V-10718",
+    "amount_usd": 1455.97,
+    "invoice_date": "2026-09-08",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-BPM-25913",
+    "vendor_id": "V-10718",
+    "amount_usd": 2526.25,
+    "invoice_date": "2026-09-15",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-BPM-27111",
+    "vendor_id": "V-10718",
+    "amount_usd": 6021.57,
+    "invoice_date": "2026-08-26",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-BPM-37702",
+    "vendor_id": "V-10718",
+    "amount_usd": 6312.40,
+    "invoice_date": "2026-09-17",
+    "status": "scheduled",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-BPM-40804",
+    "vendor_id": "V-10718",
+    "amount_usd": 7919.55,
+    "invoice_date": "2026-09-17",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-BPM-48188",
+    "vendor_id": "V-10718",
+    "amount_usd": 4569.74,
+    "invoice_date": "2026-09-11",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-BPM-62560",
+    "vendor_id": "V-10718",
+    "amount_usd": 6553.42,
+    "invoice_date": "2026-09-06",
+    "status": "void",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-BSI-26926",
+    "vendor_id": "V-10261",
+    "amount_usd": 20386.18,
+    "invoice_date": "2026-09-13",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-BSI-36733",
+    "vendor_id": "V-10261",
+    "amount_usd": 48172.67,
+    "invoice_date": "2026-09-25",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-BSI-38634",
+    "vendor_id": "V-10261",
+    "amount_usd": 8807.62,
+    "invoice_date": "2026-08-23",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-BSI-48191",
+    "vendor_id": "V-10261",
+    "amount_usd": 4725.79,
+    "invoice_date": "2026-09-10",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-BSI-89978",
+    "vendor_id": "V-10261",
+    "amount_usd": 8963.50,
+    "invoice_date": "2026-09-03",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-CAC-17398",
+    "vendor_id": "V-10112",
+    "amount_usd": 364778.59,
+    "invoice_date": "2026-09-06",
+    "status": "void",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-CAC-34077",
+    "vendor_id": "V-10112",
+    "amount_usd": 284142.82,
+    "invoice_date": "2026-09-14",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-CAC-66262",
+    "vendor_id": "V-10112",
+    "amount_usd": 439524.21,
+    "invoice_date": "2026-09-22",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-CAC-72975",
+    "vendor_id": "V-10112",
+    "amount_usd": 193529.09,
+    "invoice_date": "2026-08-23",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-CAC-77104",
+    "vendor_id": "V-10112",
+    "amount_usd": 402300.00,
+    "invoice_date": "2026-10-09",
+    "status": "approved",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-CFS-23753",
+    "vendor_id": "V-10671",
+    "amount_usd": 35676.07,
+    "invoice_date": "2026-09-17",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-CFS-69863",
+    "vendor_id": "V-10671",
+    "amount_usd": 12409.41,
+    "invoice_date": "2026-10-01",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-CFS-78867",
+    "vendor_id": "V-10671",
+    "amount_usd": 8231.34,
+    "invoice_date": "2026-10-16",
+    "status": "approved",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-CFS-79142",
+    "vendor_id": "V-10671",
+    "amount_usd": 5762.56,
+    "invoice_date": "2026-09-11",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-CHH-37465",
+    "vendor_id": "V-10528",
+    "amount_usd": 9908.72,
+    "invoice_date": "2026-09-04",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-CHH-49205",
+    "vendor_id": "V-10528",
+    "amount_usd": 14438.98,
+    "invoice_date": "2026-09-04",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-CHH-60913",
+    "vendor_id": "V-10528",
+    "amount_usd": 9875.00,
+    "invoice_date": "2026-09-22",
+    "status": "scheduled",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-CHH-74347",
+    "vendor_id": "V-10528",
+    "amount_usd": 1713.38,
+    "invoice_date": "2026-09-10",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-CRS-11872",
+    "vendor_id": "V-10349",
+    "amount_usd": 48210.00,
+    "invoice_date": "2026-09-21",
+    "status": "scheduled",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-CRS-29921",
+    "vendor_id": "V-10349",
+    "amount_usd": 67072.58,
+    "invoice_date": "2026-09-26",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-CRS-82443",
+    "vendor_id": "V-10349",
+    "amount_usd": 24122.65,
+    "invoice_date": "2026-08-24",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-DFI-55144",
+    "vendor_id": "V-10702",
+    "amount_usd": 1178.42,
+    "invoice_date": "2026-09-11",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-DFI-55786",
+    "vendor_id": "V-10702",
+    "amount_usd": 3030.62,
+    "invoice_date": "2026-09-17",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-DFI-58420",
+    "vendor_id": "V-10702",
+    "amount_usd": 11835.78,
+    "invoice_date": "2026-10-06",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-DFI-97821",
+    "vendor_id": "V-10702",
+    "amount_usd": 1668.99,
+    "invoice_date": "2026-08-27",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-DFI-98699",
+    "vendor_id": "V-10702",
+    "amount_usd": 1383.23,
+    "invoice_date": "2026-10-22",
+    "status": "approved",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-FCC-11895",
+    "vendor_id": "V-10483",
+    "amount_usd": 3015.47,
+    "invoice_date": "2026-09-15",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-FCC-18715",
+    "vendor_id": "V-10483",
+    "amount_usd": 2211.85,
+    "invoice_date": "2026-09-22",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-FCC-31094",
+    "vendor_id": "V-10483",
+    "amount_usd": 3194.29,
+    "invoice_date": "2026-08-28",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-FCC-34864",
+    "vendor_id": "V-10483",
+    "amount_usd": 9490.36,
+    "invoice_date": "2026-09-11",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-FCC-44027",
+    "vendor_id": "V-10483",
+    "amount_usd": 7182.68,
+    "invoice_date": "2026-10-11",
+    "status": "approved",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-FCC-99177",
+    "vendor_id": "V-10483",
+    "amount_usd": 4682.98,
+    "invoice_date": "2026-08-26",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-GSE-12339",
+    "vendor_id": "V-10688",
+    "amount_usd": 51689.01,
+    "invoice_date": "2026-09-06",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-GSE-17045",
+    "vendor_id": "V-10688",
+    "amount_usd": 100504.45,
+    "invoice_date": "2026-10-08",
+    "status": "open",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-GSE-41330",
+    "vendor_id": "V-10688",
+    "amount_usd": 50500.97,
+    "invoice_date": "2026-09-30",
+    "status": "approved",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-GSE-63888",
+    "vendor_id": "V-10688",
+    "amount_usd": 125080.56,
+    "invoice_date": "2026-09-13",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-GSE-65749",
+    "vendor_id": "V-10688",
+    "amount_usd": 84662.69,
+    "invoice_date": "2026-09-04",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-GSE-92248",
+    "vendor_id": "V-10688",
+    "amount_usd": 53377.45,
+    "invoice_date": "2026-09-19",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-GSE-97009",
+    "vendor_id": "V-10688",
+    "amount_usd": 106573.54,
+    "invoice_date": "2026-08-22",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-HVL-11784",
+    "vendor_id": "V-10776",
+    "amount_usd": 129811.69,
+    "invoice_date": "2026-09-23",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-HVL-21935",
+    "vendor_id": "V-10776",
+    "amount_usd": 21862.49,
+    "invoice_date": "2026-09-19",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-HVL-25722",
+    "vendor_id": "V-10776",
+    "amount_usd": 57610.25,
+    "invoice_date": "2026-09-14",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-HVL-49605",
+    "vendor_id": "V-10776",
+    "amount_usd": 24612.43,
+    "invoice_date": "2026-08-13",
+    "status": "void",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-HVL-84821",
+    "vendor_id": "V-10776",
+    "amount_usd": 20266.42,
+    "invoice_date": "2026-09-14",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-HVL-93293",
+    "vendor_id": "V-10776",
+    "amount_usd": 38996.25,
+    "invoice_date": "2026-08-19",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-JLT-25948",
+    "vendor_id": "V-10544",
+    "amount_usd": 3023.41,
+    "invoice_date": "2026-08-16",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-JLT-39510",
+    "vendor_id": "V-10544",
+    "amount_usd": 5513.38,
+    "invoice_date": "2026-09-18",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-JLT-52267",
+    "vendor_id": "V-10544",
+    "amount_usd": 6656.67,
+    "invoice_date": "2026-08-22",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-JLT-73993",
+    "vendor_id": "V-10544",
+    "amount_usd": 6295.26,
+    "invoice_date": "2026-09-08",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-JLT-74869",
+    "vendor_id": "V-10544",
+    "amount_usd": 13979.34,
+    "invoice_date": "2026-09-14",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-KPD-30687",
+    "vendor_id": "V-10357",
+    "amount_usd": 4066.43,
+    "invoice_date": "2026-09-09",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-KPD-81958",
+    "vendor_id": "V-10357",
+    "amount_usd": 57793.32,
+    "invoice_date": "2026-09-13",
+    "status": "void",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-LDS-16697",
+    "vendor_id": "V-10442",
+    "amount_usd": 115490.31,
+    "invoice_date": "2026-10-02",
+    "status": "open",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-LDS-44514",
+    "vendor_id": "V-10442",
+    "amount_usd": 115942.35,
+    "invoice_date": "2026-09-30",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-LDS-60336",
+    "vendor_id": "V-10442",
+    "amount_usd": 391807.31,
+    "invoice_date": "2026-09-09",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-LDS-72015",
+    "vendor_id": "V-10442",
+    "amount_usd": 241985.81,
+    "invoice_date": "2026-09-17",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-LDS-88412",
+    "vendor_id": "V-10442",
+    "amount_usd": 356820.40,
+    "invoice_date": "2026-10-02",
+    "status": "scheduled",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-LDS-88433",
+    "vendor_id": "V-10442",
+    "amount_usd": 129940.00,
+    "invoice_date": "2026-10-12",
+    "status": "approved",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-LDS-89895",
+    "vendor_id": "V-10442",
+    "amount_usd": 399258.44,
+    "invoice_date": "2026-09-05",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-LDS-91029",
+    "vendor_id": "V-10442",
+    "amount_usd": 535010.02,
+    "invoice_date": "2026-09-04",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-LDS-91528",
+    "vendor_id": "V-10442",
+    "amount_usd": 240571.12,
+    "invoice_date": "2026-09-22",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-LHX-31556",
+    "vendor_id": "V-10198",
+    "amount_usd": 151286.60,
+    "invoice_date": "2026-09-21",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-LHX-33066",
+    "vendor_id": "V-10198",
+    "amount_usd": 123974.45,
+    "invoice_date": "2026-09-21",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-LHX-54037",
+    "vendor_id": "V-10198",
+    "amount_usd": 299245.43,
+    "invoice_date": "2026-08-18",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-LHX-61728",
+    "vendor_id": "V-10198",
+    "amount_usd": 120817.79,
+    "invoice_date": "2026-09-09",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-LHX-65858",
+    "vendor_id": "V-10198",
+    "amount_usd": 249047.93,
+    "invoice_date": "2026-09-04",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-LHX-73318",
+    "vendor_id": "V-10198",
+    "amount_usd": 274915.25,
+    "invoice_date": "2026-09-26",
+    "status": "scheduled",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-LHX-77527",
+    "vendor_id": "V-10198",
+    "amount_usd": 294502.87,
+    "invoice_date": "2026-09-21",
+    "status": "approved",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-LHX-99135",
+    "vendor_id": "V-10198",
+    "amount_usd": 115439.81,
+    "invoice_date": "2026-09-27",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-LTS-32409",
+    "vendor_id": "V-10388",
+    "amount_usd": 4044.54,
+    "invoice_date": "2026-08-18",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-LTS-40124",
+    "vendor_id": "V-10388",
+    "amount_usd": 3843.76,
+    "invoice_date": "2026-09-14",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-LTS-48321",
+    "vendor_id": "V-10388",
+    "amount_usd": 14207.03,
+    "invoice_date": "2026-09-08",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-LTS-53220",
+    "vendor_id": "V-10388",
+    "amount_usd": 7930.19,
+    "invoice_date": "2026-10-05",
+    "status": "open",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-LTS-84982",
+    "vendor_id": "V-10388",
+    "amount_usd": 2501.58,
+    "invoice_date": "2026-09-22",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-LTS-94286",
+    "vendor_id": "V-10388",
+    "amount_usd": 12991.89,
+    "invoice_date": "2026-09-08",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-MCR-12973",
+    "vendor_id": "V-10630",
+    "amount_usd": 26908.88,
+    "invoice_date": "2026-09-10",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-MCR-17710",
+    "vendor_id": "V-10630",
+    "amount_usd": 6431.80,
+    "invoice_date": "2026-08-23",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-MCR-33806",
+    "vendor_id": "V-10630",
+    "amount_usd": 5594.06,
+    "invoice_date": "2026-09-17",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-MCR-50154",
+    "vendor_id": "V-10630",
+    "amount_usd": 8909.42,
+    "invoice_date": "2026-10-12",
+    "status": "approved",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-MCR-63772",
+    "vendor_id": "V-10630",
+    "amount_usd": 56141.65,
+    "invoice_date": "2026-09-02",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-MCR-92249",
+    "vendor_id": "V-10630",
+    "amount_usd": 13793.69,
+    "invoice_date": "2026-09-12",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-MCR-94597",
+    "vendor_id": "V-10630",
+    "amount_usd": 7901.77,
+    "invoice_date": "2026-09-06",
+    "status": "void",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-MFP-20788",
+    "vendor_id": "V-10655",
+    "amount_usd": 41980.00,
+    "invoice_date": "2026-10-06",
+    "status": "scheduled",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-MFP-72138",
+    "vendor_id": "V-10655",
+    "amount_usd": 52421.80,
+    "invoice_date": "2026-09-13",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-NOI-15875",
+    "vendor_id": "V-10233",
+    "amount_usd": 8171.40,
+    "invoice_date": "2026-09-03",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-NOI-30318",
+    "vendor_id": "V-10233",
+    "amount_usd": 18640.00,
+    "invoice_date": "2026-09-28",
+    "status": "scheduled",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-NOJ-60014",
+    "vendor_id": "V-10234",
+    "amount_usd": 23156.89,
+    "invoice_date": "2026-09-15",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-NOJ-86706",
+    "vendor_id": "V-10234",
+    "amount_usd": 55576.73,
+    "invoice_date": "2026-09-22",
+    "status": "approved",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-OTC-23556",
+    "vendor_id": "V-10471",
+    "amount_usd": 7479.68,
+    "invoice_date": "2026-09-18",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-OTC-30455",
+    "vendor_id": "V-10471",
+    "amount_usd": 12640.75,
+    "invoice_date": "2026-09-29",
+    "status": "scheduled",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-OTC-60404",
+    "vendor_id": "V-10471",
+    "amount_usd": 55127.62,
+    "invoice_date": "2026-08-21",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-OTC-61393",
+    "vendor_id": "V-10471",
+    "amount_usd": 14913.77,
+    "invoice_date": "2026-09-08",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-OTC-62508",
+    "vendor_id": "V-10471",
+    "amount_usd": 4149.67,
+    "invoice_date": "2026-09-04",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-OTC-81993",
+    "vendor_id": "V-10471",
+    "amount_usd": 24580.72,
+    "invoice_date": "2026-09-12",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-OTC-90708",
+    "vendor_id": "V-10471",
+    "amount_usd": 31846.86,
+    "invoice_date": "2026-09-12",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-PMC-14444",
+    "vendor_id": "V-10749",
+    "amount_usd": 9159.81,
+    "invoice_date": "2026-09-05",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-PMC-38891",
+    "vendor_id": "V-10749",
+    "amount_usd": 1099.62,
+    "invoice_date": "2026-09-19",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-PMC-41804",
+    "vendor_id": "V-10749",
+    "amount_usd": 3531.72,
+    "invoice_date": "2026-09-04",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-PMC-64475",
+    "vendor_id": "V-10749",
+    "amount_usd": 6714.16,
+    "invoice_date": "2026-08-24",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-PMC-66755",
+    "vendor_id": "V-10749",
+    "amount_usd": 2994.65,
+    "invoice_date": "2026-10-03",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-PMC-92019",
+    "vendor_id": "V-10749",
+    "amount_usd": 9941.25,
+    "invoice_date": "2026-09-12",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-PSS-18875",
+    "vendor_id": "V-10402",
+    "amount_usd": 5419.90,
+    "invoice_date": "2026-09-22",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-PSS-24195",
+    "vendor_id": "V-10402",
+    "amount_usd": 2017.39,
+    "invoice_date": "2026-09-01",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-PSS-34859",
+    "vendor_id": "V-10402",
+    "amount_usd": 2540.11,
+    "invoice_date": "2026-10-06",
+    "status": "open",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-PSS-38163",
+    "vendor_id": "V-10402",
+    "amount_usd": 3301.32,
+    "invoice_date": "2026-09-04",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-QFG-32900",
+    "vendor_id": "V-10790",
+    "amount_usd": 5678.36,
+    "invoice_date": "2026-09-02",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-QFG-53876",
+    "vendor_id": "V-10790",
+    "amount_usd": 5090.04,
+    "invoice_date": "2026-08-31",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-QFG-58607",
+    "vendor_id": "V-10790",
+    "amount_usd": 23293.80,
+    "invoice_date": "2026-09-19",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-QFG-78459",
+    "vendor_id": "V-10790",
+    "amount_usd": 7850.39,
+    "invoice_date": "2026-09-07",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-QFG-99055",
+    "vendor_id": "V-10790",
+    "amount_usd": 6290.91,
+    "invoice_date": "2026-08-30",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-QRF-10044",
+    "vendor_id": "V-10812",
+    "amount_usd": 87400.00,
+    "invoice_date": "2026-10-19",
+    "status": "scheduled",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-RNS-14854",
+    "vendor_id": "V-10604",
+    "amount_usd": 26307.24,
+    "invoice_date": "2026-09-07",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-RNS-18803",
+    "vendor_id": "V-10604",
+    "amount_usd": 48365.02,
+    "invoice_date": "2026-09-20",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-RNS-30053",
+    "vendor_id": "V-10604",
+    "amount_usd": 10895.28,
+    "invoice_date": "2026-09-16",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-RNS-44176",
+    "vendor_id": "V-10604",
+    "amount_usd": 23460.18,
+    "invoice_date": "2026-09-23",
+    "status": "scheduled",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-RNS-81733",
+    "vendor_id": "V-10604",
+    "amount_usd": 22741.73,
+    "invoice_date": "2026-08-15",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-RNS-93162",
+    "vendor_id": "V-10604",
+    "amount_usd": 51530.26,
+    "invoice_date": "2026-10-01",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-SAI-38582",
+    "vendor_id": "V-10587",
+    "amount_usd": 198759.36,
+    "invoice_date": "2026-09-14",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-SAI-41207",
+    "vendor_id": "V-10587",
+    "amount_usd": 198400.00,
+    "invoice_date": "2026-09-29",
+    "status": "scheduled",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-SAI-48179",
+    "vendor_id": "V-10587",
+    "amount_usd": 147924.43,
+    "invoice_date": "2026-10-19",
+    "status": "open",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-SAI-59768",
+    "vendor_id": "V-10587",
+    "amount_usd": 354466.41,
+    "invoice_date": "2026-09-24",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-SFC-76424",
+    "vendor_id": "V-10645",
+    "amount_usd": 7154.82,
+    "invoice_date": "2026-09-09",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-SHM-12684",
+    "vendor_id": "V-10561",
+    "amount_usd": 95406.66,
+    "invoice_date": "2026-09-04",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-SHM-17215",
+    "vendor_id": "V-10561",
+    "amount_usd": 63185.86,
+    "invoice_date": "2026-09-27",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-SHM-34510",
+    "vendor_id": "V-10561",
+    "amount_usd": 24597.82,
+    "invoice_date": "2026-09-11",
+    "status": "void",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-SHM-48165",
+    "vendor_id": "V-10561",
+    "amount_usd": 66272.60,
+    "invoice_date": "2026-09-08",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-SHM-88738",
+    "vendor_id": "V-10561",
+    "amount_usd": 98370.90,
+    "invoice_date": "2026-09-14",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-SHM-90317",
+    "vendor_id": "V-10561",
+    "amount_usd": 109131.61,
+    "invoice_date": "2026-10-05",
+    "status": "approved",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-TCC-55021",
+    "vendor_id": "V-10763",
+    "amount_usd": 63275.50,
+    "invoice_date": "2026-10-07",
+    "status": "scheduled",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-TCC-64739",
+    "vendor_id": "V-10763",
+    "amount_usd": 12668.41,
+    "invoice_date": "2026-08-20",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-TCC-68984",
+    "vendor_id": "V-10763",
+    "amount_usd": 27704.42,
+    "invoice_date": "2026-08-23",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-TEL-19786",
+    "vendor_id": "V-10592",
+    "amount_usd": 36012.42,
+    "invoice_date": "2026-09-13",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-TEL-39027",
+    "vendor_id": "V-10592",
+    "amount_usd": 45034.26,
+    "invoice_date": "2026-09-14",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-TEL-39891",
+    "vendor_id": "V-10592",
+    "amount_usd": 40304.62,
+    "invoice_date": "2026-09-26",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-TEL-73951",
+    "vendor_id": "V-10592",
+    "amount_usd": 10658.77,
+    "invoice_date": "2026-08-28",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-TEL-92032",
+    "vendor_id": "V-10592",
+    "amount_usd": 26679.32,
+    "invoice_date": "2026-08-18",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-VTX-30627",
+    "vendor_id": "V-10311",
+    "amount_usd": 187669.55,
+    "invoice_date": "2026-09-27",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-VTX-51565",
+    "vendor_id": "V-10311",
+    "amount_usd": 249346.19,
+    "invoice_date": "2026-09-16",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-VTX-55221",
+    "vendor_id": "V-10311",
+    "amount_usd": 346672.74,
+    "invoice_date": "2026-09-22",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-VTX-58106",
+    "vendor_id": "V-10311",
+    "amount_usd": 191070.06,
+    "invoice_date": "2026-09-10",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-VTX-70518",
+    "vendor_id": "V-10311",
+    "amount_usd": 529903.01,
+    "invoice_date": "2026-09-02",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-VTX-73762",
+    "vendor_id": "V-10311",
+    "amount_usd": 190431.51,
+    "invoice_date": "2026-09-20",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-VTX-74258",
+    "vendor_id": "V-10311",
+    "amount_usd": 195522.27,
+    "invoice_date": "2026-09-05",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-VTX-90215",
+    "vendor_id": "V-10311",
+    "amount_usd": 318750.00,
+    "invoice_date": "2026-10-02",
+    "status": "approved",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-WBC-24044",
+    "vendor_id": "V-10509",
+    "amount_usd": 41933.07,
+    "invoice_date": "2026-08-26",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-WBC-66095",
+    "vendor_id": "V-10509",
+    "amount_usd": 5439.03,
+    "invoice_date": "2026-09-20",
+    "status": "open",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-WBC-72607",
+    "vendor_id": "V-10509",
+    "amount_usd": 8503.70,
+    "invoice_date": "2026-09-16",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-WBC-75189",
+    "vendor_id": "V-10509",
+    "amount_usd": 20772.59,
+    "invoice_date": "2026-08-30",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-WBC-77444",
+    "vendor_id": "V-10509",
+    "amount_usd": 11657.01,
+    "invoice_date": "2026-09-28",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-WBC-86258",
+    "vendor_id": "V-10509",
+    "amount_usd": 6421.71,
+    "invoice_date": "2026-09-09",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-WBC-93081",
+    "vendor_id": "V-10509",
+    "amount_usd": 10969.74,
+    "invoice_date": "2026-10-13",
+    "status": "approved",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-WGM-76010",
+    "vendor_id": "V-10731",
+    "amount_usd": 4037.60,
+    "invoice_date": "2026-09-08",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-WGM-93886",
+    "vendor_id": "V-10731",
+    "amount_usd": 1017.76,
+    "invoice_date": "2026-08-29",
+    "status": "paid",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "invoice_no": "INV-WGM-98683",
+    "vendor_id": "V-10731",
+    "amount_usd": 9510.50,
+    "invoice_date": "2026-09-26",
+    "status": "open",
+    "data_origin": "SYNTHETIC"
+  }
+]

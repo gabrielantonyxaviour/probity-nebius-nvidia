@@ -1,0 +1,1002 @@
+[
+  {
+    "contact_id": "VC-00001",
+    "vendor_id": "V-07734",
+    "kind": "phone",
+    "value": "703-555-0108",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": "2020-01-15T15:00:00Z",
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00002",
+    "vendor_id": "V-10027",
+    "kind": "email",
+    "value": "accounts.receivable@boozallen.example",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00003",
+    "vendor_id": "V-10027",
+    "kind": "phone",
+    "value": "(703) 902-5000",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": "2026-10-19T16:20:00Z",
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00004",
+    "vendor_id": "V-10027",
+    "kind": "phone",
+    "value": "(703) 555-0182",
+    "valid_from": "2026-10-19T16:20:00Z",
+    "valid_to": null,
+    "changed_via": "email request",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00005",
+    "vendor_id": "V-10112",
+    "kind": "email",
+    "value": "treasury@caci.example",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00006",
+    "vendor_id": "V-10112",
+    "kind": "phone",
+    "value": "(703) 841-7800",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00007",
+    "vendor_id": "V-10154",
+    "kind": "email",
+    "value": "ap@bluefengeo.example",
+    "valid_from": "2025-11-17T18:40:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00008",
+    "vendor_id": "V-10154",
+    "kind": "phone",
+    "value": "(303) 555-0178",
+    "valid_from": "2025-11-17T18:40:00Z",
+    "valid_to": "2026-03-05T15:00:00Z",
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00009",
+    "vendor_id": "V-10154",
+    "kind": "phone",
+    "value": "(303) 555-0189",
+    "valid_from": "2026-03-05T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "annual_review",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00010",
+    "vendor_id": "V-10167",
+    "kind": "email",
+    "value": "accounts@callowayfreight.example",
+    "valid_from": "2023-02-10T19:20:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00011",
+    "vendor_id": "V-10167",
+    "kind": "phone",
+    "value": "912-555-0185",
+    "valid_from": "2023-02-10T19:20:00Z",
+    "valid_to": "2026-03-11T15:00:00Z",
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00012",
+    "vendor_id": "V-10167",
+    "kind": "phone",
+    "value": "912-555-0113",
+    "valid_from": "2026-03-11T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "phone request",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00013",
+    "vendor_id": "V-10179",
+    "kind": "email",
+    "value": "billing@elkhornradio.example",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00014",
+    "vendor_id": "V-10179",
+    "kind": "phone",
+    "value": "321.555.0148",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": "2019-10-01T15:00:00Z",
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00015",
+    "vendor_id": "V-10179",
+    "kind": "phone",
+    "value": "321.555.0143",
+    "valid_from": "2019-10-01T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "phone request",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00016",
+    "vendor_id": "V-10186",
+    "kind": "email",
+    "value": "ar@larkspurnotary.example",
+    "valid_from": "2021-04-09T19:00:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00017",
+    "vendor_id": "V-10186",
+    "kind": "phone",
+    "value": "8035550117",
+    "valid_from": "2021-04-09T19:00:00Z",
+    "valid_to": "2022-08-12T15:00:00Z",
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00018",
+    "vendor_id": "V-10186",
+    "kind": "phone",
+    "value": "8035550158",
+    "valid_from": "2022-08-12T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "phone request",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00019",
+    "vendor_id": "V-10198",
+    "kind": "email",
+    "value": "treasury@l3harris.example",
+    "valid_from": "2019-07-01T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "vendor_portal",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00020",
+    "vendor_id": "V-10198",
+    "kind": "phone",
+    "value": "3217279100",
+    "valid_from": "2019-07-01T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "vendor_portal",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00021",
+    "vendor_id": "V-10233",
+    "kind": "email",
+    "value": "finance@northgateinteriors.example",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00022",
+    "vendor_id": "V-10233",
+    "kind": "phone",
+    "value": "(410) 555-0107",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": "2022-08-19T15:00:00Z",
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00023",
+    "vendor_id": "V-10233",
+    "kind": "phone",
+    "value": "(410) 555-0140",
+    "valid_from": "2022-08-19T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "phone request",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00024",
+    "vendor_id": "V-10234",
+    "kind": "email",
+    "value": "accounts.receivable@northgateinteriors.example",
+    "valid_from": "2019-07-25T14:40:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00025",
+    "vendor_id": "V-10234",
+    "kind": "phone",
+    "value": "410-555-0102",
+    "valid_from": "2019-07-25T14:40:00Z",
+    "valid_to": "2023-03-10T15:00:00Z",
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00026",
+    "vendor_id": "V-10234",
+    "kind": "phone",
+    "value": "410-555-0190",
+    "valid_from": "2023-03-10T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "vendor_portal",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00027",
+    "vendor_id": "V-10261",
+    "kind": "email",
+    "value": "ap@brackwatersurvey.example",
+    "valid_from": "2022-12-10T16:20:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00028",
+    "vendor_id": "V-10261",
+    "kind": "phone",
+    "value": "410.555.0146",
+    "valid_from": "2022-12-10T16:20:00Z",
+    "valid_to": "2023-06-17T15:00:00Z",
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00029",
+    "vendor_id": "V-10261",
+    "kind": "phone",
+    "value": "410.555.0129",
+    "valid_from": "2023-06-17T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "vendor_portal",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00030",
+    "vendor_id": "V-10311",
+    "kind": "email",
+    "value": "ar@vectrus.example",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": "2022-07-11T15:00:00Z",
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00031",
+    "vendor_id": "V-10311",
+    "kind": "email",
+    "value": "ar@v2x.example",
+    "valid_from": "2022-07-11T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "vendor_portal",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00032",
+    "vendor_id": "V-10311",
+    "kind": "phone",
+    "value": "(719) 555-0110",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": "2022-07-11T15:00:00Z",
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00033",
+    "vendor_id": "V-10311",
+    "kind": "phone",
+    "value": "(571) 481-2000",
+    "valid_from": "2022-07-11T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "vendor_portal",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00034",
+    "vendor_id": "V-10349",
+    "kind": "email",
+    "value": "accounts@chesterfieldridge.example",
+    "valid_from": "2022-07-19T13:20:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00035",
+    "vendor_id": "V-10349",
+    "kind": "phone",
+    "value": "8045550175",
+    "valid_from": "2022-07-19T13:20:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00036",
+    "vendor_id": "V-10357",
+    "kind": "email",
+    "value": "billing@kettlepointcabling.example",
+    "valid_from": "2022-10-20T16:00:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00037",
+    "vendor_id": "V-10357",
+    "kind": "phone",
+    "value": "(540) 555-0191",
+    "valid_from": "2022-10-20T16:00:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00038",
+    "vendor_id": "V-10388",
+    "kind": "email",
+    "value": "ar@larkfieldtranslation.example",
+    "valid_from": "2023-03-23T15:40:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00039",
+    "vendor_id": "V-10388",
+    "kind": "phone",
+    "value": "301-555-0124",
+    "valid_from": "2023-03-23T15:40:00Z",
+    "valid_to": "2025-09-19T15:00:00Z",
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00040",
+    "vendor_id": "V-10388",
+    "kind": "phone",
+    "value": "301-555-0198",
+    "valid_from": "2025-09-19T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "annual_review",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00041",
+    "vendor_id": "V-10402",
+    "kind": "email",
+    "value": "finance@pembrookshredding.example",
+    "valid_from": "2022-03-15T17:50:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00042",
+    "vendor_id": "V-10402",
+    "kind": "phone",
+    "value": "703.555.0195",
+    "valid_from": "2022-03-15T17:50:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00043",
+    "vendor_id": "V-10442",
+    "kind": "email",
+    "value": "ar.federal@leidos.example",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00044",
+    "vendor_id": "V-10442",
+    "kind": "phone",
+    "value": "571-526-6000",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00045",
+    "vendor_id": "V-10471",
+    "kind": "email",
+    "value": "accounts.receivable@ostranderlab.example",
+    "valid_from": "2019-06-09T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00046",
+    "vendor_id": "V-10471",
+    "kind": "phone",
+    "value": "2565550126",
+    "valid_from": "2019-06-09T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00047",
+    "vendor_id": "V-10483",
+    "kind": "email",
+    "value": "ap@fallowcreek.example",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00048",
+    "vendor_id": "V-10483",
+    "kind": "phone",
+    "value": "(703) 555-0109",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": "2020-05-02T15:00:00Z",
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00049",
+    "vendor_id": "V-10483",
+    "kind": "phone",
+    "value": "(703) 555-0105",
+    "valid_from": "2020-05-02T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "annual_review",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00050",
+    "vendor_id": "V-10509",
+    "kind": "email",
+    "value": "accounts@wexleybadge.example",
+    "valid_from": "2021-07-13T14:20:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00051",
+    "vendor_id": "V-10509",
+    "kind": "phone",
+    "value": "410-555-0106",
+    "valid_from": "2021-07-13T14:20:00Z",
+    "valid_to": "2024-01-08T15:00:00Z",
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00052",
+    "vendor_id": "V-10509",
+    "kind": "phone",
+    "value": "410-555-0179",
+    "valid_from": "2024-01-08T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "phone request",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00053",
+    "vendor_id": "V-10528",
+    "kind": "email",
+    "value": "billing@corbinhollow.example",
+    "valid_from": "2022-10-01T19:20:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00054",
+    "vendor_id": "V-10528",
+    "kind": "phone",
+    "value": "703.555.0123",
+    "valid_from": "2022-10-01T19:20:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00055",
+    "vendor_id": "V-10544",
+    "kind": "email",
+    "value": "ar@juniperlane.example",
+    "valid_from": "2019-11-05T14:00:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00056",
+    "vendor_id": "V-10544",
+    "kind": "phone",
+    "value": "7035550111",
+    "valid_from": "2019-11-05T14:00:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00057",
+    "vendor_id": "V-10561",
+    "kind": "email",
+    "value": "finance@sableharbor.example",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00058",
+    "vendor_id": "V-10561",
+    "kind": "phone",
+    "value": "(757) 555-0122",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": "2021-04-28T15:00:00Z",
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00059",
+    "vendor_id": "V-10561",
+    "kind": "phone",
+    "value": "(757) 555-0125",
+    "valid_from": "2021-04-28T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "vendor_portal",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00060",
+    "vendor_id": "V-10587",
+    "kind": "email",
+    "value": "ap@saic.example",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00061",
+    "vendor_id": "V-10587",
+    "kind": "phone",
+    "value": "703.676.4300",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00062",
+    "vendor_id": "V-10592",
+    "kind": "email",
+    "value": "accounts.receivable@thornfieldlabs.example",
+    "valid_from": "2023-01-22T18:20:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00063",
+    "vendor_id": "V-10592",
+    "kind": "phone",
+    "value": "(240) 555-0152",
+    "valid_from": "2023-01-22T18:20:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00064",
+    "vendor_id": "V-10604",
+    "kind": "email",
+    "value": "ap@ridgebacknet.example",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00065",
+    "vendor_id": "V-10604",
+    "kind": "phone",
+    "value": "(571) 555-0138",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00066",
+    "vendor_id": "V-10617",
+    "kind": "email",
+    "value": "accounts@ashgroverecords.example",
+    "valid_from": "2019-08-10T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00067",
+    "vendor_id": "V-10617",
+    "kind": "phone",
+    "value": "3015550132",
+    "valid_from": "2019-08-10T15:00:00Z",
+    "valid_to": "2022-01-10T15:00:00Z",
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00068",
+    "vendor_id": "V-10617",
+    "kind": "phone",
+    "value": "3015550112",
+    "valid_from": "2022-01-10T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "vendor_portal",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00069",
+    "vendor_id": "V-10630",
+    "kind": "email",
+    "value": "billing@merriwethercloud.example",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00070",
+    "vendor_id": "V-10630",
+    "kind": "phone",
+    "value": "(703) 555-0176",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00071",
+    "vendor_id": "V-10645",
+    "kind": "email",
+    "value": "ar@sterlingfox.example",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00072",
+    "vendor_id": "V-10645",
+    "kind": "phone",
+    "value": "813-555-0118",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": "2021-10-27T15:00:00Z",
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00073",
+    "vendor_id": "V-10645",
+    "kind": "phone",
+    "value": "813-555-0127",
+    "valid_from": "2021-10-27T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "phone request",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00074",
+    "vendor_id": "V-10655",
+    "kind": "email",
+    "value": "accounts@marrowstone.example",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00075",
+    "vendor_id": "V-10655",
+    "kind": "phone",
+    "value": "(410) 555-0177",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00076",
+    "vendor_id": "V-10671",
+    "kind": "email",
+    "value": "accounts.receivable@copperlinefiber.example",
+    "valid_from": "2024-09-17T16:40:00Z",
+    "valid_to": "2025-03-15T15:00:00Z",
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00077",
+    "vendor_id": "V-10671",
+    "kind": "email",
+    "value": "finance@copperlinefiber.example",
+    "valid_from": "2025-03-15T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "vendor_portal",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00078",
+    "vendor_id": "V-10671",
+    "kind": "phone",
+    "value": "919.555.0162",
+    "valid_from": "2024-09-17T16:40:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00079",
+    "vendor_id": "V-10688",
+    "kind": "email",
+    "value": "accounts.receivable@graniteshoals.example",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00080",
+    "vendor_id": "V-10688",
+    "kind": "phone",
+    "value": "2105550197",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00081",
+    "vendor_id": "V-10702",
+    "kind": "email",
+    "value": "ap@dovecotefurniture.example",
+    "valid_from": "2025-07-26T16:20:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00082",
+    "vendor_id": "V-10702",
+    "kind": "phone",
+    "value": "(301) 555-0181",
+    "valid_from": "2025-07-26T16:20:00Z",
+    "valid_to": "2025-10-31T15:00:00Z",
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00083",
+    "vendor_id": "V-10702",
+    "kind": "phone",
+    "value": "(301) 555-0180",
+    "valid_from": "2025-10-31T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "annual_review",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00084",
+    "vendor_id": "V-10718",
+    "kind": "email",
+    "value": "accounts@bellhavenprint.example",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00085",
+    "vendor_id": "V-10718",
+    "kind": "phone",
+    "value": "703-555-0153",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00086",
+    "vendor_id": "V-10731",
+    "kind": "email",
+    "value": "ar@windrowgrounds.example",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": "2022-07-11T15:00:00Z",
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00087",
+    "vendor_id": "V-10731",
+    "kind": "email",
+    "value": "billing@windrowgrounds.example",
+    "valid_from": "2022-07-11T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "vendor_portal",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00088",
+    "vendor_id": "V-10731",
+    "kind": "phone",
+    "value": "703.555.0133",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00089",
+    "vendor_id": "V-10749",
+    "kind": "email",
+    "value": "finance@pinecrestcourier.example",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": "2020-09-30T15:00:00Z",
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00090",
+    "vendor_id": "V-10749",
+    "kind": "email",
+    "value": "ar@pinecrestcourier.example",
+    "valid_from": "2020-09-30T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "vendor_portal",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00091",
+    "vendor_id": "V-10749",
+    "kind": "phone",
+    "value": "9375550114",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00092",
+    "vendor_id": "V-10763",
+    "kind": "email",
+    "value": "ar@tidewatercable.example",
+    "valid_from": "2021-03-15T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00093",
+    "vendor_id": "V-10763",
+    "kind": "phone",
+    "value": "(757) 555-0131",
+    "valid_from": "2021-03-15T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00094",
+    "vendor_id": "V-10776",
+    "kind": "email",
+    "value": "finance@harrowvale.example",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00095",
+    "vendor_id": "V-10776",
+    "kind": "phone",
+    "value": "(202) 555-0168",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00096",
+    "vendor_id": "V-10790",
+    "kind": "email",
+    "value": "accounts.receivable@quarrytownfg.example",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": null,
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00097",
+    "vendor_id": "V-10790",
+    "kind": "phone",
+    "value": "757-555-0196",
+    "valid_from": "2019-04-02T12:00:00Z",
+    "valid_to": "2022-07-04T15:00:00Z",
+    "changed_via": "migration",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00098",
+    "vendor_id": "V-10790",
+    "kind": "phone",
+    "value": "757-555-0199",
+    "valid_from": "2022-07-04T15:00:00Z",
+    "valid_to": null,
+    "changed_via": "annual_review",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00099",
+    "vendor_id": "V-10812",
+    "kind": "email",
+    "value": "billing@quillanridge.example",
+    "valid_from": "2026-10-18T13:02:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "contact_id": "VC-00100",
+    "vendor_id": "V-10812",
+    "kind": "phone",
+    "value": "(757) 555-0163",
+    "valid_from": "2026-10-18T13:02:00Z",
+    "valid_to": null,
+    "changed_via": "onboarding",
+    "data_origin": "SYNTHETIC"
+  }
+]

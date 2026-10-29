@@ -1,0 +1,102 @@
+{
+ "data": {
+  "type": "lei-records",
+  "id": "549300D7XCH2480XU542",
+  "attributes": {
+   "lei": "549300D7XCH2480XU542",
+   "entity": {
+    "legalName": {
+     "name": "BOOZ ALLEN HAMILTON INC.",
+     "language": "en"
+    },
+    "otherNames": [],
+    "transliteratedOtherNames": [],
+    "legalAddress": {
+     "language": "en",
+     "addressLines": [
+      "CORPORATION TRUST CENTER 1209 ORANGE ST"
+     ],
+     "addressNumber": null,
+     "addressNumberWithinBuilding": null,
+     "mailRouting": "c/o THE CORPORATION TRUST COMPANY",
+     "city": "WILMINGTON",
+     "region": "US-DE",
+     "country": "US",
+     "postalCode": "19801"
+    },
+    "headquartersAddress": {
+     "language": "en",
+     "addressLines": [
+      "8283 Greensboro Drive"
+     ],
+     "addressNumber": null,
+     "addressNumberWithinBuilding": null,
+     "mailRouting": null,
+     "city": "McLean",
+     "region": "US-VA",
+     "country": "US",
+     "postalCode": "22102"
+    },
+    "registeredAt": {
+     "id": "RA000602",
+     "other": null
+    },
+    "registeredAs": "578430",
+    "jurisdiction": "US-DE",
+    "category": "GENERAL",
+    "legalForm": {
+     "id": "XTIQ",
+     "other": null
+    },
+    "associatedEntity": {
+     "lei": null,
+     "name": null
+    },
+    "status": "ACTIVE",
+    "expiration": {
+     "date": null,
+     "reason": null
+    },
+    "successorEntity": {
+     "lei": null,
+     "name": null
+    },
+    "successorEntities": [],
+    "creationDate": "1962-01-18T00:00:00Z",
+    "subCategory": null,
+    "otherAddresses": [],
+    "eventGroups": []
+   },
+   "registration": {
+    "initialRegistrationDate": "2013-09-09T18:24:00Z",
+    "lastUpdateDate": "2025-02-06T20:15:58Z",
+    "status": "LAPSED",
+    "nextRenewalDate": "2026-02-06T20:16:06Z",
+    "managingLou": "529900T8BM49AURSDO55",
+    "corroborationLevel": "FULLY_CORROBORATED",
+    "validatedAt": {
+     "id": "RA000602",
+     "other": null
+    },
+    "validatedAs": "578430",
+    "otherValidationAuthorities": [
+     {
+      "validatedAt": {
+       "id": "RA000639"
+      },
+      "validatedAs": "F0273997"
+     }
+    ]
+   },
+   "bic": null,
+   "mic": null,
+   "ocid": null,
+   "qcc": null,
+   "gem": null,
+   "spglobal": [
+    "222596808"
+   ],
+   "conformityFlag": "NON_CONFORMING"
+  }
+ }
+}

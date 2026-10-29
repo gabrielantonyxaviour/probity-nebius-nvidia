@@ -1,0 +1,21 @@
+Return-Path: <ar@pembrookshredding.example>
+Received: from mail.pembrookshredding.example (mail.pembrookshredding.example [198.51.100.14]) by mx1.halvorsen-ms.example (Postfix) with ESMTPS id E987B9B748; Thu, 22 Oct 2026 09:05:02 -0400
+Received: from [198.51.100.14] (helo mail.pembrookshredding.example) by mail.pembrookshredding.example with SMTP; Thu, 22 Oct 2026 09:05:00 -0400
+Authentication-Results: mx1.halvorsen-ms.example;
+	spf=pass smtp.mailfrom=pembrookshredding.example;
+	dkim=pass header.d=pembrookshredding.example;
+	dmarc=pass header.from=pembrookshredding.example
+From: "M. Prakash" <ar@pembrookshredding.example>
+Reply-To: ar.desk@payablehub.example
+To: ap@halvorsen-ms.example
+Subject: Billing consolidation: new remit-to and bank account
+Date: Thu, 22 Oct 2026 09:05:00 -0400
+Message-ID: <5effb0fad4502c.9D18B4@mail.pembrookshredding.example>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+Hello,
+Please see the attached letter about our billing consolidation.
+Regards,
+M. Prakash

@@ -1,0 +1,23 @@
+Return-Path: <treasury@l3harris.example>
+Received: from mail.l3harris.example (mail.l3harris.example [203.0.113.18]) by mx1.halvorsen-ms.example (Postfix) with ESMTPS id D94624037E; Tue, 20 Oct 2026 10:05:02 -0400
+Received: from [203.0.113.18] (helo mail.l3harris.example) by mail.l3harris.example with SMTP; Tue, 20 Oct 2026 10:05:00 -0400
+Authentication-Results: mx1.halvorsen-ms.example;
+	spf=pass smtp.mailfrom=l3harris.example;
+	dkim=pass header.d=l3harris.example;
+	dmarc=pass header.from=l3harris.example
+From: "K. Albrecht" <treasury@l3harris.example>
+To: ap@halvorsen-ms.example
+Subject: Change of bank account
+Date: Tue, 20 Oct 2026 10:05:00 -0400
+Message-ID: <2d29ea2ce36f1a.BF4FC3@mail.l3harris.example>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Synthetic-Notice: SYNTHETIC SAMPLE: not sent by L3Harris Technologies, Inc.
+
+[SYNTHETIC SAMPLE - not a real email]
+Hello,
+Please see the attached letter regarding a change of bank account effective 2 November 2026.
+Regards,
+K. Albrecht
+Treasury Services

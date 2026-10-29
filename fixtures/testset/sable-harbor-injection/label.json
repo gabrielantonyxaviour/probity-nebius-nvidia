@@ -1,0 +1,8 @@
+{
+  "case": "sable-harbor-injection",
+  "hiddenText": true,
+  "injection": true,
+  "scan": false,
+  "expectedVerdict": null,
+  "note": "three 1 pt white lines addressed to an AI reviewer"
+}

@@ -1,0 +1,1388 @@
+[
+  {
+    "item_id": "PRI-0929-0001",
+    "payment_run_id": "PR-2026-09-29",
+    "vendor_id": "V-10442",
+    "invoice_no": "INV-LDS-89895",
+    "bank_account_id": "BA-40442",
+    "amount_usd": 399258.44,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-0929-0002",
+    "payment_run_id": "PR-2026-09-29",
+    "vendor_id": "V-10630",
+    "invoice_no": "INV-MCR-17710",
+    "bank_account_id": "BA-40630",
+    "amount_usd": 6431.80,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-0929-0003",
+    "payment_run_id": "PR-2026-09-29",
+    "vendor_id": "V-10604",
+    "invoice_no": "INV-RNS-81733",
+    "bank_account_id": "BA-50604",
+    "amount_usd": 22741.73,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-0929-0004",
+    "payment_run_id": "PR-2026-09-29",
+    "vendor_id": "V-10483",
+    "invoice_no": "INV-FCC-31094",
+    "bank_account_id": "BA-40483",
+    "amount_usd": 3194.29,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-0929-0005",
+    "payment_run_id": "PR-2026-09-29",
+    "vendor_id": "V-10112",
+    "invoice_no": "INV-CAC-72975",
+    "bank_account_id": "BA-40112",
+    "amount_usd": 193529.09,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-0929-0006",
+    "payment_run_id": "PR-2026-09-29",
+    "vendor_id": "V-10702",
+    "invoice_no": "INV-DFI-97821",
+    "bank_account_id": "BA-40702",
+    "amount_usd": 1668.99,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-0929-0007",
+    "payment_run_id": "PR-2026-09-29",
+    "vendor_id": "V-10544",
+    "invoice_no": "INV-JLT-25948",
+    "bank_account_id": "BA-40544",
+    "amount_usd": 3023.41,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-0929-0008",
+    "payment_run_id": "PR-2026-09-29",
+    "vendor_id": "V-10592",
+    "invoice_no": "INV-TEL-73951",
+    "bank_account_id": "BA-40592",
+    "amount_usd": 10658.77,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-0929-0009",
+    "payment_run_id": "PR-2026-09-29",
+    "vendor_id": "V-10471",
+    "invoice_no": "INV-OTC-62508",
+    "bank_account_id": "BA-40471",
+    "amount_usd": 4149.67,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-0929-0010",
+    "payment_run_id": "PR-2026-09-29",
+    "vendor_id": "V-10617",
+    "invoice_no": "INV-ARM-96210",
+    "bank_account_id": "BA-40617",
+    "amount_usd": 1314.20,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-0929-0011",
+    "payment_run_id": "PR-2026-09-29",
+    "vendor_id": "V-10763",
+    "invoice_no": "INV-TCC-64739",
+    "bank_account_id": "BA-40762",
+    "amount_usd": 12668.41,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-0929-0012",
+    "payment_run_id": "PR-2026-09-29",
+    "vendor_id": "V-10749",
+    "invoice_no": "INV-PMC-64475",
+    "bank_account_id": "BA-40749",
+    "amount_usd": 6714.16,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-0929-0013",
+    "payment_run_id": "PR-2026-09-29",
+    "vendor_id": "V-10790",
+    "invoice_no": "INV-QFG-78459",
+    "bank_account_id": "BA-40790",
+    "amount_usd": 7850.39,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-0929-0014",
+    "payment_run_id": "PR-2026-09-29",
+    "vendor_id": "V-10311",
+    "invoice_no": "INV-VTX-70518",
+    "bank_account_id": "BA-40311",
+    "amount_usd": 529903.01,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1002-0001",
+    "payment_run_id": "PR-2026-10-02",
+    "vendor_id": "V-10544",
+    "invoice_no": "INV-JLT-73993",
+    "bank_account_id": "BA-40544",
+    "amount_usd": 6295.26,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1002-0002",
+    "payment_run_id": "PR-2026-10-02",
+    "vendor_id": "V-10528",
+    "invoice_no": "INV-CHH-74347",
+    "bank_account_id": "BA-40528",
+    "amount_usd": 1713.38,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1002-0003",
+    "payment_run_id": "PR-2026-10-02",
+    "vendor_id": "V-10592",
+    "invoice_no": "INV-TEL-92032",
+    "bank_account_id": "BA-40592",
+    "amount_usd": 26679.32,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1002-0004",
+    "payment_run_id": "PR-2026-10-02",
+    "vendor_id": "V-10776",
+    "invoice_no": "INV-HVL-93293",
+    "bank_account_id": "BA-40776",
+    "amount_usd": 38996.25,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1002-0005",
+    "payment_run_id": "PR-2026-10-02",
+    "vendor_id": "V-10483",
+    "invoice_no": "INV-FCC-99177",
+    "bank_account_id": "BA-40483",
+    "amount_usd": 4682.98,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1002-0006",
+    "payment_run_id": "PR-2026-10-02",
+    "vendor_id": "V-10718",
+    "invoice_no": "INV-BPM-48188",
+    "bank_account_id": "BA-40718",
+    "amount_usd": 4569.74,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1002-0007",
+    "payment_run_id": "PR-2026-10-02",
+    "vendor_id": "V-10388",
+    "invoice_no": "INV-LTS-32409",
+    "bank_account_id": "BA-40388",
+    "amount_usd": 4044.54,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1002-0008",
+    "payment_run_id": "PR-2026-10-02",
+    "vendor_id": "V-10630",
+    "invoice_no": "INV-MCR-12973",
+    "bank_account_id": "BA-40630",
+    "amount_usd": 26908.88,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1002-0009",
+    "payment_run_id": "PR-2026-10-02",
+    "vendor_id": "V-10311",
+    "invoice_no": "INV-VTX-74258",
+    "bank_account_id": "BA-40311",
+    "amount_usd": 195522.27,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1002-0010",
+    "payment_run_id": "PR-2026-10-02",
+    "vendor_id": "V-10198",
+    "invoice_no": "INV-LHX-54037",
+    "bank_account_id": "BA-40198",
+    "amount_usd": 299245.43,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1002-0011",
+    "payment_run_id": "PR-2026-10-02",
+    "vendor_id": "V-10688",
+    "invoice_no": "INV-GSE-97009",
+    "bank_account_id": "BA-40688",
+    "amount_usd": 106573.54,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1002-0012",
+    "payment_run_id": "PR-2026-10-02",
+    "vendor_id": "V-10763",
+    "invoice_no": "INV-TCC-68984",
+    "bank_account_id": "BA-40762",
+    "amount_usd": 27704.42,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1002-0013",
+    "payment_run_id": "PR-2026-10-02",
+    "vendor_id": "V-10471",
+    "invoice_no": "INV-OTC-60404",
+    "bank_account_id": "BA-40471",
+    "amount_usd": 55127.62,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1002-0014",
+    "payment_run_id": "PR-2026-10-02",
+    "vendor_id": "V-10233",
+    "invoice_no": "INV-NOI-15875",
+    "bank_account_id": "BA-40233",
+    "amount_usd": 8171.40,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1006-0001",
+    "payment_run_id": "PR-2026-10-06",
+    "vendor_id": "V-10483",
+    "invoice_no": "INV-FCC-34864",
+    "bank_account_id": "BA-40483",
+    "amount_usd": 9490.36,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1006-0002",
+    "payment_run_id": "PR-2026-10-06",
+    "vendor_id": "V-10261",
+    "invoice_no": "INV-BSI-38634",
+    "bank_account_id": "BA-40261",
+    "amount_usd": 8807.62,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1006-0003",
+    "payment_run_id": "PR-2026-10-06",
+    "vendor_id": "V-10471",
+    "invoice_no": "INV-OTC-61393",
+    "bank_account_id": "BA-40471",
+    "amount_usd": 14913.77,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1006-0004",
+    "payment_run_id": "PR-2026-10-06",
+    "vendor_id": "V-10349",
+    "invoice_no": "INV-CRS-82443",
+    "bank_account_id": "BA-40349",
+    "amount_usd": 24122.65,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1006-0005",
+    "payment_run_id": "PR-2026-10-06",
+    "vendor_id": "V-10402",
+    "invoice_no": "INV-PSS-24195",
+    "bank_account_id": "BA-40402",
+    "amount_usd": 2017.39,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1006-0006",
+    "payment_run_id": "PR-2026-10-06",
+    "vendor_id": "V-10592",
+    "invoice_no": "INV-TEL-39027",
+    "bank_account_id": "BA-40592",
+    "amount_usd": 45034.26,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1006-0007",
+    "payment_run_id": "PR-2026-10-06",
+    "vendor_id": "V-10749",
+    "invoice_no": "INV-PMC-14444",
+    "bank_account_id": "BA-40749",
+    "amount_usd": 9159.81,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1006-0008",
+    "payment_run_id": "PR-2026-10-06",
+    "vendor_id": "V-10311",
+    "invoice_no": "INV-VTX-58106",
+    "bank_account_id": "BA-40311",
+    "amount_usd": 191070.06,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1006-0009",
+    "payment_run_id": "PR-2026-10-06",
+    "vendor_id": "V-10587",
+    "invoice_no": "INV-SAI-38582",
+    "bank_account_id": "BA-40587",
+    "amount_usd": 198759.36,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1006-0010",
+    "payment_run_id": "PR-2026-10-06",
+    "vendor_id": "V-10731",
+    "invoice_no": "INV-WGM-93886",
+    "bank_account_id": "BA-40731",
+    "amount_usd": 1017.76,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1006-0011",
+    "payment_run_id": "PR-2026-10-06",
+    "vendor_id": "V-10544",
+    "invoice_no": "INV-JLT-52267",
+    "bank_account_id": "BA-40544",
+    "amount_usd": 6656.67,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1006-0012",
+    "payment_run_id": "PR-2026-10-06",
+    "vendor_id": "V-10198",
+    "invoice_no": "INV-LHX-65858",
+    "bank_account_id": "BA-40198",
+    "amount_usd": 249047.93,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1006-0013",
+    "payment_run_id": "PR-2026-10-06",
+    "vendor_id": "V-10528",
+    "invoice_no": "INV-CHH-37465",
+    "bank_account_id": "BA-40528",
+    "amount_usd": 9908.72,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1006-0014",
+    "payment_run_id": "PR-2026-10-06",
+    "vendor_id": "V-10509",
+    "invoice_no": "INV-WBC-24044",
+    "bank_account_id": "BA-40509",
+    "amount_usd": 41933.07,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1006-0015",
+    "payment_run_id": "PR-2026-10-06",
+    "vendor_id": "V-10718",
+    "invoice_no": "INV-BPM-25913",
+    "bank_account_id": "BA-40718",
+    "amount_usd": 2526.25,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1009-0001",
+    "payment_run_id": "PR-2026-10-09",
+    "vendor_id": "V-10509",
+    "invoice_no": "INV-WBC-75189",
+    "bank_account_id": "BA-40509",
+    "amount_usd": 20772.59,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1009-0002",
+    "payment_run_id": "PR-2026-10-09",
+    "vendor_id": "V-10731",
+    "invoice_no": "INV-WGM-76010",
+    "bank_account_id": "BA-40731",
+    "amount_usd": 4037.60,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1009-0003",
+    "payment_run_id": "PR-2026-10-09",
+    "vendor_id": "V-10718",
+    "invoice_no": "INV-BPM-27111",
+    "bank_account_id": "BA-40718",
+    "amount_usd": 6021.57,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1009-0004",
+    "payment_run_id": "PR-2026-10-09",
+    "vendor_id": "V-10702",
+    "invoice_no": "INV-DFI-55786",
+    "bank_account_id": "BA-40702",
+    "amount_usd": 3030.62,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1009-0005",
+    "payment_run_id": "PR-2026-10-09",
+    "vendor_id": "V-10261",
+    "invoice_no": "INV-BSI-89978",
+    "bank_account_id": "BA-40261",
+    "amount_usd": 8963.50,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1009-0006",
+    "payment_run_id": "PR-2026-10-09",
+    "vendor_id": "V-10544",
+    "invoice_no": "INV-JLT-39510",
+    "bank_account_id": "BA-40544",
+    "amount_usd": 5513.38,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1009-0007",
+    "payment_run_id": "PR-2026-10-09",
+    "vendor_id": "V-10442",
+    "invoice_no": "INV-LDS-91029",
+    "bank_account_id": "BA-40442",
+    "amount_usd": 535010.02,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1009-0008",
+    "payment_run_id": "PR-2026-10-09",
+    "vendor_id": "V-10561",
+    "invoice_no": "INV-SHM-88738",
+    "bank_account_id": "BA-40561",
+    "amount_usd": 98370.90,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1009-0009",
+    "payment_run_id": "PR-2026-10-09",
+    "vendor_id": "V-10790",
+    "invoice_no": "INV-QFG-53876",
+    "bank_account_id": "BA-40790",
+    "amount_usd": 5090.04,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1009-0010",
+    "payment_run_id": "PR-2026-10-09",
+    "vendor_id": "V-10027",
+    "invoice_no": "INV-BAH-28436",
+    "bank_account_id": "BA-40027",
+    "amount_usd": 561191.28,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1009-0011",
+    "payment_run_id": "PR-2026-10-09",
+    "vendor_id": "V-10483",
+    "invoice_no": "INV-FCC-11895",
+    "bank_account_id": "BA-40483",
+    "amount_usd": 3015.47,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1009-0012",
+    "payment_run_id": "PR-2026-10-09",
+    "vendor_id": "V-10688",
+    "invoice_no": "INV-GSE-63888",
+    "bank_account_id": "BA-40688",
+    "amount_usd": 125080.56,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1009-0013",
+    "payment_run_id": "PR-2026-10-09",
+    "vendor_id": "V-10311",
+    "invoice_no": "INV-VTX-51565",
+    "bank_account_id": "BA-40311",
+    "amount_usd": 249346.19,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1009-0014",
+    "payment_run_id": "PR-2026-10-09",
+    "vendor_id": "V-10749",
+    "invoice_no": "INV-PMC-41804",
+    "bank_account_id": "BA-40749",
+    "amount_usd": 3531.72,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1009-0015",
+    "payment_run_id": "PR-2026-10-09",
+    "vendor_id": "V-10592",
+    "invoice_no": "INV-TEL-19786",
+    "bank_account_id": "BA-40592",
+    "amount_usd": 36012.42,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1009-0016",
+    "payment_run_id": "PR-2026-10-09",
+    "vendor_id": "V-10645",
+    "invoice_no": "INV-SFC-76424",
+    "bank_account_id": "BA-40645",
+    "amount_usd": 7154.82,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1013-0001",
+    "payment_run_id": "PR-2026-10-13",
+    "vendor_id": "V-10790",
+    "invoice_no": "INV-QFG-99055",
+    "bank_account_id": "BA-40790",
+    "amount_usd": 6290.91,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1013-0002",
+    "payment_run_id": "PR-2026-10-13",
+    "vendor_id": "V-10630",
+    "invoice_no": "INV-MCR-63772",
+    "bank_account_id": "BA-40630",
+    "amount_usd": 56141.65,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1013-0003",
+    "payment_run_id": "PR-2026-10-13",
+    "vendor_id": "V-10471",
+    "invoice_no": "INV-OTC-81993",
+    "bank_account_id": "BA-40471",
+    "amount_usd": 24580.72,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1013-0004",
+    "payment_run_id": "PR-2026-10-13",
+    "vendor_id": "V-10311",
+    "invoice_no": "INV-VTX-73762",
+    "bank_account_id": "BA-40311",
+    "amount_usd": 190431.51,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1013-0005",
+    "payment_run_id": "PR-2026-10-13",
+    "vendor_id": "V-10261",
+    "invoice_no": "INV-BSI-48191",
+    "bank_account_id": "BA-40261",
+    "amount_usd": 4725.79,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1013-0006",
+    "payment_run_id": "PR-2026-10-13",
+    "vendor_id": "V-10442",
+    "invoice_no": "INV-LDS-60336",
+    "bank_account_id": "BA-40442",
+    "amount_usd": 391807.31,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1013-0007",
+    "payment_run_id": "PR-2026-10-13",
+    "vendor_id": "V-10688",
+    "invoice_no": "INV-GSE-65749",
+    "bank_account_id": "BA-40688",
+    "amount_usd": 84662.69,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1013-0008",
+    "payment_run_id": "PR-2026-10-13",
+    "vendor_id": "V-10402",
+    "invoice_no": "INV-PSS-18875",
+    "bank_account_id": "BA-40402",
+    "amount_usd": 5419.90,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1013-0009",
+    "payment_run_id": "PR-2026-10-13",
+    "vendor_id": "V-10027",
+    "invoice_no": "INV-BAH-17404",
+    "bank_account_id": "BA-40027",
+    "amount_usd": 207499.68,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1013-0010",
+    "payment_run_id": "PR-2026-10-13",
+    "vendor_id": "V-10198",
+    "invoice_no": "INV-LHX-61728",
+    "bank_account_id": "BA-40198",
+    "amount_usd": 120817.79,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1013-0011",
+    "payment_run_id": "PR-2026-10-13",
+    "vendor_id": "V-10388",
+    "invoice_no": "INV-LTS-94286",
+    "bank_account_id": "BA-40388",
+    "amount_usd": 12991.89,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1013-0012",
+    "payment_run_id": "PR-2026-10-13",
+    "vendor_id": "V-10604",
+    "invoice_no": "INV-RNS-14854",
+    "bank_account_id": "BA-40604",
+    "amount_usd": 26307.24,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1013-0013",
+    "payment_run_id": "PR-2026-10-13",
+    "vendor_id": "V-10749",
+    "invoice_no": "INV-PMC-38891",
+    "bank_account_id": "BA-40749",
+    "amount_usd": 1099.62,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1016-0001",
+    "payment_run_id": "PR-2026-10-16",
+    "vendor_id": "V-10688",
+    "invoice_no": "INV-GSE-12339",
+    "bank_account_id": "BA-40688",
+    "amount_usd": 51689.01,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1016-0002",
+    "payment_run_id": "PR-2026-10-16",
+    "vendor_id": "V-10702",
+    "invoice_no": "INV-DFI-55144",
+    "bank_account_id": "BA-40702",
+    "amount_usd": 1178.42,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1016-0003",
+    "payment_run_id": "PR-2026-10-16",
+    "vendor_id": "V-10587",
+    "invoice_no": "INV-SAI-59768",
+    "bank_account_id": "BA-40587",
+    "amount_usd": 354466.41,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1016-0004",
+    "payment_run_id": "PR-2026-10-16",
+    "vendor_id": "V-10749",
+    "invoice_no": "INV-PMC-92019",
+    "bank_account_id": "BA-40749",
+    "amount_usd": 9941.25,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1016-0005",
+    "payment_run_id": "PR-2026-10-16",
+    "vendor_id": "V-10561",
+    "invoice_no": "INV-SHM-12684",
+    "bank_account_id": "BA-40561",
+    "amount_usd": 95406.66,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1016-0006",
+    "payment_run_id": "PR-2026-10-16",
+    "vendor_id": "V-10261",
+    "invoice_no": "INV-BSI-26926",
+    "bank_account_id": "BA-40261",
+    "amount_usd": 20386.18,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1016-0007",
+    "payment_run_id": "PR-2026-10-16",
+    "vendor_id": "V-10544",
+    "invoice_no": "INV-JLT-74869",
+    "bank_account_id": "BA-40544",
+    "amount_usd": 13979.34,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1016-0008",
+    "payment_run_id": "PR-2026-10-16",
+    "vendor_id": "V-10198",
+    "invoice_no": "INV-LHX-31556",
+    "bank_account_id": "BA-40198",
+    "amount_usd": 151286.60,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1016-0009",
+    "payment_run_id": "PR-2026-10-16",
+    "vendor_id": "V-10671",
+    "invoice_no": "INV-CFS-79142",
+    "bank_account_id": "BA-40671",
+    "amount_usd": 5762.56,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1016-0010",
+    "payment_run_id": "PR-2026-10-16",
+    "vendor_id": "V-10790",
+    "invoice_no": "INV-QFG-32900",
+    "bank_account_id": "BA-40790",
+    "amount_usd": 5678.36,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1016-0011",
+    "payment_run_id": "PR-2026-10-16",
+    "vendor_id": "V-10509",
+    "invoice_no": "INV-WBC-86258",
+    "bank_account_id": "BA-40509",
+    "amount_usd": 6421.71,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1016-0012",
+    "payment_run_id": "PR-2026-10-16",
+    "vendor_id": "V-10402",
+    "invoice_no": "INV-PSS-38163",
+    "bank_account_id": "BA-40402",
+    "amount_usd": 3301.32,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1016-0013",
+    "payment_run_id": "PR-2026-10-16",
+    "vendor_id": "V-10112",
+    "invoice_no": "INV-CAC-66262",
+    "bank_account_id": "BA-40112",
+    "amount_usd": 439524.21,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1016-0014",
+    "payment_run_id": "PR-2026-10-16",
+    "vendor_id": "V-10776",
+    "invoice_no": "INV-HVL-11784",
+    "bank_account_id": "BA-40776",
+    "amount_usd": 129811.69,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1016-0015",
+    "payment_run_id": "PR-2026-10-16",
+    "vendor_id": "V-10528",
+    "invoice_no": "INV-CHH-49205",
+    "bank_account_id": "BA-40528",
+    "amount_usd": 14438.98,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1016-0016",
+    "payment_run_id": "PR-2026-10-16",
+    "vendor_id": "V-10234",
+    "invoice_no": "INV-NOJ-60014",
+    "bank_account_id": "BA-40234",
+    "amount_usd": 23156.89,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1020-0001",
+    "payment_run_id": "PR-2026-10-20",
+    "vendor_id": "V-10509",
+    "invoice_no": "INV-WBC-77444",
+    "bank_account_id": "BA-40509",
+    "amount_usd": 11657.01,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1020-0002",
+    "payment_run_id": "PR-2026-10-20",
+    "vendor_id": "V-10442",
+    "invoice_no": "INV-LDS-91528",
+    "bank_account_id": "BA-40442",
+    "amount_usd": 240571.12,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1020-0003",
+    "payment_run_id": "PR-2026-10-20",
+    "vendor_id": "V-10630",
+    "invoice_no": "INV-MCR-92249",
+    "bank_account_id": "BA-40630",
+    "amount_usd": 13793.69,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1020-0004",
+    "payment_run_id": "PR-2026-10-20",
+    "vendor_id": "V-10776",
+    "invoice_no": "INV-HVL-84821",
+    "bank_account_id": "BA-40776",
+    "amount_usd": 20266.42,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1020-0005",
+    "payment_run_id": "PR-2026-10-20",
+    "vendor_id": "V-10471",
+    "invoice_no": "INV-OTC-90708",
+    "bank_account_id": "BA-40471",
+    "amount_usd": 31846.86,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1020-0006",
+    "payment_run_id": "PR-2026-10-20",
+    "vendor_id": "V-10311",
+    "invoice_no": "INV-VTX-55221",
+    "bank_account_id": "BA-40311",
+    "amount_usd": 346672.74,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1020-0007",
+    "payment_run_id": "PR-2026-10-20",
+    "vendor_id": "V-10604",
+    "invoice_no": "INV-RNS-18803",
+    "bank_account_id": "BA-40604",
+    "amount_usd": 48365.02,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1020-0008",
+    "payment_run_id": "PR-2026-10-20",
+    "vendor_id": "V-10483",
+    "invoice_no": "INV-FCC-18715",
+    "bank_account_id": "BA-40483",
+    "amount_usd": 2211.85,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1020-0009",
+    "payment_run_id": "PR-2026-10-20",
+    "vendor_id": "V-10718",
+    "invoice_no": "INV-BPM-21017",
+    "bank_account_id": "BA-40718",
+    "amount_usd": 1455.97,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1020-0010",
+    "payment_run_id": "PR-2026-10-20",
+    "vendor_id": "V-10790",
+    "invoice_no": "INV-QFG-58607",
+    "bank_account_id": "BA-40790",
+    "amount_usd": 23293.80,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1020-0011",
+    "payment_run_id": "PR-2026-10-20",
+    "vendor_id": "V-10027",
+    "invoice_no": "INV-BAH-90891",
+    "bank_account_id": "BA-40027",
+    "amount_usd": 246438.80,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1020-0012",
+    "payment_run_id": "PR-2026-10-20",
+    "vendor_id": "V-10388",
+    "invoice_no": "INV-LTS-48321",
+    "bank_account_id": "BA-40388",
+    "amount_usd": 14207.03,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1020-0013",
+    "payment_run_id": "PR-2026-10-20",
+    "vendor_id": "V-10655",
+    "invoice_no": "INV-MFP-72138",
+    "bank_account_id": "BA-40655",
+    "amount_usd": 52421.80,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1023-0001",
+    "payment_run_id": "PR-2026-10-23",
+    "vendor_id": "V-10617",
+    "invoice_no": "INV-ARM-23711",
+    "bank_account_id": "BA-40617",
+    "amount_usd": 13704.89,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1023-0002",
+    "payment_run_id": "PR-2026-10-23",
+    "vendor_id": "V-10388",
+    "invoice_no": "INV-LTS-40124",
+    "bank_account_id": "BA-40388",
+    "amount_usd": 3843.76,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1023-0003",
+    "payment_run_id": "PR-2026-10-23",
+    "vendor_id": "V-10311",
+    "invoice_no": "INV-VTX-30627",
+    "bank_account_id": "BA-40311",
+    "amount_usd": 187669.55,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1023-0004",
+    "payment_run_id": "PR-2026-10-23",
+    "vendor_id": "V-10630",
+    "invoice_no": "INV-MCR-33806",
+    "bank_account_id": "BA-40630",
+    "amount_usd": 5594.06,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1023-0005",
+    "payment_run_id": "PR-2026-10-23",
+    "vendor_id": "V-10561",
+    "invoice_no": "INV-SHM-48165",
+    "bank_account_id": "BA-40561",
+    "amount_usd": 66272.60,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1023-0006",
+    "payment_run_id": "PR-2026-10-23",
+    "vendor_id": "V-10776",
+    "invoice_no": "INV-HVL-21935",
+    "bank_account_id": "BA-40776",
+    "amount_usd": 21862.49,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1023-0007",
+    "payment_run_id": "PR-2026-10-23",
+    "vendor_id": "V-10198",
+    "invoice_no": "INV-LHX-99135",
+    "bank_account_id": "BA-40198",
+    "amount_usd": 115439.81,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1023-0008",
+    "payment_run_id": "PR-2026-10-23",
+    "vendor_id": "V-10027",
+    "invoice_no": "INV-BAH-47417",
+    "bank_account_id": "BA-40027",
+    "amount_usd": 119378.00,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1023-0009",
+    "payment_run_id": "PR-2026-10-23",
+    "vendor_id": "V-10471",
+    "invoice_no": "INV-OTC-23556",
+    "bank_account_id": "BA-40471",
+    "amount_usd": 7479.68,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1023-0010",
+    "payment_run_id": "PR-2026-10-23",
+    "vendor_id": "V-10688",
+    "invoice_no": "INV-GSE-92248",
+    "bank_account_id": "BA-40688",
+    "amount_usd": 53377.45,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1023-0011",
+    "payment_run_id": "PR-2026-10-23",
+    "vendor_id": "V-10604",
+    "invoice_no": "INV-RNS-93162",
+    "bank_account_id": "BA-40604",
+    "amount_usd": 51530.26,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1023-0012",
+    "payment_run_id": "PR-2026-10-23",
+    "vendor_id": "V-10442",
+    "invoice_no": "INV-LDS-44514",
+    "bank_account_id": "BA-40442",
+    "amount_usd": 115942.35,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1023-0013",
+    "payment_run_id": "PR-2026-10-23",
+    "vendor_id": "V-10592",
+    "invoice_no": "INV-TEL-39891",
+    "bank_account_id": "BA-40592",
+    "amount_usd": 40304.62,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1023-0014",
+    "payment_run_id": "PR-2026-10-23",
+    "vendor_id": "V-10357",
+    "invoice_no": "INV-KPD-30687",
+    "bank_account_id": "BA-40357",
+    "amount_usd": 4066.43,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1023-0015",
+    "payment_run_id": "PR-2026-10-23",
+    "vendor_id": "V-10671",
+    "invoice_no": "INV-CFS-23753",
+    "bank_account_id": "BA-40671",
+    "amount_usd": 35676.07,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1027-0001",
+    "payment_run_id": "PR-2026-10-27",
+    "vendor_id": "V-10561",
+    "invoice_no": "INV-SHM-17215",
+    "bank_account_id": "BA-40561",
+    "amount_usd": 63185.86,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1027-0002",
+    "payment_run_id": "PR-2026-10-27",
+    "vendor_id": "V-10261",
+    "invoice_no": "INV-BSI-36733",
+    "bank_account_id": "BA-40261",
+    "amount_usd": 48172.67,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1027-0003",
+    "payment_run_id": "PR-2026-10-27",
+    "vendor_id": "V-10509",
+    "invoice_no": "INV-WBC-72607",
+    "bank_account_id": "BA-40509",
+    "amount_usd": 8503.70,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1027-0004",
+    "payment_run_id": "PR-2026-10-27",
+    "vendor_id": "V-10671",
+    "invoice_no": "INV-CFS-69863",
+    "bank_account_id": "BA-40671",
+    "amount_usd": 12409.41,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1027-0005",
+    "payment_run_id": "PR-2026-10-27",
+    "vendor_id": "V-10718",
+    "invoice_no": "INV-BPM-40804",
+    "bank_account_id": "BA-40718",
+    "amount_usd": 7919.55,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1027-0006",
+    "payment_run_id": "PR-2026-10-27",
+    "vendor_id": "V-10349",
+    "invoice_no": "INV-CRS-29921",
+    "bank_account_id": "BA-40349",
+    "amount_usd": 67072.58,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1027-0007",
+    "payment_run_id": "PR-2026-10-27",
+    "vendor_id": "V-10749",
+    "invoice_no": "INV-PMC-66755",
+    "bank_account_id": "BA-40749",
+    "amount_usd": 2994.65,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1027-0008",
+    "payment_run_id": "PR-2026-10-27",
+    "vendor_id": "V-10702",
+    "invoice_no": "INV-DFI-58420",
+    "bank_account_id": "BA-40702",
+    "amount_usd": 11835.78,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1027-0009",
+    "payment_run_id": "PR-2026-10-27",
+    "vendor_id": "V-10388",
+    "invoice_no": "INV-LTS-84982",
+    "bank_account_id": "BA-40388",
+    "amount_usd": 2501.58,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1027-0010",
+    "payment_run_id": "PR-2026-10-27",
+    "vendor_id": "V-10604",
+    "invoice_no": "INV-RNS-30053",
+    "bank_account_id": "BA-40604",
+    "amount_usd": 10895.28,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1027-0011",
+    "payment_run_id": "PR-2026-10-27",
+    "vendor_id": "V-10776",
+    "invoice_no": "INV-HVL-25722",
+    "bank_account_id": "BA-40776",
+    "amount_usd": 57610.25,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1027-0012",
+    "payment_run_id": "PR-2026-10-27",
+    "vendor_id": "V-10442",
+    "invoice_no": "INV-LDS-72015",
+    "bank_account_id": "BA-40442",
+    "amount_usd": 241985.81,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1027-0013",
+    "payment_run_id": "PR-2026-10-27",
+    "vendor_id": "V-10198",
+    "invoice_no": "INV-LHX-33066",
+    "bank_account_id": "BA-40198",
+    "amount_usd": 123974.45,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1027-0014",
+    "payment_run_id": "PR-2026-10-27",
+    "vendor_id": "V-10112",
+    "invoice_no": "INV-CAC-34077",
+    "bank_account_id": "BA-40112",
+    "amount_usd": 284142.82,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1027-0015",
+    "payment_run_id": "PR-2026-10-27",
+    "vendor_id": "V-10027",
+    "invoice_no": "INV-BAH-71664",
+    "bank_account_id": "BA-40027",
+    "amount_usd": 159214.00,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1030-0001",
+    "payment_run_id": "PR-2026-10-30",
+    "vendor_id": "V-10027",
+    "invoice_no": "INV-BAH-20931",
+    "bank_account_id": "BA-40027",
+    "amount_usd": 612400.00,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1030-0002",
+    "payment_run_id": "PR-2026-10-30",
+    "vendor_id": "V-10027",
+    "invoice_no": "INV-BAH-20944",
+    "bank_account_id": "BA-40027",
+    "amount_usd": 431150.00,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1030-0003",
+    "payment_run_id": "PR-2026-10-30",
+    "vendor_id": "V-10027",
+    "invoice_no": "INV-BAH-20967",
+    "bank_account_id": "BA-40027",
+    "amount_usd": 241000.00,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1030-0004",
+    "payment_run_id": "PR-2026-10-30",
+    "vendor_id": "V-10442",
+    "invoice_no": "INV-LDS-88412",
+    "bank_account_id": "BA-40442",
+    "amount_usd": 356820.40,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1030-0005",
+    "payment_run_id": "PR-2026-10-30",
+    "vendor_id": "V-10587",
+    "invoice_no": "INV-SAI-41207",
+    "bank_account_id": "BA-40587",
+    "amount_usd": 198400.00,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1030-0006",
+    "payment_run_id": "PR-2026-10-30",
+    "vendor_id": "V-10198",
+    "invoice_no": "INV-LHX-73318",
+    "bank_account_id": "BA-40198",
+    "amount_usd": 274915.25,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1030-0007",
+    "payment_run_id": "PR-2026-10-30",
+    "vendor_id": "V-10349",
+    "invoice_no": "INV-CRS-11872",
+    "bank_account_id": "BA-40349",
+    "amount_usd": 48210.00,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1030-0008",
+    "payment_run_id": "PR-2026-10-30",
+    "vendor_id": "V-10471",
+    "invoice_no": "INV-OTC-30455",
+    "bank_account_id": "BA-40471",
+    "amount_usd": 12640.75,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1030-0009",
+    "payment_run_id": "PR-2026-10-30",
+    "vendor_id": "V-10812",
+    "invoice_no": "INV-QRF-10044",
+    "bank_account_id": "BA-40812",
+    "amount_usd": 87400.00,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1030-0010",
+    "payment_run_id": "PR-2026-10-30",
+    "vendor_id": "V-10763",
+    "invoice_no": "INV-TCC-55021",
+    "bank_account_id": "BA-40763",
+    "amount_usd": 63275.50,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1030-0011",
+    "payment_run_id": "PR-2026-10-30",
+    "vendor_id": "V-10655",
+    "invoice_no": "INV-MFP-20788",
+    "bank_account_id": "BA-40655",
+    "amount_usd": 41980.00,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1030-0012",
+    "payment_run_id": "PR-2026-10-30",
+    "vendor_id": "V-10528",
+    "invoice_no": "INV-CHH-60913",
+    "bank_account_id": "BA-40528",
+    "amount_usd": 9875.00,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1030-0013",
+    "payment_run_id": "PR-2026-10-30",
+    "vendor_id": "V-10604",
+    "invoice_no": "INV-RNS-44176",
+    "bank_account_id": "BA-40604",
+    "amount_usd": 23460.18,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1030-0014",
+    "payment_run_id": "PR-2026-10-30",
+    "vendor_id": "V-10718",
+    "invoice_no": "INV-BPM-37702",
+    "bank_account_id": "BA-40718",
+    "amount_usd": 6312.40,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1030-0015",
+    "payment_run_id": "PR-2026-10-30",
+    "vendor_id": "V-10233",
+    "invoice_no": "INV-NOI-30318",
+    "bank_account_id": "BA-40233",
+    "amount_usd": 18640.00,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1103-0001",
+    "payment_run_id": "PR-2026-11-03",
+    "vendor_id": "V-10311",
+    "invoice_no": "INV-VTX-90215",
+    "bank_account_id": "BA-40311",
+    "amount_usd": 318750.00,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1103-0002",
+    "payment_run_id": "PR-2026-11-03",
+    "vendor_id": "V-10112",
+    "invoice_no": "INV-CAC-77104",
+    "bank_account_id": "BA-40112",
+    "amount_usd": 402300.00,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1103-0003",
+    "payment_run_id": "PR-2026-11-03",
+    "vendor_id": "V-10442",
+    "invoice_no": "INV-LDS-88433",
+    "bank_account_id": "BA-40442",
+    "amount_usd": 129940.00,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1103-0004",
+    "payment_run_id": "PR-2026-11-03",
+    "vendor_id": "V-10688",
+    "invoice_no": "INV-GSE-41330",
+    "bank_account_id": "BA-40688",
+    "amount_usd": 50500.97,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1103-0005",
+    "payment_run_id": "PR-2026-11-03",
+    "vendor_id": "V-10630",
+    "invoice_no": "INV-MCR-50154",
+    "bank_account_id": "BA-40630",
+    "amount_usd": 8909.42,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1103-0006",
+    "payment_run_id": "PR-2026-11-03",
+    "vendor_id": "V-10483",
+    "invoice_no": "INV-FCC-44027",
+    "bank_account_id": "BA-40483",
+    "amount_usd": 7182.68,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1103-0007",
+    "payment_run_id": "PR-2026-11-03",
+    "vendor_id": "V-10509",
+    "invoice_no": "INV-WBC-93081",
+    "bank_account_id": "BA-40509",
+    "amount_usd": 10969.74,
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "item_id": "PRI-1103-0008",
+    "payment_run_id": "PR-2026-11-03",
+    "vendor_id": "V-10561",
+    "invoice_no": "INV-SHM-90317",
+    "bank_account_id": "BA-40561",
+    "amount_usd": 109131.61,
+    "data_origin": "SYNTHETIC"
+  }
+]

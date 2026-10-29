@@ -1,0 +1,20 @@
+Return-Path: <ap@graniteshoals.example>
+Received: from mail.graniteshoals.example (mail.graniteshoals.example [192.0.2.52]) by mx1.halvorsen-ms.example (Postfix) with ESMTPS id 90EAEAF12A; Sun, 25 Oct 2026 10:02:02 -0400
+Received: from [192.0.2.52] (helo mail.graniteshoals.example) by mail.graniteshoals.example with SMTP; Sun, 25 Oct 2026 10:02:00 -0400
+Authentication-Results: mx1.halvorsen-ms.example;
+	spf=pass smtp.mailfrom=graniteshoals.example;
+	dkim=pass header.d=graniteshoals.example;
+	dmarc=pass header.from=graniteshoals.example
+From: "J. Okeke-Ruiz" <ap@graniteshoals.example>
+To: ap@halvorsen-ms.example
+Subject: New suite number for remittances
+Date: Sun, 25 Oct 2026 10:02:00 -0400
+Message-ID: <eaef15366eabd0.E358E7@mail.graniteshoals.example>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+Hello,
+A short letter about our new suite number is attached.
+Kind regards,
+J. Okeke-Ruiz

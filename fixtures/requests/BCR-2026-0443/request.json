@@ -1,0 +1,23 @@
+{
+  "requestId": "BCR-2026-0443",
+  "vendorId": "V-10776",
+  "candidateVendorIds": [],
+  "kind": "remit_change",
+  "changeKinds": [
+    "remit"
+  ],
+  "claimedName": "Harrow & Vale Legal Support LLC",
+  "channel": "vendor_portal",
+  "receivedAt": "2026-10-27T06:48:00Z",
+  "senderEmail": "Vendor portal",
+  "paymentRunId": "PR-2026-10-30",
+  "email": {
+    "from": "Vendor portal",
+    "replyTo": null,
+    "subject": "Vendor portal request: Lockbox for remittances",
+    "spf": null,
+    "dkim": null,
+    "received": "2026-10-27T06:48:00Z"
+  },
+  "hasEml": false
+}

@@ -1,0 +1,24 @@
+Return-Path: <ap-remittance@boozallen-payments.example>
+Received: from mail.boozallen-payments.example (mail.boozallen-payments.example [203.0.113.47]) by mx1.halvorsen-ms.example (Postfix) with ESMTPS id F548032482; Thu, 22 Oct 2026 11:12:02 -0400
+Received: from [203.0.113.47] (helo mail.boozallen-payments.example) by mail.boozallen-payments.example with SMTP; Thu, 22 Oct 2026 11:12:00 -0400
+Authentication-Results: mx1.halvorsen-ms.example;
+	spf=pass smtp.mailfrom=boozallen-payments.example;
+	dkim=pass header.d=boozallen-payments.example;
+	dmarc=pass header.from=boozallen-payments.example
+From: "R. Castellane" <ap-remittance@boozallen-payments.example>
+Reply-To: ap-remittance@boozallen-payments.example
+To: ap@halvorsen-ms.example
+Subject: Updated remittance and banking instructions - effective before 30 October
+Date: Thu, 22 Oct 2026 11:12:00 -0400
+Message-ID: <3c06d3ed72a731.92A2ED@mail.boozallen-payments.example>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Synthetic-Notice: SYNTHETIC SAMPLE: not sent by Booz Allen Hamilton Inc.
+
+[SYNTHETIC SAMPLE - not a real email]
+Hello,
+Please find attached our updated remittance and banking instructions, effective before your 30 October payment run.
+Regards,
+R. Castellane
+Treasury Operations

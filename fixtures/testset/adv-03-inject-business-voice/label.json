@@ -1,0 +1,8 @@
+{
+  "case": "adv-03-inject-business-voice",
+  "hiddenText": false,
+  "injection": true,
+  "scan": false,
+  "expectedVerdict": null,
+  "note": "instruction to automated tools with no AI/system/ignore keywords"
+}

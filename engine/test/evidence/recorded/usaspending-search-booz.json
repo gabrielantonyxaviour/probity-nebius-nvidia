@@ -1,0 +1,77 @@
+{
+ "page_metadata": {
+  "page": 1,
+  "total": 22,
+  "limit": 8,
+  "next": 2,
+  "previous": null,
+  "hasNext": true,
+  "hasPrevious": false
+ },
+ "results": [
+  {
+   "id": "708321e7-6fc7-9d1d-4e92-513ce9c43d78-C",
+   "duns": "175320100",
+   "uei": "VWE7ANVJJ948",
+   "name": "BOOZ ALLEN HAMILTON INC.",
+   "recipient_level": "C",
+   "amount": 10214038.36
+  },
+  {
+   "id": "c368c14e-6eb2-7d4e-3928-20f518803d57-C",
+   "duns": "193977782",
+   "uei": "NDFCFYCC8551",
+   "name": "BOOZ ALLEN HAMILTON INC.",
+   "recipient_level": "C",
+   "amount": 0.0
+  },
+  {
+   "id": "6c8fb599-9ec9-c4dc-01a3-3ef03eefb334-C",
+   "duns": "099103871",
+   "uei": "FMMGJ8CQA4F7",
+   "name": "BOOZ ALLEN HAMILTON INC.",
+   "recipient_level": "C",
+   "amount": 0.0
+  },
+  {
+   "id": "e99d0084-4c04-63c0-f9cc-f14c797e57cf-C",
+   "duns": "926396821",
+   "uei": "M3MGMMZKR6Y9",
+   "name": "BOOZ ALLEN HAMILTON INC.",
+   "recipient_level": "C",
+   "amount": 0.0
+  },
+  {
+   "id": "e99d0084-4c04-63c0-f9cc-f14c797e57cf-P",
+   "duns": "926396821",
+   "uei": "M3MGMMZKR6Y9",
+   "name": "BOOZ ALLEN HAMILTON INC.",
+   "recipient_level": "P",
+   "amount": 0.0
+  },
+  {
+   "id": "68662e40-4588-24bc-3220-73a770bd5aff-C",
+   "duns": "620118500",
+   "uei": "TRKTVSZ7NKB3",
+   "name": "BOOZ ALLEN HAMILTON INC.",
+   "recipient_level": "C",
+   "amount": 0.0
+  },
+  {
+   "id": "16a28041-cf48-493f-29ec-c628fa89dec0-C",
+   "duns": "945685808",
+   "uei": "EM3HDKVEVK16",
+   "name": "BOOZ ALLEN HAMILTON INC.",
+   "recipient_level": "C",
+   "amount": 0.0
+  },
+  {
+   "id": "73b7f82b-28a4-e6cf-d84b-e6ec84eef100-C",
+   "duns": "831527965",
+   "uei": "LJMMYD57SP75",
+   "name": "BOOZ ALLEN HAMILTON INC.",
+   "recipient_level": "C",
+   "amount": 0.0
+  }
+ ]
+}

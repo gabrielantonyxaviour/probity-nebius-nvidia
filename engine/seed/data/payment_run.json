@@ -1,0 +1,79 @@
+[
+  {
+    "payment_run_id": "PR-2026-09-29",
+    "scheduled_date": "2026-09-29",
+    "cutoff_local": "14:00 ET",
+    "status": "released",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "payment_run_id": "PR-2026-10-02",
+    "scheduled_date": "2026-10-02",
+    "cutoff_local": "14:00 ET",
+    "status": "released",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "payment_run_id": "PR-2026-10-06",
+    "scheduled_date": "2026-10-06",
+    "cutoff_local": "14:00 ET",
+    "status": "released",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "payment_run_id": "PR-2026-10-09",
+    "scheduled_date": "2026-10-09",
+    "cutoff_local": "14:00 ET",
+    "status": "released",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "payment_run_id": "PR-2026-10-13",
+    "scheduled_date": "2026-10-13",
+    "cutoff_local": "14:00 ET",
+    "status": "released",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "payment_run_id": "PR-2026-10-16",
+    "scheduled_date": "2026-10-16",
+    "cutoff_local": "14:00 ET",
+    "status": "released",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "payment_run_id": "PR-2026-10-20",
+    "scheduled_date": "2026-10-20",
+    "cutoff_local": "14:00 ET",
+    "status": "released",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "payment_run_id": "PR-2026-10-23",
+    "scheduled_date": "2026-10-23",
+    "cutoff_local": "14:00 ET",
+    "status": "released",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "payment_run_id": "PR-2026-10-27",
+    "scheduled_date": "2026-10-27",
+    "cutoff_local": "14:00 ET",
+    "status": "released",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "payment_run_id": "PR-2026-10-30",
+    "scheduled_date": "2026-10-30",
+    "cutoff_local": "14:00 ET",
+    "status": "scheduled",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "payment_run_id": "PR-2026-11-03",
+    "scheduled_date": "2026-11-03",
+    "cutoff_local": "14:00 ET",
+    "status": "draft",
+    "data_origin": "SYNTHETIC"
+  }
+]

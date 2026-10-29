@@ -1,0 +1,28 @@
+{
+  "requestId": "BCR-2026-0416",
+  "vendorId": "V-10587",
+  "candidateVendorIds": [
+    "V-10587",
+    "V-10442",
+    "V-07734"
+  ],
+  "kind": "bank_change",
+  "changeKinds": [
+    "bank",
+    "remit"
+  ],
+  "claimedName": "Science Applications International Corporation",
+  "channel": "email",
+  "receivedAt": "2026-10-23T13:47:00Z",
+  "senderEmail": "ap@saic.example",
+  "paymentRunId": "PR-2026-10-30",
+  "email": {
+    "from": "\"D. Marchetti\" <ap@saic.example>",
+    "replyTo": null,
+    "subject": "Remit-to address update",
+    "spf": "pass",
+    "dkim": "pass",
+    "received": "2026-10-23T13:47:00Z"
+  },
+  "hasEml": true
+}

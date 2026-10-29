@@ -1,0 +1,23 @@
+{
+  "requestId": "BCR-2026-0401",
+  "vendorId": "V-10357",
+  "candidateVendorIds": [],
+  "kind": "remit_change",
+  "changeKinds": [
+    "remit"
+  ],
+  "claimedName": "Kettle Point Data Cabling LLC",
+  "channel": "mail",
+  "receivedAt": "2026-10-21T14:20:00Z",
+  "senderEmail": "Postal mail (scanned)",
+  "paymentRunId": "PR-2026-10-30",
+  "email": {
+    "from": "Postal mail (scanned)",
+    "replyTo": null,
+    "subject": "Scanned letter: We have moved our office",
+    "spf": null,
+    "dkim": null,
+    "received": "2026-10-21T14:20:00Z"
+  },
+  "hasEml": false
+}

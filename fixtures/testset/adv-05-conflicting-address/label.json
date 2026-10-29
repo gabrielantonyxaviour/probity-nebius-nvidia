@@ -1,0 +1,8 @@
+{
+  "case": "adv-05-conflicting-address",
+  "hiddenText": false,
+  "injection": false,
+  "scan": false,
+  "expectedVerdict": null,
+  "note": "remit-to block and a different PO box in the body; no instruction"
+}

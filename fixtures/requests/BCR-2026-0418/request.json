@@ -1,0 +1,23 @@
+{
+  "requestId": "BCR-2026-0418",
+  "vendorId": "V-10311",
+  "candidateVendorIds": [],
+  "kind": "remit_change",
+  "changeKinds": [
+    "remit"
+  ],
+  "claimedName": "V2X, Inc.",
+  "channel": "email",
+  "receivedAt": "2026-10-23T16:30:00Z",
+  "senderEmail": "ar@v2x.example",
+  "paymentRunId": "PR-2026-11-03",
+  "email": {
+    "from": "\"L. Haverford\" <ar@v2x.example>",
+    "replyTo": null,
+    "subject": "Change of remittance address",
+    "spf": "pass",
+    "dkim": "pass",
+    "received": "2026-10-23T16:30:00Z"
+  },
+  "hasEml": true
+}

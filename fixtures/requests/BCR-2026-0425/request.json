@@ -1,0 +1,23 @@
+{
+  "requestId": "BCR-2026-0425",
+  "vendorId": "V-10688",
+  "candidateVendorIds": [],
+  "kind": "remit_change",
+  "changeKinds": [
+    "remit"
+  ],
+  "claimedName": "Granite Shoals Engineering PLLC",
+  "channel": "email",
+  "receivedAt": "2026-10-25T14:02:00Z",
+  "senderEmail": "ap@graniteshoals.example",
+  "paymentRunId": "PR-2026-11-03",
+  "email": {
+    "from": "\"J. Okeke-Ruiz\" <ap@graniteshoals.example>",
+    "replyTo": null,
+    "subject": "New suite number for remittances",
+    "spf": "pass",
+    "dkim": "pass",
+    "received": "2026-10-25T14:02:00Z"
+  },
+  "hasEml": true
+}

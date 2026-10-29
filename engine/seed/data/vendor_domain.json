@@ -1,0 +1,278 @@
+[
+  {
+    "vendor_id": "V-10027",
+    "domain": "boozallen.example",
+    "added_at": "2019-04-02T12:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10112",
+    "domain": "caci.example",
+    "added_at": "2019-04-02T12:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10154",
+    "domain": "bluefengeo.example",
+    "added_at": "2025-11-17T18:40:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10167",
+    "domain": "callowayfreight.example",
+    "added_at": "2023-02-10T19:20:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10179",
+    "domain": "elkhornradio.example",
+    "added_at": "2019-04-02T12:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10186",
+    "domain": "larkspurnotary.example",
+    "added_at": "2021-04-09T19:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10198",
+    "domain": "harris.example",
+    "added_at": "2019-04-02T12:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10198",
+    "domain": "l3harris.example",
+    "added_at": "2019-07-01T15:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10233",
+    "domain": "northgateinteriors.example",
+    "added_at": "2019-04-02T12:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10234",
+    "domain": "northgateinteriors.example",
+    "added_at": "2019-07-25T14:40:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10261",
+    "domain": "brackwatersurvey.example",
+    "added_at": "2024-04-02T15:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10261",
+    "domain": "brackwatersvy.example",
+    "added_at": "2022-12-10T16:20:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10311",
+    "domain": "v2x.example",
+    "added_at": "2022-07-11T15:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10311",
+    "domain": "vectrus.example",
+    "added_at": "2019-04-02T12:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10349",
+    "domain": "chesterfieldridge.example",
+    "added_at": "2022-07-19T13:20:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10357",
+    "domain": "kettlepointcabling.example",
+    "added_at": "2022-10-20T16:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10388",
+    "domain": "larkfieldtranslation.example",
+    "added_at": "2023-03-23T15:40:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10402",
+    "domain": "pembrookshredding.example",
+    "added_at": "2022-03-15T17:50:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10442",
+    "domain": "leidos.example",
+    "added_at": "2019-04-02T12:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10471",
+    "domain": "ostranderlab.example",
+    "added_at": "2019-06-09T15:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10483",
+    "domain": "fallowcreek.example",
+    "added_at": "2020-10-26T15:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10483",
+    "domain": "fallowcreekcafe.example",
+    "added_at": "2019-04-02T12:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10509",
+    "domain": "wexleybadge.example",
+    "added_at": "2021-07-13T14:20:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10528",
+    "domain": "corbinhollow.example",
+    "added_at": "2022-10-01T19:20:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10544",
+    "domain": "juniperlane.example",
+    "added_at": "2019-11-05T14:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10561",
+    "domain": "sableharbor.example",
+    "added_at": "2020-08-03T15:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10561",
+    "domain": "sableharborship.example",
+    "added_at": "2019-04-02T12:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10587",
+    "domain": "saic.example",
+    "added_at": "2019-04-02T12:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10592",
+    "domain": "thornfieldlabs.example",
+    "added_at": "2023-01-22T18:20:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10604",
+    "domain": "ridgebacknet.example",
+    "added_at": "2019-04-02T12:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10617",
+    "domain": "ashgroveiron.example",
+    "added_at": "2019-08-10T15:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10617",
+    "domain": "ashgroverecords.example",
+    "added_at": "2021-03-16T15:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10630",
+    "domain": "merriwethercloud.example",
+    "added_at": "2019-04-02T12:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10645",
+    "domain": "sterlingfox.example",
+    "added_at": "2019-04-02T12:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10655",
+    "domain": "marrowstone.example",
+    "added_at": "2019-04-02T12:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10671",
+    "domain": "copperlinefiber.example",
+    "added_at": "2024-09-17T16:40:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10688",
+    "domain": "graniteshoals.example",
+    "added_at": "2019-04-02T12:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10702",
+    "domain": "dovecotefurniture.example",
+    "added_at": "2026-12-31T15:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10702",
+    "domain": "dovecotemoving.example",
+    "added_at": "2025-07-26T16:20:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10718",
+    "domain": "bellhavenprint.example",
+    "added_at": "2019-04-02T12:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10731",
+    "domain": "windrowgrounds.example",
+    "added_at": "2019-04-02T12:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10749",
+    "domain": "pinecrestcourier.example",
+    "added_at": "2019-04-02T12:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10763",
+    "domain": "tidewatercable.example",
+    "added_at": "2021-03-15T15:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10776",
+    "domain": "harrowvale.example",
+    "added_at": "2019-04-02T12:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10790",
+    "domain": "quarrytownfg.example",
+    "added_at": "2019-04-02T12:00:00Z",
+    "data_origin": "SYNTHETIC"
+  },
+  {
+    "vendor_id": "V-10812",
+    "domain": "quillanridge.example",
+    "added_at": "2026-10-18T13:02:00Z",
+    "data_origin": "SYNTHETIC"
+  }
+]

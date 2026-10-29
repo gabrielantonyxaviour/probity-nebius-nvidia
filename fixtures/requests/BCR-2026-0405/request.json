@@ -1,0 +1,23 @@
+{
+  "requestId": "BCR-2026-0405",
+  "vendorId": "V-10544",
+  "candidateVendorIds": [],
+  "kind": "bank_change",
+  "changeKinds": [
+    "bank"
+  ],
+  "claimedName": "Juniper Lane Travel Management LLC",
+  "channel": "vendor_portal",
+  "receivedAt": "2026-10-21T18:44:00Z",
+  "senderEmail": "Vendor portal",
+  "paymentRunId": "PR-2026-10-30",
+  "email": {
+    "from": "Vendor portal",
+    "replyTo": null,
+    "subject": "Vendor portal request: ACH details for Juniper Lane Travel Management",
+    "spf": null,
+    "dkim": null,
+    "received": "2026-10-21T18:44:00Z"
+  },
+  "hasEml": false
+}

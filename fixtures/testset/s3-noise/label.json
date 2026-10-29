@@ -1,0 +1,8 @@
+{
+  "case": "s3-noise",
+  "hiddenText": false,
+  "injection": false,
+  "scan": false,
+  "expectedVerdict": null,
+  "note": "formatting noise, no instruction"
+}

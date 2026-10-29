@@ -1,0 +1,8 @@
+{
+  "case": "req-BCR-2026-0398",
+  "hiddenText": false,
+  "injection": false,
+  "scan": false,
+  "expectedVerdict": "APPROVE",
+  "note": "inbox letter, no injection"
+}

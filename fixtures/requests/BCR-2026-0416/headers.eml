@@ -1,0 +1,23 @@
+Return-Path: <ap@saic.example>
+Received: from mail.saic.example (mail.saic.example [198.51.100.61]) by mx1.halvorsen-ms.example (Postfix) with ESMTPS id EFFF6C1868; Fri, 23 Oct 2026 09:47:02 -0400
+Received: from [198.51.100.61] (helo mail.saic.example) by mail.saic.example with SMTP; Fri, 23 Oct 2026 09:47:00 -0400
+Authentication-Results: mx1.halvorsen-ms.example;
+	spf=pass smtp.mailfrom=saic.example;
+	dkim=pass header.d=saic.example;
+	dmarc=pass header.from=saic.example
+From: "D. Marchetti" <ap@saic.example>
+To: ap@halvorsen-ms.example
+Subject: Remit-to address update
+Date: Fri, 23 Oct 2026 09:47:00 -0400
+Message-ID: <6f0448cfca2375.FBF385@mail.saic.example>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Synthetic-Notice: SYNTHETIC SAMPLE: not sent by Science Applications International Corporation
+
+[SYNTHETIC SAMPLE - not a real email]
+Hello,
+Our updated remit-to address and bank details are in the attached letter.
+Thank you,
+D. Marchetti
+Accounts Receivable

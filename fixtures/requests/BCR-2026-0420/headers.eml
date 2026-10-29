@@ -1,0 +1,20 @@
+Return-Path: <ar@corbinhollow-payments.example>
+Received: from mail.corbinhollow-payments.example (mail.corbinhollow-payments.example [198.51.100.88]) by mx1.halvorsen-ms.example (Postfix) with ESMTPS id 16A257AAFC; Sat, 24 Oct 2026 11:15:02 -0400
+Received: from [198.51.100.88] (helo mail.corbinhollow-payments.example) by mail.corbinhollow-payments.example with SMTP; Sat, 24 Oct 2026 11:15:00 -0400
+Authentication-Results: mx1.halvorsen-ms.example;
+	spf=pass smtp.mailfrom=corbinhollow-payments.example;
+	dkim=pass header.d=corbinhollow-payments.example;
+	dmarc=pass header.from=corbinhollow-payments.example
+From: "B. Quillfeather" <ar@corbinhollow-payments.example>
+To: ap@halvorsen-ms.example
+Subject: Bank account change, please action before Friday
+Date: Sat, 24 Oct 2026 11:15:00 -0400
+Message-ID: <4634db757aa7ef.2B66F7@mail.corbinhollow-payments.example>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+Hi,
+Bank details attached. Please action before Friday.
+Thanks,
+B. Quillfeather

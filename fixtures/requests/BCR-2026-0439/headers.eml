@@ -1,0 +1,20 @@
+Return-Path: <billing@merriwethercloud.example>
+Received: from mail.merriwethercloud.example (mail.merriwethercloud.example [203.0.113.120]) by mx1.halvorsen-ms.example (Postfix) with ESMTPS id 7E45161BDE; Tue, 27 Oct 2026 02:12:02 -0400
+Received: from [203.0.113.120] (helo mail.merriwethercloud.example) by mail.merriwethercloud.example with SMTP; Tue, 27 Oct 2026 02:12:00 -0400
+Authentication-Results: mx1.halvorsen-ms.example;
+	spf=pass smtp.mailfrom=merriwethercloud.example;
+	dkim=pass header.d=merriwethercloud.example;
+	dmarc=pass header.from=merriwethercloud.example
+From: "Dana Whitcombe" <billing@merriwethercloud.example>
+To: ap@halvorsen-ms.example
+Subject: Bank account update for our subscriptions
+Date: Tue, 27 Oct 2026 02:12:00 -0400
+Message-ID: <234ce9457aee0d.3667C1@mail.merriwethercloud.example>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+Hello,
+The letter with our new bank details is attached.
+Thank you,
+Billing team

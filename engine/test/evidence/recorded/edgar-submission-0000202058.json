@@ -1,0 +1,60 @@
+{
+ "cik": "0000202058",
+ "entityType": "operating",
+ "sic": "3812",
+ "sicDescription": "Search, Detection, Navigation, Guidance, Aeronautical Sys",
+ "ownerOrg": "04 Manufacturing",
+ "insiderTransactionForOwnerExists": 1,
+ "insiderTransactionForIssuerExists": 1,
+ "name": "L3HARRIS TECHNOLOGIES, INC. /DE/",
+ "tickers": [
+  "LHX"
+ ],
+ "exchanges": [
+  "NYSE"
+ ],
+ "ein": "340276860",
+ "lei": null,
+ "description": "",
+ "website": "",
+ "investorWebsite": "",
+ "category": "Large accelerated filer",
+ "fiscalYearEnd": "0102",
+ "stateOfIncorporation": "DE",
+ "stateOfIncorporationDescription": "DE",
+ "addresses": {
+  "mailing": {
+   "street1": "1025 W NASA BLVD",
+   "street2": null,
+   "city": "MELBOURNE",
+   "stateOrCountry": "FL",
+   "zipCode": "32919",
+   "stateOrCountryDescription": "FL",
+   "isForeignLocation": 0,
+   "foreignStateTerritory": null,
+   "country": null,
+   "countryCode": null
+  },
+  "business": {
+   "street1": "1025 W NASA BLVD",
+   "street2": null,
+   "city": "MELBOURNE",
+   "stateOrCountry": "FL",
+   "zipCode": "32919",
+   "stateOrCountryDescription": "FL",
+   "isForeignLocation": null,
+   "foreignStateTerritory": null,
+   "country": null,
+   "countryCode": null
+  }
+ },
+ "phone": "3217279100",
+ "flags": "",
+ "formerNames": [
+  {
+   "name": "HARRIS CORP /DE/",
+   "from": "1994-09-09T00:00:00.000Z",
+   "to": "2019-06-25T00:00:00.000Z"
+  }
+ ]
+}

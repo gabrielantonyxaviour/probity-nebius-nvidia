@@ -1,0 +1,23 @@
+{
+  "requestId": "BCR-2026-0407",
+  "vendorId": "V-10561",
+  "candidateVendorIds": [],
+  "kind": "bank_change",
+  "changeKinds": [
+    "bank"
+  ],
+  "claimedName": "Sable Harbor Marine Logistics LLC",
+  "channel": "email",
+  "receivedAt": "2026-10-22T09:41:00Z",
+  "senderEmail": "finance@sableharbor.example",
+  "paymentRunId": "PR-2026-11-03",
+  "email": {
+    "from": "\"T. Valdivia\" <finance@sableharbor.example>",
+    "replyTo": null,
+    "subject": "Updated ACH banking details - effective 3 November",
+    "spf": "pass",
+    "dkim": "pass",
+    "received": "2026-10-22T09:41:00Z"
+  },
+  "hasEml": true
+}

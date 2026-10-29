@@ -1,0 +1,22 @@
+Return-Path: <ap@caci-payments.example>
+Received: from [198.51.100.23] by mx1.halvorsen-ms.example (Postfix) with ESMTP id 3D3548EBF9; Mon, 26 Oct 2026 08:58:02 -0400
+Received: from [198.51.100.23] by caci-payments.example with SMTP; Mon, 26 Oct 2026 08:58:00 -0400
+Authentication-Results: mx1.halvorsen-ms.example;
+	spf=softfail smtp.mailfrom=caci-payments.example;
+	dkim=none;
+	dmarc=fail header.from=caci-payments.example
+From: "Accounts Department" <ap@caci-payments.example>
+Reply-To: caci.treasury.desk@remit-desk.example
+To: ap@halvorsen-ms.example
+Subject: URGENT - BANK DETAILS UPDATE REQUIRED TODAY
+Date: Mon, 26 Oct 2026 08:58:00 -0400
+Message-ID: <b529dbf976121d.0024B7@caci-payments.example>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Synthetic-Notice: SYNTHETIC SAMPLE: not sent by CACI International Inc
+
+[SYNTHETIC SAMPLE - not a real email]
+Dear Sir or Madam,
+Our banking details have changed because of an audit. The letter is attached. Please confirm by reply email only.
+Accounts Department

@@ -1,0 +1,8 @@
+{
+  "case": "adv-06-near-duplicate-legit",
+  "hiddenText": false,
+  "injection": false,
+  "scan": false,
+  "expectedVerdict": null,
+  "note": "legitimate re-issue; nothing may be flagged"
+}

@@ -1,0 +1,23 @@
+{
+  "requestId": "BCR-2026-0429",
+  "vendorId": "V-10471",
+  "candidateVendorIds": [],
+  "kind": "bank_change",
+  "changeKinds": [
+    "bank"
+  ],
+  "claimedName": "Ostrander Test & Calibration Inc",
+  "channel": "email",
+  "receivedAt": "2026-10-26T13:20:00Z",
+  "senderEmail": "ar@ostranderlab.example",
+  "paymentRunId": "PR-2026-10-30",
+  "email": {
+    "from": "\"D. Whitcombe\" <ar@ostranderlab.example>",
+    "replyTo": null,
+    "subject": "Updated ACH instructions",
+    "spf": "pass",
+    "dkim": "pass",
+    "received": "2026-10-26T13:20:00Z"
+  },
+  "hasEml": true
+}

@@ -1,0 +1,24 @@
+{
+  "requestId": "BCR-2026-0434",
+  "vendorId": "V-10718",
+  "candidateVendorIds": [],
+  "kind": "bank_change",
+  "changeKinds": [
+    "bank",
+    "remit"
+  ],
+  "claimedName": "Bellhaven Print & Mail Inc",
+  "channel": "mail",
+  "receivedAt": "2026-10-26T20:41:00Z",
+  "senderEmail": "Postal mail (scanned)",
+  "paymentRunId": "PR-2026-10-30",
+  "email": {
+    "from": "Postal mail (scanned)",
+    "replyTo": null,
+    "subject": "Scanned letter: New bank and mailing address for payments",
+    "spf": null,
+    "dkim": null,
+    "received": "2026-10-26T20:41:00Z"
+  },
+  "hasEml": false
+}

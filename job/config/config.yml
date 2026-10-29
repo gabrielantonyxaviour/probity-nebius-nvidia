@@ -1,0 +1,20 @@
+# NeMo Guardrails 0.24.1 used as a library (LLMRails.check_async), not as a server.
+# The main model is NVIDIA Nemotron 3.5 Lightning on Nebius Token Factory (OpenAI-compatible).
+# The API key is read from OPENAI_API_KEY, which sweep.py sets from the job's environment.
+models:
+  - type: main
+    engine: openai
+    model: nvidia/Nemotron-3_5-Lightning
+    parameters:
+      base_url: https://api.tokenfactory.nebius.com/v1/
+      temperature: 0
+      chat_template_kwargs:
+        enable_thinking: false
+
+rails:
+  input:
+    flows:
+      - self check input
+  output:
+    flows:
+      - self check output

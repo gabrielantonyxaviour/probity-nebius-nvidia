@@ -1,0 +1,59 @@
+// /api/limits and /api/sweep/*. The two job endpoints (work, callback) and start accept only HMAC-signed requests.
+import { Hono, type Context } from "hono";
+import { getLimits, type GuardEnv } from "./guard";
+import { verifyRequest } from "./hmac";
+import { CallbackBody, latestSweep, startSweep, storeCallback, type OpsEnv } from "./sweep";
+import { sweepWork } from "./work";
+
+type Ctx = Context<{ Bindings: OpsEnv }>;
+const fail = (c: Ctx, status: 400 | 401 | 500 | 502, error: string, code: string): Response => c.json({ error, code }, status);
+
+/** Session identity: the `x-probity-session` header, else the `probity_sid` cookie, else a shared "anon" session. */
+export function defaultSessionId(c: Ctx): string {
+  const h = c.req.header("x-probity-session");
+  if (h && /^[\w-]{6,64}$/.test(h)) return h;
+  const m = /(?:^|;\s*)probity_sid=([\w-]{6,64})/.exec(c.req.header("cookie") ?? "");
+  return m?.[1] ?? "anon";
+}
+
+async function signed(c: Ctx, body: string): Promise<boolean> {
+  return verifyRequest(c.env.JOB_CALLBACK_SECRET, c.req.method, new URL(c.req.url).pathname, body, c.req.header("x-probity-timestamp"), c.req.header("x-probity-signature"));
+}
+
+export function makeOpsRoutes(sessionOf: (c: Ctx) => string = defaultSessionId): Hono<{ Bindings: OpsEnv }> {
+  const app = new Hono<{ Bindings: OpsEnv }>();
+
+  app.get("/limits", async (c) => c.json(await getLimits(c.env as GuardEnv, sessionOf(c))));
+
+  app.get("/sweep/latest", async (c) => c.json(await latestSweep(c.env)));
+
+  app.get("/sweep/work", async (c) => {
+    if (!(await signed(c, ""))) return fail(c, 401, "Signature missing or invalid.", "unauthorized");
+    return c.json({ requests: await sweepWork(c.env) });
+  });
+
+  app.post("/sweep/callback", async (c) => {
+    const raw = await c.req.text();
+    if (!(await signed(c, raw))) return fail(c, 401, "Signature missing or invalid.", "unauthorized");
+    let json: unknown;
+    try { json = JSON.parse(raw); } catch { return fail(c, 400, "Body is not JSON.", "bad_request"); }
+    const parsed = CallbackBody.safeParse(json);
+    if (!parsed.success) return fail(c, 400, "Report does not match the expected shape.", "bad_request");
+    return c.json(await storeCallback(c.env, parsed.data));
+  });
+
+  app.post("/sweep/start", async (c) => {
+    const raw = await c.req.text();
+    if (!(await signed(c, raw))) return fail(c, 401, "Signature missing or invalid.", "unauthorized");
+    const mode = raw.includes('"eval"') ? "eval" : "sweep";
+    try {
+      return c.json(await startSweep(c.env, mode));
+    } catch {
+      return fail(c, 502, "The sweep job could not be started.", "job_start_failed");
+    }
+  });
+
+  return app;
+}
+
+export const opsRoutes = makeOpsRoutes();

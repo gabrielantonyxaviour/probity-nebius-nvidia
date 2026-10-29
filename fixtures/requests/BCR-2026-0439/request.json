@@ -1,0 +1,23 @@
+{
+  "requestId": "BCR-2026-0439",
+  "vendorId": "V-10630",
+  "candidateVendorIds": [],
+  "kind": "bank_change",
+  "changeKinds": [
+    "bank"
+  ],
+  "claimedName": "Merriwether Cloud Reseller LLC",
+  "channel": "email",
+  "receivedAt": "2026-10-27T06:12:00Z",
+  "senderEmail": "billing@merriwethercloud.example",
+  "paymentRunId": "PR-2026-11-03",
+  "email": {
+    "from": "\"Dana Whitcombe\" <billing@merriwethercloud.example>",
+    "replyTo": null,
+    "subject": "Bank account update for our subscriptions",
+    "spf": "pass",
+    "dkim": "pass",
+    "received": "2026-10-27T06:12:00Z"
+  },
+  "hasEml": true
+}

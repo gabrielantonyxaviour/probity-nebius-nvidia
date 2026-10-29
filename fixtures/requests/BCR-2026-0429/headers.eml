@@ -1,0 +1,20 @@
+Return-Path: <ar@ostranderlab.example>
+Received: from mail.ostranderlab.example (mail.ostranderlab.example [198.51.100.31]) by mx1.halvorsen-ms.example (Postfix) with ESMTPS id 3EF6EF494C; Mon, 26 Oct 2026 09:20:02 -0400
+Received: from [198.51.100.31] (helo mail.ostranderlab.example) by mail.ostranderlab.example with SMTP; Mon, 26 Oct 2026 09:20:00 -0400
+Authentication-Results: mx1.halvorsen-ms.example;
+	spf=pass smtp.mailfrom=ostranderlab.example;
+	dkim=pass header.d=ostranderlab.example;
+	dmarc=pass header.from=ostranderlab.example
+From: "D. Whitcombe" <ar@ostranderlab.example>
+To: ap@halvorsen-ms.example
+Subject: Updated ACH instructions
+Date: Mon, 26 Oct 2026 09:20:00 -0400
+Message-ID: <ba637f28cf71c4.A65F13@mail.ostranderlab.example>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+Hello,
+Our new ACH instructions are attached.
+Sincerely,
+D. Whitcombe

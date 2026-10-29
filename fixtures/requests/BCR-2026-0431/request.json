@@ -1,0 +1,23 @@
+{
+  "requestId": "BCR-2026-0431",
+  "vendorId": "V-10112",
+  "candidateVendorIds": [],
+  "kind": "bank_change",
+  "changeKinds": [
+    "bank"
+  ],
+  "claimedName": "CACI Internationl Inc",
+  "channel": "email",
+  "receivedAt": "2026-10-26T12:58:00Z",
+  "senderEmail": "ap@caci-payments.example",
+  "paymentRunId": "PR-2026-11-03",
+  "email": {
+    "from": "\"Accounts Department\" <ap@caci-payments.example>",
+    "replyTo": "caci.treasury.desk@remit-desk.example",
+    "subject": "URGENT - BANK DETAILS UPDATE REQUIRED TODAY",
+    "spf": "softfail",
+    "dkim": "none",
+    "received": "2026-10-26T12:58:00Z"
+  },
+  "hasEml": true
+}

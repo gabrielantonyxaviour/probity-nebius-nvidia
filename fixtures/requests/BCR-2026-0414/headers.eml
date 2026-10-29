@@ -1,0 +1,20 @@
+Return-Path: <accounts@chesterfieldridge.example>
+Received: from mail.chesterfieldridge.example (mail.chesterfieldridge.example [203.0.113.90]) by mx1.halvorsen-ms.example (Postfix) with ESMTPS id 27997E604E; Thu, 22 Oct 2026 15:30:02 -0400
+Received: from [203.0.113.90] (helo mail.chesterfieldridge.example) by mail.chesterfieldridge.example with SMTP; Thu, 22 Oct 2026 15:30:00 -0400
+Authentication-Results: mx1.halvorsen-ms.example;
+	spf=pass smtp.mailfrom=chesterfieldridge.example;
+	dkim=pass header.d=chesterfieldridge.example;
+	dmarc=pass header.from=chesterfieldridge.example
+From: "H. Ostergaard" <accounts@chesterfieldridge.example>
+To: ap@halvorsen-ms.example
+Subject: Change of bank account
+Date: Thu, 22 Oct 2026 15:30:00 -0400
+Message-ID: <2bfc49faba8da2.4B8A83@mail.chesterfieldridge.example>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+Hello,
+Our updated bank details are in the attached letter.
+Regards,
+H. Ostergaard

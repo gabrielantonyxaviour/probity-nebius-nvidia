@@ -1,0 +1,24 @@
+{
+  "requestId": "BCR-2026-0412",
+  "vendorId": "V-10027",
+  "candidateVendorIds": [],
+  "kind": "bank_change",
+  "changeKinds": [
+    "bank",
+    "remit"
+  ],
+  "claimedName": "Booz Allen Hamilton Inc.",
+  "channel": "email",
+  "receivedAt": "2026-10-22T15:12:00Z",
+  "senderEmail": "ap-remittance@boozallen-payments.example",
+  "paymentRunId": "PR-2026-10-30",
+  "email": {
+    "from": "\"R. Castellane\" <ap-remittance@boozallen-payments.example>",
+    "replyTo": "ap-remittance@boozallen-payments.example",
+    "subject": "Updated remittance and banking instructions - effective before 30 October",
+    "spf": "pass",
+    "dkim": "pass",
+    "received": "2026-10-22T15:12:00Z"
+  },
+  "hasEml": true
+}

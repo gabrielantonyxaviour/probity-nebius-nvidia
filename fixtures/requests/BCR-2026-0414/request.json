@@ -1,0 +1,23 @@
+{
+  "requestId": "BCR-2026-0414",
+  "vendorId": "V-10349",
+  "candidateVendorIds": [],
+  "kind": "bank_change",
+  "changeKinds": [
+    "bank"
+  ],
+  "claimedName": "Chesterfield Ridge Staffing Group Inc",
+  "channel": "email",
+  "receivedAt": "2026-10-22T19:30:00Z",
+  "senderEmail": "accounts@chesterfieldridge.example",
+  "paymentRunId": "PR-2026-10-30",
+  "email": {
+    "from": "\"H. Ostergaard\" <accounts@chesterfieldridge.example>",
+    "replyTo": null,
+    "subject": "Change of bank account",
+    "spf": "pass",
+    "dkim": "pass",
+    "received": "2026-10-22T19:30:00Z"
+  },
+  "hasEml": true
+}

@@ -1,0 +1,24 @@
+{
+  "requestId": "BCR-2026-0409",
+  "vendorId": "V-10402",
+  "candidateVendorIds": [],
+  "kind": "bank_change",
+  "changeKinds": [
+    "bank",
+    "remit"
+  ],
+  "claimedName": "Pembrook Secure Shredding Co",
+  "channel": "email",
+  "receivedAt": "2026-10-22T13:05:00Z",
+  "senderEmail": "ar@pembrookshredding.example",
+  "paymentRunId": "PR-2026-10-30",
+  "email": {
+    "from": "\"M. Prakash\" <ar@pembrookshredding.example>",
+    "replyTo": "ar.desk@payablehub.example",
+    "subject": "Billing consolidation: new remit-to and bank account",
+    "spf": "pass",
+    "dkim": "pass",
+    "received": "2026-10-22T13:05:00Z"
+  },
+  "hasEml": true
+}

@@ -1,0 +1,8 @@
+{
+  "case": "s3-scan",
+  "hiddenText": false,
+  "injection": false,
+  "scan": true,
+  "expectedVerdict": null,
+  "note": "image-only scan"
+}
