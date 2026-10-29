@@ -10,6 +10,8 @@ export const dodoMode = (env: Pick<CEnv, "DODO_MODE">): DodoMode => (env.DODO_MO
 export const dodoBase = (env: Pick<CEnv, "DODO_MODE">) => (dodoMode(env) === "live" ? "https://live.dodopayments.com" : "https://test.dodopayments.com");
 const dodoKey = (env: CEnv) => (dodoMode(env) === "live" ? env.DODO_PAYMENTS_LIVE_API_KEY : env.DODO_PAYMENTS_API_KEY);
 
+const isBrandError = (e: unknown) => e instanceof DodoError && e.status >= 400 && e.status < 500 && /brand/i.test(e.message);
+
 export class DodoError extends Error {
   constructor(public status: number, message: string) { super(message); }
 }
@@ -43,13 +45,21 @@ export async function ensureProProduct(env: CEnv): Promise<string> {
   const cached = await getSetting(env, key);
   if (cached) return cached;
   for (let page = 0; page < 10; page++) {
-    const list = await dodo<Page<{ product_id: string; name: string }>>(env, "GET", `/products?page_size=100&page_number=${page}`);
+    const list = await dodo<Page<{ product_id: string; name: string; brand_id?: string | null }>>(env, "GET", `/products?page_size=100&page_number=${page}`);
     const items = list.items ?? [];
     const hit = items.find((p) => p.name === PRODUCT_NAME);
-    if (hit) { await putSetting(env, key, hit.product_id); return hit.product_id; }
+    if (hit) {
+      // An older product created before the brand existed is moved onto it (the checkout session has no brand field; it follows the product).
+      if (env.DODO_BRAND_ID && hit.brand_id !== env.DODO_BRAND_ID) {
+        // Brands are per mode (the Probity brand exists in live only): an unknown brand must not block checkout.
+        await dodo(env, "PATCH", `/products/${hit.product_id}`, { brand_id: env.DODO_BRAND_ID }).catch((e: unknown) => { if (!isBrandError(e)) throw e; });
+      }
+      await putSetting(env, key, hit.product_id);
+      return hit.product_id;
+    }
     if (items.length < 100) break;
   }
-  const created = await dodo<{ product_id: string }>(env, "POST", "/products", {
+  const body = {
     name: PRODUCT_NAME,
     description: "Gmail, Outlook, Xero and Slack connections, payment-run schedules and 500 checks a month for one company.",
     tax_category: "saas",
@@ -64,7 +74,11 @@ export async function ensureProProduct(env: CEnv): Promise<string> {
       trial_period_days: 0,
       zero_amount_payment_method_optional: true,
     },
-  });
+  };
+  const create = (extra: object) => dodo<{ product_id: string }>(env, "POST", "/products", { ...body, ...extra });
+  const created = env.DODO_BRAND_ID
+    ? await create({ brand_id: env.DODO_BRAND_ID }).catch((e: unknown) => { if (!isBrandError(e)) throw e; return create({}); })
+    : await create({});
   await putSetting(env, key, created.product_id);
   return created.product_id;
 }
@@ -82,7 +96,7 @@ export async function ensureJudgeDiscount(env: CEnv): Promise<string> {
     type: "percentage",
     amount: 10000,
     code: JUDGE_DISCOUNT_CODE,
-    name: "Nebius judges",
+    name: JUDGE_DISCOUNT_CODE,
     restricted_to: [productId],
     preserve_on_plan_change: false,
   });

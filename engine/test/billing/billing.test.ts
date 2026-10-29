@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { Me } from "@probity/shared";
+import { ensureProProduct } from "../../src/billing/dodo";
 import { signWebhook } from "../../src/billing/webhook";
 import { checksLeft, consumeCheck, getPlan } from "../../src/billing/plans";
 import { Client, makeApp, makeTestEnv } from "../auth/helpers";
@@ -191,5 +192,75 @@ describe("check meter", () => {
     expect(await checksLeft(env, orgId)).toBe(475);
     expect(await consumeCheck(env, orgId)).toBe(true);
     expect(await checksLeft(env, "org_demo")).toBe(500);
+  });
+});
+
+describe("brand and live mode", () => {
+  type Call = { url: string; method: string; body: any };
+  function stub(calls: Call[], products: { product_id: string; name: string; brand_id?: string | null }[]) {
+    vi.stubGlobal("fetch", async (url: string, init: RequestInit) => {
+      const body = init.body ? JSON.parse(String(init.body)) : undefined;
+      calls.push({ url, method: init.method ?? "GET", body });
+      const u = new URL(url);
+      if (u.pathname === "/products" && init.method === "GET") return Response.json({ items: products });
+      if (u.pathname === "/products" && init.method === "POST") return Response.json({ product_id: "pdt_new" });
+      if (u.pathname.startsWith("/products/") && init.method === "PATCH") return Response.json({});
+      return new Response("{}", { status: 404 });
+    });
+  }
+  it("creates the product on the Probity brand, in either mode", async () => {
+    for (const mode of ["test", "live"] as const) {
+      const calls: Call[] = [];
+      stub(calls, []);
+      const env = makeTestEnv({ DODO_MODE: mode, DODO_BRAND_ID: "brnd_0Nqnyy64ALmi3fK2GK7ks", DODO_PAYMENTS_API_KEY: "t", DODO_PAYMENTS_LIVE_API_KEY: "l" });
+      expect(await ensureProProduct(env)).toBe("pdt_new");
+      const create = calls.find((c) => c.method === "POST")!;
+      expect(create.url).toBe(`https://${mode}.dodopayments.com/products`);
+      expect(create.body).toMatchObject({ name: "Probity Pro", brand_id: "brnd_0Nqnyy64ALmi3fK2GK7ks", tax_category: "saas" });
+      expect(create.body.price).toMatchObject({ price: 4900, currency: "USD", zero_amount_payment_method_optional: true, subscription_period_count: 20 });
+      vi.unstubAllGlobals();
+    }
+  });
+  it("without DODO_BRAND_ID no brand is sent; an existing product on another brand is moved onto it", async () => {
+    const calls: Call[] = [];
+    stub(calls, []);
+    await ensureProProduct(makeTestEnv({ DODO_PAYMENTS_API_KEY: "t" }));
+    expect(calls.find((c) => c.method === "POST")!.body.brand_id).toBeUndefined();
+    vi.unstubAllGlobals();
+
+    const moved: Call[] = [];
+    stub(moved, [{ product_id: "pdt_old", name: "Probity Pro", brand_id: "brnd_larinova" }]);
+    const env = makeTestEnv({ DODO_BRAND_ID: "brnd_probity", DODO_PAYMENTS_API_KEY: "t" });
+    expect(await ensureProProduct(env)).toBe("pdt_old");
+    expect(moved.find((c) => c.method === "PATCH")).toMatchObject({ url: "https://test.dodopayments.com/products/pdt_old", body: { brand_id: "brnd_probity" } });
+    vi.unstubAllGlobals();
+
+    const same: Call[] = [];
+    stub(same, [{ product_id: "pdt_old", name: "Probity Pro", brand_id: "brnd_probity" }]);
+    await ensureProProduct(makeTestEnv({ DODO_BRAND_ID: "brnd_probity", DODO_PAYMENTS_API_KEY: "t" }));
+    expect(same.some((c) => c.method === "PATCH")).toBe(false);
+  });
+  it("an unknown brand (the Probity brand exists in live only) does not block the product", async () => {
+    const calls: Call[] = [];
+    let n = 0;
+    vi.stubGlobal("fetch", async (url: string, init: RequestInit) => {
+      calls.push({ url, method: init.method ?? "GET", body: init.body ? JSON.parse(String(init.body)) : undefined });
+      if (init.method === "GET") return Response.json({ items: [] });
+      return n++ === 0 ? Response.json({ message: "Brand ID could not be found" }, { status: 422 }) : Response.json({ product_id: "pdt_nobrand" });
+    });
+    expect(await ensureProProduct(makeTestEnv({ DODO_BRAND_ID: "brnd_live_only", DODO_PAYMENTS_API_KEY: "t" }))).toBe("pdt_nobrand");
+    const posts = calls.filter((c) => c.method === "POST");
+    expect(posts[0]!.body.brand_id).toBe("brnd_live_only");
+    expect(posts[1]!.body.brand_id).toBeUndefined();
+  });
+  it("the webhook handler works in live mode with whatever DODO_WEBHOOK_SECRET is set, and rejects the other mode's secret", async () => {
+    const liveSecret = "whsec_" + btoa("live-endpoint-secret-bytes-0123456789");
+    const env = makeTestEnv({ DODO_MODE: "live", DODO_WEBHOOK_SECRET: liveSecret });
+    const c = new Client(makeApp(), env);
+    await c.signIn("controller@acmefreight.example");
+    const orgId = Me.parse((await c.json("/api/workspaces", { body: { name: "Acme Freight Ltd" } })).body).org.id;
+    expect((await post(c, evt("subscription.active", orgId), { secret: "whsec_" + btoa("webhook-test-secret-bytes-0123456789") })).status).toBe(401);
+    expect((await post(c, evt("subscription.active", orgId))).body.applied).toBe(true);
+    expect((await c.json("/api/billing")).body).toMatchObject({ plan: "pro", status: "active" });
   });
 });

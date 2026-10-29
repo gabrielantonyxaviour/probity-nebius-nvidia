@@ -12,6 +12,8 @@ export interface ProductVars {
   DODO_PAYMENTS_API_KEY?: string;
   DODO_PAYMENTS_LIVE_API_KEY?: string;
   DODO_MODE?: string;
+  /** Dodo brand (statement descriptor, checkout branding) for the Probity product, e.g. brnd_... Optional; the account's primary brand is used when unset. */
+  DODO_BRAND_ID?: string;
   DODO_WEBHOOK_SECRET?: string;
   JUDGE_CODE?: string;
 }
