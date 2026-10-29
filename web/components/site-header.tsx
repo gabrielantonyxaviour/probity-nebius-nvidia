@@ -31,12 +31,12 @@ export function SiteHeader() {
 }
 
 function Mark() {
-  // A seal: the ring is the vendor record, the bar is the letter it must match.
+  // The record on file and the letter, overlapping; the crimson overlap is where they must line up.
   return (
-    <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
-      <circle cx="11" cy="11" r="9.25" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <rect x="6" y="10.1" width="10" height="1.8" rx=".9" fill="currentColor" />
-      <circle cx="11" cy="11" r="2.6" fill="var(--hold)" />
+    <svg width="26" height="20" viewBox="2 9 60 46" aria-hidden="true">
+      <path d="M30 26h9v7a5 5 0 0 1-5 5H25V31a5 5 0 0 1 5-5z" fill="var(--mark-accent)" />
+      <rect x="7" y="14" width="32" height="24" rx="5" fill="none" stroke="currentColor" strokeWidth="4.5" />
+      <rect x="25" y="26" width="32" height="24" rx="5" fill="none" stroke="currentColor" strokeWidth="4.5" />
     </svg>
   );
 }

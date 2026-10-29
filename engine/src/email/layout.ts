@@ -1,5 +1,5 @@
 // Branded HTML shell for every Probity e-mail. Table layout and inline styles only, so Gmail, Outlook and Apple Mail
-// render it the same; no web fonts, scripts or images (the mark is drawn with a styled cell, so nothing is blocked).
+// render it the same; no web fonts or scripts. The mark is one small hosted PNG with an empty alt, so the wordmark still reads if images are off.
 export const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 const C = { bg: "#f9f5ef", card: "#ffffff", ink: "#27251e", muted: "#625d58", rule: "#e6e1d9", hold: "#a23544", holdBg: "#f6e9e7", call: "#914a27", ok: "#136a22" };
@@ -27,7 +27,7 @@ export function shell(preheader: string, body: string): string {
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px">
 <tr><td style="padding:0 4px 18px">
   <table role="presentation" cellpadding="0" cellspacing="0"><tr>
-    <td style="width:22px;height:22px;border:2px solid ${C.ink};border-radius:50%;text-align:center;vertical-align:middle"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${C.hold}"></span></td>
+    <td style="vertical-align:middle"><img src="https://probity.pages.dev/brand/probity-mark-email.png" width="30" height="23" alt="" style="display:block;border:0"></td>
     <td style="padding-left:9px;font:24px/1 ${SERIF};color:${C.ink};letter-spacing:-.02em">Probity</td>
   </tr></table>
 </td></tr>

@@ -28,6 +28,7 @@
   --serif: var(--ff-serif), "Iowan Old Style", Georgia, serif;
   --sans: var(--ff-sans), -apple-system, system-ui, "Segoe UI", sans-serif;
   --mono: var(--ff-mono), ui-monospace, Menlo, monospace;
+  --mark-accent: light-dark(#A23544, #E25D6E);
   --radius: 10px;
   --gutter: clamp(16px, 4vw, 40px);
 }
