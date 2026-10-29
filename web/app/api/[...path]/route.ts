@@ -7,7 +7,7 @@ type Engine = { fetch: (req: Request) => Promise<Response> };
 
 // Signature headers must pass untouched: Standard Webhooks (Composio, Dodo), Slack, and our own sweep HMAC.
 const PASS_HEADERS = [
-  "content-type", "cookie", "accept", "x-session", "origin", "user-agent",
+  "content-type", "cookie", "accept", "x-session", "origin", "user-agent", "cf-connecting-ip", "x-forwarded-for",
   "x-probity-timestamp", "x-probity-signature",
   "webhook-id", "webhook-timestamp", "webhook-signature",
   "x-slack-signature", "x-slack-request-timestamp",
