@@ -68,13 +68,16 @@ export async function probeNebius(fetcher: typeof fetch = fetch): Promise<Array<
     ["auth.nebius.com", "https://auth.nebius.com/oauth2/token/exchange", { method: "POST", headers: { ...UA, "Content-Type": "application/x-www-form-urlencoded" }, body: "grant_type=x" }],
     ["api eu-north1", "https://api.eu-north1.nebius.cloud/ai/v1/jobs", { headers: UA }],
     ["api eu-north1 http", "http://api.eu-north1.nebius.cloud/ai/v1/jobs", { headers: UA }],
+    ["iam.api.nebius.cloud", "https://iam.api.nebius.cloud/", { headers: UA }],
+    ["ai.api.nebius.cloud", "https://ai.api.nebius.cloud/ai/v1/jobs", { headers: UA }],
+    ["cdn target", "https://api.nebius.cloud.cdn.cloudflare.net/ai/v1/jobs", { headers: { ...UA, Host: "api.nebius.cloud" } }],
     ["docs.nebius.com", "https://docs.nebius.com/llms.txt", { headers: UA }],
   ];
   const out: Array<{ hop: string; status: number | null; ms: number; note: string }> = [];
   for (const [hop, url, init] of hops) { // one at a time: a Worker holds at most six open connections
     const t0 = Date.now();
     try {
-      const res = await fetch(url, { ...init, signal: AbortSignal.timeout(8_000) });
+      const res = await fetch(url, { ...init, signal: AbortSignal.timeout(5_000) });
       out.push({ hop, status: res.status, ms: Date.now() - t0, note: (await res.text()).replace(/\s+/g, " ").slice(0, 100) });
     } catch (e) {
       out.push({ hop, status: null, ms: Date.now() - t0, note: e instanceof Error ? e.name : "failed" });
