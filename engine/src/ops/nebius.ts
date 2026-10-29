@@ -63,6 +63,12 @@ export async function probeNebius(fetcher: typeof fetch = fetch): Promise<Array<
     ["token endpoint", NEBIUS_TOKEN_URL, { method: "POST", headers: { ...UA, "Content-Type": "application/x-www-form-urlencoded" }, body: "grant_type=urn:ietf:params:oauth:grant-type:token-exchange&subject_token=x.y.z&subject_token_type=urn:ietf:params:oauth:token-type:jwt" }],
     ["api jobs (no token)", `${NEBIUS_API}/ai/v1/jobs`, { headers: UA }],
     ["api jobs (no UA)", `${NEBIUS_API}/ai/v1/jobs`, {}],
+    ["auth.nebius.com", "https://auth.nebius.com/oauth2/token/exchange", { method: "POST", headers: { ...UA, "Content-Type": "application/x-www-form-urlencoded" }, body: "grant_type=x" }],
+    ["api eu-north1", "https://api.eu-north1.nebius.cloud/ai/v1/jobs", { headers: UA }],
+    ["api eu-north1 http", "http://api.eu-north1.nebius.cloud/ai/v1/jobs", { headers: UA }],
+    ["token factory", "https://api.tokenfactory.nebius.com/v1/models", { headers: UA }],
+    ["docs.nebius.com", "https://docs.nebius.com/llms.txt", { headers: UA }],
+    ["non-cloudflare", "https://httpbin.org/status/200", { headers: UA }],
   ];
   return Promise.all(hops.map(async ([hop, url, init]) => {
     const t0 = Date.now();
