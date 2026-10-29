@@ -34,10 +34,9 @@ describe("HMAC", () => {
     expect(await verifyRequest(SECRET, "POST", "/api/sweep/callback", '{"a":1}', undefined, undefined, 1100)).toBe(false);
     expect(await verifyRequest("", "POST", "/x", "", "1", "x", 1)).toBe(false);
   });
-  it("matches the Python signer (known vector)", async () => {
-    // python: hmac.new(b"test-secret", b"1000.GET./api/sweep/work.", sha256).hexdigest()
-    const s = await signRequest(SECRET, "GET", "/api/sweep/work", "", 1000);
-    expect(s.signature).toMatch(/^[0-9a-f]{64}$/);
+  it("matches the Python signer in job/sweep.py (vector computed with hmac.new in Python)", async () => {
+    const s = await signRequest(SECRET, "POST", "/api/sweep/callback", '{"a":1}', 1000);
+    expect(s.signature).toBe("01f7d8e0818f6e1988061b3cfef3114a7af9853ae825f1e3e708139851850eae");
   });
 });
 

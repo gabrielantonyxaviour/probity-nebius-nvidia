@@ -1,11 +1,14 @@
 // /api/limits and /api/sweep/*. The two job endpoints (work, callback) and start accept only HMAC-signed requests.
 import { Hono, type Context } from "hono";
+import { z } from "zod";
 import { getLimits, type GuardEnv } from "./guard";
 import { verifyRequest } from "./hmac";
 import { CallbackBody, latestSweep, startSweep, storeCallback, type OpsEnv } from "./sweep";
 import { sweepWork } from "./work";
 
 type Ctx = Context<{ Bindings: OpsEnv }>;
+const StartBody = z.object({ mode: z.enum(["sweep", "eval"]).default("sweep") });
+const safeJson = (t: string): unknown => { try { return JSON.parse(t); } catch { return null; } };
 const fail = (c: Ctx, status: 400 | 401 | 500 | 502, error: string, code: string): Response => c.json({ error, code }, status);
 
 /** Session identity: the `x-probity-session` header, else the `probity_sid` cookie, else a shared "anon" session. */
@@ -45,9 +48,10 @@ export function makeOpsRoutes(sessionOf: (c: Ctx) => string = defaultSessionId):
   app.post("/sweep/start", async (c) => {
     const raw = await c.req.text();
     if (!(await signed(c, raw))) return fail(c, 401, "Signature missing or invalid.", "unauthorized");
-    const mode = raw.includes('"eval"') ? "eval" : "sweep";
+    const parsed = StartBody.safeParse(raw ? safeJson(raw) : {});
+    if (!parsed.success) return fail(c, 400, "Body must be {\"mode\":\"sweep\"|\"eval\"}.", "bad_request");
     try {
-      return c.json(await startSweep(c.env, mode));
+      return c.json(await startSweep(c.env, parsed.data.mode));
     } catch {
       return fail(c, 502, "The sweep job could not be started.", "job_start_failed");
     }
