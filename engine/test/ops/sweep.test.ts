@@ -116,6 +116,22 @@ describe("sweep work", () => {
   });
 });
 
+describe("job spend", () => {
+  it("the first terminal callback counts compute (from registration) plus the rails' token cost toward the budget; a retry does not", async () => {
+    const env = makeEnv({ seed: true });
+    const app = wrap() as never;
+    env.d1.exec("INSERT INTO sweep_reports (job_id, json, created_at) VALUES ('aijob-cost1', '{\"jobId\":\"aijob-cost1\",\"sweepId\":\"sweep-cost0001\",\"mode\":\"sweep\",\"state\":\"starting\",\"startedAt\":\"2026-10-30T10:00:00.000Z\",\"finishedAt\":null,\"requestsSwept\":0,\"recheckedRequestIds\":[],\"nemo\":{\"spansChecked\":0,\"flagged\":0,\"outputChecks\":0,\"outputBlocked\":0},\"eval\":null,\"costUsd\":0}', '2026-10-30T10:00:00.000Z')");
+    const report = JSON.stringify(callback({ sweepId: "sweep-cost0001", startedAt: "2026-10-30T10:01:30.000Z", finishedAt: "2026-10-30T11:00:00.000Z", tokenCostUsd: 0.0016 }));
+    await call(app, env, "POST", "/sweep/callback", report);
+    await call(app, env, "POST", "/sweep/callback", report); // retried delivery
+    const rows = await env.d1.prepare("SELECT kind, usd, note FROM spend WHERE kind = 'nebius_job'").all<{ kind: string; usd: number; note: string }>();
+    expect(rows.results).toHaveLength(1);
+    expect(rows.results[0]!.kind).toBe("nebius_job");
+    expect(rows.results[0]!.usd).toBeCloseTo(0.068 + 0.0016, 4); // one hour of cpu-d3 plus the rails
+    expect(rows.results[0]!.note).toContain("aijob-cost1");
+  });
+});
+
 describe("register", () => {
   it("an operator-started job is recorded under its real Nebius id and the callback lands on it", async () => {
     const env = makeEnv({ seed: true });

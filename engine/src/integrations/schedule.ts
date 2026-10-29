@@ -7,6 +7,7 @@ import { startRun } from "../check/start";
 import { lookupEdgar, lookupGleif, lookupUsaspending } from "../evidence";
 import { sendEmail, preRunSummaryEmail } from "../email";
 import { railsPass } from "../ops/rails";
+import { recordSpend } from "../ops/spend";
 import { storeCallback } from "../ops/sweep";
 import { sweepWork, type WorkItem } from "../ops/work";
 import type { AppEnv } from "../routes/util";
@@ -88,7 +89,8 @@ export async function runOneRecheck(env: IntEnv, d: Due, now: number): Promise<v
   const rails = await railsPass(env, items);
   const counts = await env.DB.prepare("SELECT json_extract(u.json, '$.decision.finalVerdict') AS verdict, COUNT(*) AS n FROM requests r JOIN runs u ON u.id = r.latest_run_id WHERE r.org_id = ?1 AND r.status != 'closed' GROUP BY 1").bind(orgId).all<{ verdict: string | null; n: number }>();
   const n = (v: string): number => counts.results.find((x) => x.verdict === v)?.n ?? 0;
-  await storeCallback(env, { sweepId: `recheck-${crypto.randomUUID().slice(0, 8)}`, mode: "sweep", state: "completed", startedAt, finishedAt: nowIso(), requestsSwept: rails.requestsSwept, recheckedRequestIds: rechecked, flaggedRequestIds: rails.flaggedRequestIds, sweptRequestIds: rails.sweptRequestIds, nemo: rails.nemo, eval: null, costUsd: rails.costUsd });
+  await storeCallback(env, { sweepId: `recheck-${crypto.randomUUID().slice(0, 8)}`, mode: "sweep", state: "completed", startedAt, finishedAt: nowIso(), requestsSwept: rails.requestsSwept, recheckedRequestIds: rechecked, flaggedRequestIds: rails.flaggedRequestIds, sweptRequestIds: rails.sweptRequestIds, nemo: rails.nemo, eval: null, costUsd: rails.costUsd, tokenCostUsd: 0 }, { nebiusJob: false });
+  await recordSpend(env, [{ kind: "token_factory", usd: rails.costUsd, orgId, note: "pre-run re-check rails" }]).catch(() => undefined);
   const when = cutoffAfter(sched, now);
   const sum = { cleared: n("APPROVE"), onHold: n("HOLD"), needsCall: n("CALLBACK_VERIFY") };
   await postSummary(env, orgId, { company: orgId, weekday: when?.weekday ?? null, cutoff: when?.cutoff ?? null, ...sum, flagged: rails.flaggedRequestIds.length });

@@ -26,7 +26,17 @@ SECRET = os.environ.get("JOB_CALLBACK_SECRET", "")
 SWEEP_ID = os.environ.get("SWEEP_ID", "")
 CONCURRENCY = int(os.environ.get("CONCURRENCY", "4"))
 SPAN_CHARS = 6000
+LIGHTNING_USD_PER_M = (0.06, 0.24)  # Nemotron 3.5 Lightning input / output, per million tokens
 VM_USD_PER_HOUR = 0.068  # cpu-d3 2vcpu-8gb $0.066/h + 20 GiB network SSD $0.002/h; model tokens are not included
+
+
+def _template_chars() -> dict:
+    with open(os.path.join(HERE, "config", "prompts.yml"), encoding="utf-8") as f:
+        parts = f.read().split("- task: ")[1:]
+    return {p.split("\n", 1)[0].strip(): len(p) for p in parts}
+
+
+TEMPLATE_CHARS = _template_chars()
 
 
 def now() -> str:
@@ -61,11 +71,18 @@ class Screen:
         self.rails = rails
         self.gate = asyncio.Semaphore(CONCURRENCY)
         self.input_checks = self.input_flagged = self.output_checks = self.output_blocked = 0
+        self.token_usd = 0.0
+
+    def _bill(self, template_chars: int, text_chars: int) -> None:
+        """Estimates the Token Factory cost of one rail call from its prompt and reply sizes (about 4 characters per token)."""
+        prompt_tokens = (template_chars + text_chars) / 4
+        self.token_usd += (prompt_tokens * LIGHTNING_USD_PER_M[0] + 2 * LIGHTNING_USD_PER_M[1]) / 1_000_000
 
     async def input_rail(self, text: str) -> bool:
         """True when the input rail BLOCKS the text (an instruction aimed at an automated reviewer)."""
         async with self.gate:
             res = await self.rails.check_async([{"role": "user", "content": text[:SPAN_CHARS]}], rail_types=[RailType.INPUT])
+        self._bill(TEMPLATE_CHARS["self_check_input"], min(len(text), SPAN_CHARS))
         blocked = res.status == RailStatus.BLOCKED
         self.input_checks += 1
         self.input_flagged += int(blocked)
@@ -78,6 +95,7 @@ class Screen:
                 [{"role": "user", "content": evidence[:SPAN_CHARS]}, {"role": "assistant", "content": rationale[:SPAN_CHARS]}],
                 rail_types=[RailType.OUTPUT],
             )
+        self._bill(TEMPLATE_CHARS["self_check_output"], min(len(evidence), SPAN_CHARS) + min(len(rationale), SPAN_CHARS))
         blocked = res.status == RailStatus.BLOCKED
         self.output_checks += 1
         self.output_blocked += int(blocked)
@@ -139,6 +157,7 @@ async def main() -> int:
     report["finishedAt"] = now()
     report["nemo"] = {"spansChecked": screen.input_checks, "flagged": screen.input_flagged, "outputChecks": screen.output_checks, "outputBlocked": screen.output_blocked}
     report["costUsd"] = round((time.time() - started) / 3600 * VM_USD_PER_HOUR, 5)
+    report["tokenCostUsd"] = round(screen.token_usd, 6)
     print("SWEEP_REPORT " + json.dumps(report, separators=(",", ":")), flush=True)
     if APP_URL and SECRET:
         try:
