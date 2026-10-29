@@ -31,7 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <span>
               The buying company, its vendors' records and every letter are synthetic. Registry facts and web results are live.
             </span>
-            <span className="mono">MIT licence</span>
+            <span className="row" style={{ gap: 14, fontSize: 13 }}><a href="/pricing">Pricing</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><span className="mono">MIT licence</span></span>
           </div>
         </footer>
       </body>
