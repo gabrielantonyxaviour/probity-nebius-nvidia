@@ -20,7 +20,11 @@ export function defaultSessionId(c: Ctx): string {
 }
 
 async function signed(c: Ctx, body: string): Promise<boolean> {
-  return verifyRequest(c.env.JOB_CALLBACK_SECRET, c.req.method, new URL(c.req.url).pathname, body, c.req.header("x-probity-timestamp"), c.req.header("x-probity-signature"));
+  // The web Worker's /api proxy forwards only a fixed list of headers, so the signature may also ride in the query (?pts=&psig=).
+  const url = new URL(c.req.url);
+  const ts = c.req.header("x-probity-timestamp") ?? url.searchParams.get("pts") ?? undefined;
+  const sig = c.req.header("x-probity-signature") ?? url.searchParams.get("psig") ?? undefined;
+  return verifyRequest(c.env.JOB_CALLBACK_SECRET, c.req.method, url.pathname, body, ts, sig);
 }
 
 export function makeOpsRoutes(sessionOf: (c: Ctx) => string = defaultSessionId): Hono<{ Bindings: OpsEnv }> {

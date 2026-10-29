@@ -41,7 +41,10 @@ def sign(method: str, path: str, body: str) -> dict:
 
 def call_app(method: str, path: str, payload: dict | None = None) -> dict:
     body = json.dumps(payload, separators=(",", ":")) if payload is not None else ""
-    req = urllib.request.Request(APP_URL + path, data=body.encode() if payload is not None else None, method=method, headers=sign(method, path, body))
+    h = sign(method, path, body)
+    # The app's /api proxy drops unknown headers, so the signature also travels in the query string.
+    url = f"{APP_URL}{path}?pts={h['X-Probity-Timestamp']}&psig={h['X-Probity-Signature']}"
+    req = urllib.request.Request(url, data=body.encode() if payload is not None else None, method=method, headers=h)
     with urllib.request.urlopen(req, timeout=60) as res:
         return json.loads(res.read() or b"{}")
 

@@ -60,6 +60,16 @@ describe("sweep endpoints", () => {
     expect(swept.results.map((x) => x.id)).toEqual(["BCR-2026-0407", "BCR-2026-0412"]);
   });
 
+  it("accepts the signature in the query string when a proxy drops custom headers", async () => {
+    const env = makeEnv({ seed: true });
+    const body = JSON.stringify(callback());
+    const s = await signRequest(SECRET, "POST", "/api/sweep/callback", body);
+    const r = await wrap().request(`http://app.test/api/sweep/callback?pts=${s.timestamp}&psig=${s.signature}`, { method: "POST", body }, env as never);
+    expect(r.status).toBe(200);
+    const bad = await wrap().request(`http://app.test/api/sweep/callback?pts=${s.timestamp}&psig=${"0".repeat(64)}`, { method: "POST", body }, env as never);
+    expect(bad.status).toBe(401);
+  });
+
   it("a malformed report is a 400, not a 500", async () => {
     const r = await call(wrap() as never, makeEnv({ seed: true }), "POST", "/sweep/callback", JSON.stringify({ state: "weird" }));
     expect(r.status).toBe(400);
