@@ -107,6 +107,18 @@ export function textReasons(i: GateInput): Reason[] {
   return out;
 }
 
+/** Disguised text: characters a person cannot see, look-alike letters, encoded blobs. Disguise alone is a call-back; flagged text is held by textReasons. */
+export function disguiseReasons(i: GateInput): Reason[] {
+  const f = i.findings;
+  if (!f) return [];
+  const out: Reason[] = [];
+  if (f.bidi > 0) out.push(hold("H11", `The text uses ${plural(f.bidi, "direction-control character", "direction-control characters")} that reorder what is shown on screen. Someone disguised it.`));
+  if (f.zeroWidth > 0) out.push(callback("C11", `The text has ${plural(f.zeroWidth, "invisible character", "invisible characters")} inside words, which is how filters are slipped past. Read the letter itself.`));
+  if (f.lookalikes.length) out.push(callback("C12", `${plural(f.lookalikes.length, "word", "words")} mix letters from different alphabets (for example "${f.lookalikes[0]}"), a disguise for text. Read the letter itself.`));
+  if (f.encoded > 0) out.push(callback("C13", `${plural(f.encoded, "passage", "passages")} of encoded text were found and decoded; a payment request has no reason to hide text. Read the letter itself.`));
+  return out;
+}
+
 export function conductReasons(i: GateInput): Reason[] {
   const out: Reason[] = [];
   const avoid = i.pressure.find((p) => p.kind === "avoid_verification" || p.kind === "secrecy");

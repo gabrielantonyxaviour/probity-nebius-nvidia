@@ -1,0 +1,9 @@
+{
+  "case": "h1-zero-width-split",
+  "kind": "zero_width",
+  "hiddenText": false,
+  "injection": true,
+  "scan": false,
+  "expectedVerdict": "HOLD",
+  "note": "visible instruction whose words are split by zero-width spaces so a keyword filter misses it"
+}

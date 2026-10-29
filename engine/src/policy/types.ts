@@ -1,5 +1,6 @@
 import type { Evidence, LetterReading, RequestDetail, Screen } from "@probity/shared";
 import { z } from "zod";
+import type { Findings } from "../check/sanitize";
 
 /** Labels that the ledger (D1 lookups by the engine) and the gate agree on. Evidence is matched by field and these labels. */
 export const LABEL = {
@@ -40,4 +41,6 @@ export interface GateInput {
   letterPhones: string[];
   /** Routing number exactly as read (not secret), and whether the two readings agreed on the account digits. */
   readingsDisagree: string[];
+  /** invisible characters, look-alike letters and encoded text found in the request's text */
+  findings?: Findings;
 }

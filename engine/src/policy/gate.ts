@@ -1,7 +1,7 @@
 // The policy gate. Pure code: facts in, decision out. A model can add evidence and wording, never change the verdict.
 import { POLICY_VERSION, type Decision, type Outcome, type Reason, type Verdict } from "@probity/shared";
 import { buildCallCard } from "./callcard";
-import { accountReasons, addressReasons, conductReasons, domainReasons, entityReasons, textReasons } from "./rules";
+import { accountReasons, addressReasons, conductReasons, disguiseReasons, domainReasons, entityReasons, textReasons } from "./rules";
 import { LABEL, type GateInput } from "./types";
 
 const ORDER = { hold: 0, callback: 1, info: 2 } as const;
@@ -17,6 +17,7 @@ export function computeReasons(i: GateInput): Reason[] {
     ...addressReasons(i),
     ...accountReasons(i),
     ...textReasons(i),
+    ...disguiseReasons(i),
     ...conductReasons(i),
   ];
   if (!callbackOnRecord(i)) rs.push({ code: "C1", severity: "callback", text: "No call-back to an independent number is on record for this request.", evidenceIds: [] });

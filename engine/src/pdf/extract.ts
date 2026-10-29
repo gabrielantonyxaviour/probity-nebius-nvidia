@@ -1,6 +1,7 @@
 // Text layer of a PDF: every text run with its position, size and fill colour (from the pdf.js operator list).
 // Detection of what a person cannot see lives in hidden.ts.
 import { extractTextItems, getDocumentProxy, getResolvedPDFJS } from "unpdf";
+import { sanitize } from "../check/sanitize";
 
 export interface RunItem {
   page: number; // 0-based
@@ -17,6 +18,8 @@ export interface PageText {
   width: number;
   height: number;
   items: RunItem[];
+  /** invisible characters in the page's raw glyphs; pdf.js drops them from its text, so they are counted here */
+  invisible: { zeroWidth: number; bidi: number };
 }
 
 export class PdfError extends Error {
@@ -84,7 +87,8 @@ export async function extractPages(bytes: Uint8Array): Promise<PageText[]> {
         }
         runs.push({ page: p, str: it.str, x: it.x, y: it.y, width: it.width, fontSize: it.fontSize, fill: hit?.fill ?? null, renderMode: hit?.mode ?? null });
       }
-      pages.push({ width: x1 - x0, height: y1 - y0, items: runs });
+      const raw = sanitize(ops.map((o) => o.text).join("\n")).findings;
+      pages.push({ width: x1 - x0, height: y1 - y0, items: runs, invisible: { zeroWidth: raw.zeroWidth, bidi: raw.bidi } });
     }
     return pages;
   } catch (e) {

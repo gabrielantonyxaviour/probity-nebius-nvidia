@@ -48,7 +48,7 @@ function fakeFetch(scoutScript: Array<string[]>, flagWeb: boolean): typeof fetch
 const scratch = (): Scratch =>
   ({
     request: { requestId: "BCR-2026-0412", vendorId: "V-10027", vendorName: "Booz Allen Hamilton Inc", kind: "bank_change", senderEmail: "x@y.example", amountAtRisk: { cents: 1, currency: "USD" }, nextRunAt: null, receivedAt: "2026-10-22T15:12:00Z", email: { from: "a@boozallen.example", replyTo: null, subject: "s", received: "x", spf: null, dkim: null }, vendorOnFile: { legalName: "Booz Allen Hamilton Inc", remitAddress: "", phone: null, domain: "boozallen.example", accountMasked: "••••0501" } },
-    emlText: "", letterKind: "pdf", lines: [], letterPhones: [], withheld: [], claims: [], pressure: [], textAccount: null, readingsDisagree: [], examiner: null, pageKeys: [],
+    emlText: "", letterKind: "pdf", findings: { zeroWidth: 0, bidi: 0, lookalikes: [], encoded: 0 }, lines: [], letterPhones: [], withheld: [], claims: [], pressure: [], textAccount: null, readingsDisagree: [], examiner: null, pageKeys: [],
   }) as Scratch;
 
 function setup(script: string[][], flagWeb = false) {

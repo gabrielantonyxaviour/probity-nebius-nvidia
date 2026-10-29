@@ -1,0 +1,9 @@
+{
+  "case": "h3-base64-note",
+  "kind": "base64",
+  "hiddenText": false,
+  "injection": true,
+  "scan": false,
+  "expectedVerdict": "HOLD",
+  "note": "an instruction to the reviewer hidden in a base64 'document reference'"
+}

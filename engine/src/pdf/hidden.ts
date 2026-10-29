@@ -18,6 +18,8 @@ export interface LetterLine {
   fontSize: number;
   hidden: Verdict | null;
   bbox: [number, number, number, number]; // top-left origin
+  /** only reported to the clerk if the screen flags it (PDF metadata) */
+  soft?: boolean;
 }
 
 const TINY_PT = 3;

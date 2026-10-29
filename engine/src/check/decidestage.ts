@@ -19,6 +19,7 @@ export function gateInputOf(run: Run, s: Scratch): GateInput {
     pressure: s.pressure,
     letterPhones: [...new Set([...s.letterPhones, ...s.claims.filter((c) => c.field === "phone").flatMap((c) => phonesIn(c.value))])],
     readingsDisagree: s.readingsDisagree,
+    findings: s.findings,
   };
 }
 

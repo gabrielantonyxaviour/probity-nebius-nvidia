@@ -41,5 +41,5 @@ export async function recordSpend(env: SpendEnv, rows: SpendRow[]): Promise<void
 export const recordCalls = (env: SpendEnv, orgId: string, runId: string, calls: ModelCall[]): Promise<void> =>
   recordSpend(env, calls.map((c) => ({ kind: "token_factory" as const, usd: c.costUsd, orgId, runId, model: c.model, note: c.stepKey })));
 
-/** A Nebius job's compute estimate (called by the sweep job module when a job ends). */
+/** A Nebius job's compute estimate (called by the pre-run re-check job module when a job ends). */
 export const recordJobSpend = (env: SpendEnv, usd: number, note: string): Promise<void> => recordSpend(env, [{ kind: "nebius_job", usd, note }]);

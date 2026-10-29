@@ -23,6 +23,8 @@ export interface PdfAnalysis {
   hidden: HiddenText[];
   scanned: boolean;
   truncated: boolean;
+  /** zero-width and direction-control characters in the raw glyphs of all pages */
+  invisible: { zeroWidth: number; bidi: number };
   /** page index -> PNG bytes were handed to `storePage`; keys come back in order */
   pageKeys: string[];
 }
@@ -77,6 +79,7 @@ export async function analyzePdf(bytes: Uint8Array, opts: AnalyzeOptions): Promi
     hidden: hiddenFromLines(lines),
     scanned,
     truncated: total > maxPages,
+    invisible: { zeroWidth: pages.reduce((n, p) => n + p.invisible.zeroWidth, 0), bidi: pages.reduce((n, p) => n + p.invisible.bidi, 0) },
     pageKeys,
   };
 }

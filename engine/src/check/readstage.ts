@@ -6,6 +6,7 @@ import { callJson } from "../models/structured";
 import { digits, validAba } from "../policy/normalise";
 import type { Pressure } from "../policy/types";
 import { READER_IMAGE_SYSTEM, READER_TEXT_SYSTEM, readerImageUser, readerTextUser } from "../prompts/reader";
+import { mergeFindings, sanitize } from "./sanitize";
 import { screenSpans } from "./screenstage";
 import { accountOf, collapseRuns, sameClaimValue, toClaims } from "./claims";
 import { ImageReading, TextReading, type RawClaim } from "./schemas";
@@ -45,7 +46,7 @@ export async function readTextStage(ctx: Ctx, s: Scratch): Promise<StageOut> {
 
 const RETRY_HINT = " Read the routing number and the account number again, digit by digit. A routing number has exactly 9 digits. Count the digits, including repeated zeros.";
 
-async function readPage(ctx: Ctx, key: string, n: number, total: number, hint = "") {
+export async function readPage(ctx: Ctx, key: string, n: number, total: number, hint = "") {
   const png = await ctx.files.get(key);
   if (!png) throw new Error("A page image is missing.");
   const messages: ChatOptions["messages"] = [
@@ -97,7 +98,12 @@ export async function readImageStage(ctx: Ctx, s: Scratch): Promise<StageOut> {
     raw = pages.flatMap((p) => p.data.claims);
     ({ acct, disagree } = await compareMoney(s, raw));
   }
-  const imageLines = pages.flatMap((p) => p.data.lines);
+  let findings = s.findings;
+  const imageLines = pages.flatMap((p) => p.data.lines).map((l) => {
+    const c = sanitize(l);
+    findings = mergeFindings(findings, c.findings);
+    return c.text;
+  });
   const run = await ctx.store.get(ctx.runId);
   const scanned = !!run.letter?.scanned;
   const imgClaims = toClaims(raw, null, true);
@@ -125,5 +131,5 @@ export async function readImageStage(ctx: Ctx, s: Scratch): Promise<StageOut> {
   const seen = merged.filter((c) => c.inImage).length;
   const summary = `${seen} of ${merged.length} claims also seen on the page image${missing.length ? `; ${plural(missing.length, "text line", "text lines")} not on the page` : ""}${disagree.length ? `; the two readings disagree on the ${disagree.join(" and ")}` : ""}`;
   const textAccount = s.textAccount ?? (acct ? { hash: acct.hash, digitsHash: acct.digitsHash, last4: acct.last4 } : null);
-  return { scratch: { ...s, claims: merged, pressure, textAccount, readingsDisagree: disagree }, summary, calls };
+  return { scratch: { ...s, claims: merged, pressure, textAccount, readingsDisagree: disagree, findings }, summary, calls };
 }

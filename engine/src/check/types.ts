@@ -2,6 +2,7 @@ import type { Claim, ModelCall, RequestDetail, Run } from "@probity/shared";
 import type { Env } from "../env";
 import type { LetterLine, PdfiumWasm } from "../pdf";
 import type { ExaminerOutput, Pressure } from "../policy/types";
+import type { Findings } from "./sanitize";
 
 /** Where runs live. D1 in the Worker, a Map in tests. */
 export interface RunStore {
@@ -35,6 +36,8 @@ export interface Scratch {
   /** pdf | image (a photo or screenshot, read by the vision model only) | body (no attachment: the e-mail text is the letter) */
   letterKind: "pdf" | "image" | "body";
   lines: LetterLine[];
+  /** invisible characters, look-alike letters and encoded text found in the request (see sanitize.ts) */
+  findings: Findings;
   letterPhones: string[];
   /** ids of letter lines the screen flagged: withheld from every later prompt */
   withheld: string[];
