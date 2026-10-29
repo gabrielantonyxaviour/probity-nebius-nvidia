@@ -158,7 +158,7 @@ INSERT OR REPLACE INTO vendor_contacts (contact_id, vendor_id, kind, value, vali
   ('VC-00056', 'V-10544', 'phone', '7035550111', '2019-11-05T14:00:00Z', NULL, 'onboarding'),
   ('VC-00057', 'V-10561', 'email', 'finance@sableharbor.example', '2019-04-02T12:00:00Z', NULL, 'migration'),
   ('VC-00058', 'V-10561', 'phone', '(757) 555-0122', '2019-04-02T12:00:00Z', '2021-04-28T15:00:00Z', 'migration'),
-  ('VC-00059', 'V-10561', 'phone', '(757) 555-0125', '2021-04-28T15:00:00Z', NULL, 'vendor_portal'),
+  ('VC-00059', 'V-10561', 'phone', '(757) 555-0190', '2021-04-28T15:00:00Z', NULL, 'vendor_portal'),
   ('VC-00060', 'V-10587', 'email', 'ap@saic.example', '2019-04-02T12:00:00Z', NULL, 'migration'),
   ('VC-00061', 'V-10587', 'phone', '703.676.4300', '2019-04-02T12:00:00Z', NULL, 'migration'),
   ('VC-00062', 'V-10592', 'email', 'accounts.receivable@thornfieldlabs.example', '2023-01-22T18:20:00Z', NULL, 'onboarding'),

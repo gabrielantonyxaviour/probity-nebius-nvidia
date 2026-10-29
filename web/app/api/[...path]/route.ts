@@ -28,16 +28,26 @@ async function forward(req: Request, { params }: Ctx): Promise<Response> {
   const init: RequestInit = { method: req.method, headers, redirect: "manual" };
   if (req.method !== "GET" && req.method !== "HEAD") init.body = await req.arrayBuffer();
 
+  // Local development points at `wrangler dev` directly; deployed, the service binding is the only route.
+  const base = process.env.ENGINE_URL;
+  if (base) return clean(await fetch(`${base}${target}`, init));
   try {
     const { env } = await getCloudflareContext({ async: true });
     const engine = (env as unknown as { ENGINE?: Engine }).ENGINE;
-    if (engine) return await engine.fetch(new Request(`https://engine${target}`, init));
+    const res = engine ? await engine.fetch(new Request(`https://engine${target}`, init)) : undefined;
+    if (res instanceof Response) return clean(res);
   } catch {
-    // Not running inside a Worker (plain `next dev`): fall through to ENGINE_URL.
+    // Binding unavailable: answer below.
   }
-  const base = process.env.ENGINE_URL;
-  if (base) return fetch(`${base}${target}`, init);
   return Response.json({ error: "The check service is not reachable", code: "engine_unavailable" }, { status: 503 });
+}
+
+/** fetch() has already decoded the body, so the encoding and length headers no longer describe it. */
+function clean(res: Response): Response {
+  const headers = new Headers(res.headers);
+  headers.delete("content-encoding");
+  headers.delete("content-length");
+  return new Response(res.body, { status: res.status, statusText: res.statusText, headers });
 }
 
 export const GET = forward;

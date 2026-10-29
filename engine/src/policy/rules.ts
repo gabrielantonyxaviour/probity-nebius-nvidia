@@ -88,19 +88,21 @@ export function textReasons(i: GateInput): Reason[] {
   const out: Reason[] = [];
   const flags = i.screen.flags.filter((f) => f.source !== "web");
   const web = i.screen.flags.filter((f) => f.source === "web");
-  const key = (t: string) => nameNorm(t).slice(0, 60);
-  const flaggedKey = new Set(i.screen.flags.map((f) => key(f.text)));
-  const hiddenFlagged = i.letter.hidden.filter((h) => flaggedKey.has(key(h.text))).length;
+  // A hidden line counts as flagged when either text contains the other's opening words: the screen
+  // and the PDF reader can split the same sentence differently.
+  const head = (t: string) => nameNorm(t).slice(0, 40);
+  const overlaps = (a: string, b: string) => nameNorm(a).includes(head(b)) || nameNorm(b).includes(head(a));
+  const hiddenFlagged = i.letter.hidden.filter((h) => flags.some((f) => overlaps(f.text, h.text))).length;
   const onPage = flags.filter((f) => f.source === "letter").length - hiddenFlagged;
   const inMail = flags.filter((f) => f.source === "email").length;
   const parts = [
-    hiddenFlagged ? `${plural(hiddenFlagged, "hidden line", "hidden lines")} in the PDF (invisible on the page)` : null,
-    onPage > 0 ? `${plural(onPage, "line", "lines")} on the page` : null,
+    hiddenFlagged ? `${plural(hiddenFlagged, "line", "lines")} hidden in the PDF where a person can't see ${hiddenFlagged === 1 ? "it" : "them"}` : null,
+    onPage > 0 ? `${plural(onPage, "line", "lines")} in plain sight on the page` : null,
     inMail ? `${plural(inMail, "passage", "passages")} in the e-mail` : null,
   ].filter(Boolean);
-  if (flags.length) out.push(hold("H10", `The request contains text addressed to an automated reviewer: ${parts.join(", ")}. It was quoted and ignored, and played no part in this decision.`));
+  if (flags.length) out.push(hold("H10", `The request tries to instruct an automated reviewer: ${parts.join(", ")}. Probity treated it as evidence and ignored it.`));
   if (web.length) out.push(info("I4", `${plural(web.length, "web result", "web results")} found during the check contained text addressed to a reviewer; it was ignored.`));
-  const unflagged = i.letter.hidden.filter((h) => !flaggedKey.has(key(h.text)));
+  const unflagged = i.letter.hidden.filter((h) => !flags.some((f) => overlaps(f.text, h.text)));
   if (unflagged.length) out.push(callback("C6", `${plural(unflagged.length, "line", "lines")} in the PDF cannot be seen on the printed page; check the letter itself.`));
   return out;
 }

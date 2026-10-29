@@ -55,8 +55,9 @@ export function LetterView({ run }: { run: Run }) {
                 width: `${((h.bbox[2] - h.bbox[0]) / pw) * 100}%`, minHeight: `${Math.max(((h.bbox[3] - h.bbox[1]) / ph) * 100, 1.6)}%`,
                 background: "rgba(162, 53, 68, .14)", outline: "2px solid #a23544", borderRadius: 2,
               }}>
-                <span style={{ position: "absolute", top: "-1.7em", left: -2, background: "#a23544", color: "#fff", fontSize: 11, padding: "1px 6px", borderRadius: 3, whiteSpace: "nowrap" }}>
-                  hidden line {i + 1}
+                <span aria-label={`Hidden line ${i + 1}`} style={{ position: "absolute", top: "50%", right: "calc(100% + 6px)", transform: "translateY(-50%)", width: 18, height: 18,
+                  display: "grid", placeItems: "center", borderRadius: "50%", background: "#a23544", color: "#fff", fontSize: 11, fontWeight: 600 }}>
+                  {i + 1}
                 </span>
               </div>
             ))}
@@ -73,7 +74,7 @@ export function LetterView({ run }: { run: Run }) {
             <div style={{ display: "grid", gap: 10 }}>
               {letter.hidden.map((h, i) => (
                 <div key={i} style={{ borderLeft: "3px solid var(--hold)", paddingLeft: 10 }}>
-                  <p className="label" style={{ margin: 0, color: "var(--hold)" }}>Hidden line {i + 1} · {WHY[h.why]}</p>
+                  <p className="label" style={{ margin: 0, color: "var(--hold)" }}><span style={{ display: "inline-grid", placeItems: "center", width: 16, height: 16, borderRadius: "50%", background: "#a23544", color: "#fff", marginRight: 6, letterSpacing: 0 }}>{i + 1}</span>{WHY[h.why]}</p>
                   <p className="mono" style={{ margin: "4px 0 2px", fontSize: 12.5, overflowWrap: "anywhere" }}>&ldquo;{h.text}&rdquo;</p>
                   <p className="muted" style={{ margin: 0, fontSize: 12.5 }}>{h.detail}</p>
                 </div>

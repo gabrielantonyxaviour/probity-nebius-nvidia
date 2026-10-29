@@ -22,7 +22,9 @@ export function computeReasons(i: GateInput): Reason[] {
   if (!callbackOnRecord(i)) rs.push({ code: "C1", severity: "callback", text: "No call-back to an independent number is on record for this request.", evidenceIds: [] });
   if (!card.phone && !callbackOnRecord(i))
     rs.push({ code: "C9", severity: "callback", text: `No independent phone number was found for ${i.request.vendorName}. Escalate to the contracting officer for a verified contact.`, evidenceIds: [] });
-  return rs.sort((a, b) => ORDER[a.severity] - ORDER[b.severity]);
+  // Text aimed at an automated reviewer leads: it is the finding a clerk cannot see for themselves.
+  const lead = (r: Reason) => (r.code === "H10" ? -1 : 0);
+  return rs.sort((a, b) => ORDER[a.severity] - ORDER[b.severity] || lead(a) - lead(b));
 }
 
 export const verdictOf = (reasons: Reason[]): Verdict =>

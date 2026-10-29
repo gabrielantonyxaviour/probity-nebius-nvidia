@@ -50,7 +50,7 @@ export function ModelsStrip({ run, onOpen }: { run: Run; onOpen?: () => void }) 
       </ul>
       <div className="between mono num" style={{ borderTop: "1px solid var(--rule)", marginTop: 14, paddingTop: 10, fontSize: 12, flexWrap: "wrap", gap: 8 }}>
         <span>{dollars(run.totals.costUsd)} this check</span>
-        <span>{cachedPct}% of input cached</span>
+        {cachedPct > 0 && <span>{cachedPct}% of input cached</span>}
         {run.totals.tavilyCredits > 0 && <span>{run.totals.tavilyCredits} Tavily credits</span>}
       </div>
       {onOpen && <button onClick={onOpen} className="linkish" style={{ marginTop: 10 }}>Every call, with timings and tokens</button>}
