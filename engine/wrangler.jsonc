@@ -7,9 +7,9 @@
   "workers_dev": false,
   "preview_urls": false,
   "d1_databases": [
-    { "binding": "DB", "database_name": "probity", "database_id": "00000000-0000-0000-0000-000000000000", "migrations_dir": "migrations" }
+    { "binding": "DB", "database_name": "probity", "database_id": "f34fb564-7b37-4214-8a8b-ed7cde1af5e1", "migrations_dir": "migrations" }
   ],
-  "kv_namespaces": [{ "binding": "CACHE", "id": "00000000000000000000000000000000" }],
+  "kv_namespaces": [{ "binding": "CACHE", "id": "4d7773f643c3448b8cd43406c2937fc7" }],
   "r2_buckets": [{ "binding": "FILES", "bucket_name": "probity-files" }],
   "workflows": [{ "name": "probity-check", "binding": "CHECK", "class_name": "CheckWorkflow" }],
   "triggers": { "crons": ["0 18 * * SUN,MON,TUE,WED,THU"] },
