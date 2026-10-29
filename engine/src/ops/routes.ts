@@ -56,8 +56,10 @@ export function makeOpsRoutes(sessionOf: (c: Ctx) => string = defaultSessionId):
     if (!parsed.success) return fail(c, 400, "Body must be {\"mode\":\"sweep\"|\"eval\"}.", "bad_request");
     try {
       return c.json(await startSweep(c.env, parsed.data.mode));
-    } catch {
-      return fail(c, 502, "The sweep job could not be started.", "job_start_failed");
+    } catch (e) {
+      // Reached only with a valid signature, so the cause may be shown to the operator.
+      const detail = e instanceof Error ? `${e.name}: ${e.message}`.slice(0, 300) : "unknown";
+      return c.json({ error: "The sweep job could not be started.", code: "job_start_failed", detail }, 502);
     }
   });
 

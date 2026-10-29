@@ -42,6 +42,9 @@ export async function signJwt(key: SaKey, nowSec = Math.floor(Date.now() / 1000)
   return `${head}.${claims}.${b64url(sig)}`;
 }
 
+/** First 200 characters of an error body, for the (HMAC-protected) start route. Nebius error bodies carry no credentials. */
+const excerpt = async (res: Response): Promise<string> => (await res.text().catch(() => "")).replace(/\s+/g, " ").slice(0, 200);
+
 const TokenResponse = z.object({ access_token: z.string(), expires_in: z.number().optional() });
 
 /** IAM access token for the shared service account; cached in KV for 11 of its 12 hours. Throws on failure (callers catch). */
@@ -51,7 +54,7 @@ export async function getIamToken(env: NebiusEnv, fetcher: typeof fetch = fetch)
   const jwt = await signJwt(parseCredentials(env.NEBIUS_SA_CREDENTIALS));
   const body = new URLSearchParams({ grant_type: "urn:ietf:params:oauth:grant-type:token-exchange", requested_token_type: "urn:ietf:params:oauth:token-type:access_token", subject_token: jwt, subject_token_type: "urn:ietf:params:oauth:token-type:jwt" });
   const res = await fetcher(NEBIUS_TOKEN_URL, { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body, signal: AbortSignal.timeout(15_000) });
-  if (!res.ok) throw new Error(`Nebius token exchange failed (${res.status})`);
+  if (!res.ok) throw new Error(`Nebius token exchange failed (${res.status}): ${await excerpt(res)}`);
   const token = TokenResponse.parse(await res.json()).access_token;
   await env.CACHE.put(TOKEN_KV_KEY, token, { expirationTtl: TOKEN_KV_TTL_S });
   return token;
@@ -93,7 +96,7 @@ export type JobStatus = { id: string; state: string; startedAt: string | null; f
 export async function createJob(env: NebiusEnv, req: JobRequest, fetcher: typeof fetch = fetch): Promise<{ jobId: string }> {
   const token = await getIamToken(env, fetcher);
   const res = await fetcher(`${NEBIUS_API}/ai/v1/jobs`, { method: "POST", headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify(jobBody(req, env.NEBIUS_PROJECT_ID || DEFAULT_PROJECT_ID)), signal: AbortSignal.timeout(30_000) });
-  if (!res.ok) throw new Error(`Nebius job create failed (${res.status})`);
+  if (!res.ok) throw new Error(`Nebius job create failed (${res.status}): ${await excerpt(res)}`);
   const op = Operation.parse(await res.json());
   const jobId = op.resourceId ?? op.resource_id;
   if (!jobId) throw new Error("Nebius job create returned no resource id");
@@ -103,7 +106,7 @@ export async function createJob(env: NebiusEnv, req: JobRequest, fetcher: typeof
 export async function getJob(env: NebiusEnv, jobId: string, fetcher: typeof fetch = fetch): Promise<JobStatus> {
   const token = await getIamToken(env, fetcher);
   const res = await fetcher(`${NEBIUS_API}/ai/v1/jobs/${encodeURIComponent(jobId)}`, { headers: { Authorization: `Bearer ${token}` }, signal: AbortSignal.timeout(15_000) });
-  if (!res.ok) throw new Error(`Nebius job read failed (${res.status})`);
+  if (!res.ok) throw new Error(`Nebius job read failed (${res.status}): ${await excerpt(res)}`);
   const j = JobState.parse(await res.json());
   return { id: j.metadata.id, state: j.status?.state ?? "STATE_UNSPECIFIED", startedAt: j.status?.startedAt ?? null, finishedAt: j.status?.finishedAt ?? null };
 }
