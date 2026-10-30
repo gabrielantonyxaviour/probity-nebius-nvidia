@@ -19,7 +19,7 @@ export function runBlocks(run: Run, o: { amountCents: number | null; appUrl: str
   const phone = card?.phone ? `*${esc(card.phone)}*` : "_no independent number found_";
   const sources = card?.sources.length ? ` (${card.sources.map((s) => esc(s.label)).join(", ")})` : "";
   const struck = (card?.letterPhones ?? []).map((p) => `~${esc(p)}~`).join(" ");
-  const link = `${o.appUrl}/r/${encodeURIComponent(run.requestId)}`;
+  const link = `${o.appUrl}/app/r/${encodeURIComponent(run.requestId)}`;
   const head = `${EMOJI[verdict] ?? ""} *${LABEL[verdict] ?? verdict}: ${esc(run.vendorName)}*${o.amountCents ? `  ·  ${money(o.amountCents)} at risk` : ""}`;
   const blocks: Block[] = [
     { type: "section", text: { type: "mrkdwn", text: head } },
@@ -45,5 +45,5 @@ export function runBlocks(run: Run, o: { amountCents: number | null; appUrl: str
 export function summaryBlocks(p: { company: string; weekday: string | null; cutoff: string | null; cleared: number; onHold: number; needsCall: number; flagged: number; appUrl: string }): { text: string; blocks: Block[] } {
   const when = p.weekday && p.cutoff ? `${p.weekday}'s run, cut-off ${p.cutoff}` : "Next payment run";
   const text = `${when}: ${p.cleared} cleared, ${p.onHold} on hold, ${p.needsCall} need a call${p.flagged ? `, ${p.flagged} flagged by the re-check` : ""}.`;
-  return { text, blocks: [{ type: "section", text: { type: "mrkdwn", text: `:clipboard: *Pre-run re-check · ${esc(p.company)}*\n${text}` } }, { type: "context", elements: [{ type: "mrkdwn", text: `<${p.appUrl}/|Open the inbox>` }] }] };
+  return { text, blocks: [{ type: "section", text: { type: "mrkdwn", text: `:clipboard: *Pre-run re-check · ${esc(p.company)}*\n${text}` } }, { type: "context", elements: [{ type: "mrkdwn", text: `<${p.appUrl}/app|Open the inbox>` }] }] };
 }

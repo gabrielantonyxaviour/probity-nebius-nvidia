@@ -49,7 +49,7 @@ describe("slack", () => {
     expect(text).toContain("(703) 902-5000");
     expect(text).toContain("SEC EDGAR");
     expect(text).toContain("~(703) 555-0147~");
-    expect(text).toContain("https://probity.test/r/BCR-2026-0412");
+    expect(text).toContain("https://probity.test/app/r/BCR-2026-0412");
     const actions = (m.blocks.find((b) => b.type === "actions") as { elements: Array<{ value: string }> }).elements;
     expect(actions.map((a) => a.value)).toEqual(["confirmed", "denied", "no_answer"]);
     expect(JSON.stringify(runBlocks(run() as never, { amountCents: null, appUrl: "https://probity.test", resolved: "done" }).blocks)).not.toContain('"actions"');

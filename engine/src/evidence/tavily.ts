@@ -2,7 +2,7 @@
 // A fresh lookup is 2 credits. Results are cached 30 days (a hit costs 0). Probity's shared budget is 150 credits per month.
 import { z } from "zod";
 import type { Evidence } from "@probity/shared";
-import { tavilyGate, tavilyRecord, tavilyRefund } from "../ops/guard";
+import { CAPS, tavilyGate, tavilyRecord, tavilyRefund } from "../ops/guard";
 import { cachedLookup, fetchWithTimeout } from "./http";
 import { clip, fact, normaliseName, nameTokens, type EvidenceEnv, type ToolResult } from "./types";
 
@@ -104,7 +104,7 @@ export async function tavilyContact(env: EvidenceEnv, q: { company: string; doma
     if (peek) return toResult(peek.value, q.company, peek.at, true, 0);
 
     const gate = await tavilyGate(env, q.sessionId);
-    if (!gate.ok) return none(gate.why === "budget" ? "Web lookup budget used up; no web lookup was made." : "This session has used its 3 new web lookups; no web lookup was made.");
+    if (!gate.ok) return none(gate.why === "budget" ? "Web lookup budget used up; no web lookup was made." : `This session has used its ${CAPS.tavilyLookupsPerSession} new web lookups; no web lookup was made.`);
     let spent = 0;
     const res = await cachedLookup(env, key, TTL_S, async () => {
       const fresh = await fetchFresh(env, q.company, hint);

@@ -3,7 +3,7 @@
 import { DEMO_ORG_ID, type Limits } from "@probity/shared";
 import { budgetReached } from "./spend";
 
-export const CAPS = { liveChecksPerDay: 5, liveChecksPerSession: 3, tavilyCreditsPerMonth: 150, tavilyLookupsPerSession: 3 } as const;
+export const CAPS = { liveChecksPerDay: 5, liveChecksPerSession: 3, tavilyCreditsPerMonth: 600, tavilyLookupsPerSession: 12 } as const;
 /** A fresh lookup is one basic Search plus one basic Extract = 2 credits at the documented price. */
 export const TAVILY_LOOKUP_CREDITS = 2;
 

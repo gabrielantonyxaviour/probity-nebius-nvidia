@@ -85,21 +85,21 @@ describe("tavilyContact", () => {
   it("stops at the monthly budget with no call", async () => {
     const calls = stub();
     const env = makeEnv({ seed: true });
-    env.d1.exec(`INSERT INTO usage (day, session_id, kind, n) VALUES ('${new Date().toISOString().slice(0, 7)}','*','tavily_credit',149)`);
+    env.d1.exec(`INSERT INTO usage (day, session_id, kind, n) VALUES ('${new Date().toISOString().slice(0, 7)}','*','tavily_credit',599)`);
     const r = await tavilyContact(env, { company: "Leidos Holdings", sessionId: "sess-aaaaaa" });
     expect(calls).toHaveLength(0);
     expect(r.summary).toContain("budget used up");
     expect(r.creditsUsed).toBe(0);
   });
 
-  it("allows 3 new lookups per session, then refuses without a call", async () => {
+  it("allows 12 new lookups per session, then refuses without a call", async () => {
     const calls = stub();
     const env = makeEnv({ seed: true });
-    for (const c of ["Alpha Corp", "Beta Corp", "Gamma Corp"]) await tavilyContact(env, { company: c, sessionId: "sess-cccccc" });
+    for (const c of Array.from({ length: 12 }, (_, i) => `Company ${i + 1} Corp`)) await tavilyContact(env, { company: c, sessionId: "sess-cccccc" });
     const before = calls.length;
     const fourth = await tavilyContact(env, { company: "Delta Corp", sessionId: "sess-cccccc" });
     expect(calls.length).toBe(before);
-    expect(fourth.summary).toContain("3 new web lookups");
+    expect(fourth.summary).toContain("12 new web lookups");
   });
 
   it("without a key it says so and spends nothing", async () => {

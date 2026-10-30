@@ -2,7 +2,6 @@
 import { Hono } from "hono";
 import { z } from "zod";
 import { DEMO_ORG_ID, PaymentRun, Run, Schedule } from "@probity/shared";
-import { getPlan } from "../billing/plans";
 import { startRun } from "../check/start";
 import { lookupEdgar, lookupGleif, lookupUsaspending } from "../evidence";
 import { sendEmail, preRunSummaryEmail } from "../email";
@@ -36,7 +35,6 @@ scheduleRoutes.get("/schedule", async (c) => c.json(await load(c.env, c.get("org
 
 scheduleRoutes.put("/schedule", requireAdmin, async (c) => {
   const orgId = c.get("orgId");
-  if ((await getPlan(c.env, orgId)) !== "pro") return c.json({ error: "Scheduled pre-run re-checks are part of the Pro plan.", code: "pro_required" }, 402);
   const body = Input.safeParse(await c.req.json().catch(() => null));
   if (!body.success) return c.json({ error: body.error.issues[0]?.message ?? "That schedule is not valid.", code: "bad_request" }, 400);
   const next = nextRecheckAt(body.data);
@@ -96,7 +94,7 @@ export async function runOneRecheck(env: IntEnv, d: Due, now: number): Promise<v
   const org = await env.DB.prepare("SELECT name FROM organization WHERE id = ?1").bind(orgId).first<{ name: string }>();
   await postSummary(env, orgId, { company: org?.name ?? "Your company", weekday: when?.weekday ?? null, cutoff: when?.cutoff ?? null, ...sum, flagged: rails.flaggedRequestIds.length });
   const to = parseJson<string[]>(d.notify_emails_json, []);
-  if (to.length > 0 && when) await sendEmail(env, { to, ...preRunSummaryEmail({ company: org?.name, weekday: when.weekday, cutoff: when.cutoff, ...sum, link: `${appUrl(env)}/` }) });
+  if (to.length > 0 && when) await sendEmail(env, { to, ...preRunSummaryEmail({ company: org?.name, weekday: when.weekday, cutoff: when.cutoff, ...sum, link: `${appUrl(env)}/app` }) });
 }
 
 /** Cron entry (every 5 minutes): re-checks every company whose final pre-run window has opened, then schedules its next one. */
@@ -109,7 +107,6 @@ export async function runDueRechecks(env: IntEnv, now = Date.now()): Promise<{ r
     // make the same window fire every five minutes.
     const claim = await env.DB.prepare("UPDATE schedules SET next_recheck_at = ?2, last_recheck_at = ?3 WHERE org_id = ?1 AND next_recheck_at = ?4").bind(d.org_id, next, new Date(now).toISOString(), d.next_recheck_at).run();
     if ((claim.meta.changes ?? 0) === 0) continue;
-    if ((await getPlan(env, d.org_id)) !== "pro") continue;
     try { await runOneRecheck(env, d, now); out.ran.push(d.org_id); } catch { out.failed.push(d.org_id); }
   }
   return out;

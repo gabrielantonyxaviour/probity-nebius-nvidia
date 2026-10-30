@@ -2,7 +2,7 @@
 import { DEMO_ORG_ID, type Billing, type Plan } from "@probity/shared";
 import type { Env } from "../env";
 
-export const PLAN_LIMITS: Record<Plan, { checksPerMonth: number }> = { free: { checksPerMonth: 25 }, pro: { checksPerMonth: 500 } };
+export const PLAN_LIMITS: Record<Plan, { checksPerMonth: number }> = { free: { checksPerMonth: 100 }, pro: { checksPerMonth: 1000 } };
 export const PRICE_LABEL = "$49 / month per company";
 const GRACE_MS = 3 * 24 * 3600 * 1000; // a late renewal webhook must not lock a paying customer out
 

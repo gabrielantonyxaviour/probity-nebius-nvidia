@@ -37,10 +37,9 @@ describe("schedule routes", () => {
     expect(s.timezone).toBe("America/New_York");
     expect(s.nextRecheckAt).toBeNull();
   });
-  it("PUT needs the Pro plan, an admin and a real time zone", async () => {
+  it("PUT is open to every plan, needs an admin and a real time zone", async () => {
     const env = makeEnv({ seed: true });
-    expect((await put(appFor("org_acme"), env, body)).status).toBe(402);
-    makePro(env, "org_acme");
+    expect((await put(appFor("org_acme"), env, body)).status).toBe(200);
     expect((await put(appFor("org_acme", "member"), env, body)).status).toBe(403);
     expect((await put(appFor("org_acme"), env, { ...body, timezone: "Mars/Olympus" })).status).toBe(400);
     expect((await put(appFor("org_acme"), env, { ...body, notifyEmails: ["not-an-email"] })).status).toBe(400);
@@ -72,12 +71,12 @@ describe("runDueRechecks", () => {
     expect(await runDueRechecks(env as never, now)).toEqual({ ran: [], failed: [] }); // not due again
   });
 
-  it("skips companies on the free plan and the demo company, but still moves their window on", async () => {
+  it("runs for free-plan companies too, skips the demo company, and moves the window on", async () => {
     const env = makeEnv({ seed: true });
     seedDue(env, "org_free");
     seedDue(env, "org_demo");
     stubFetch([]);
-    expect(await runDueRechecks(env as never, Date.parse("2026-10-30T16:01:00Z"))).toEqual({ ran: [], failed: [] });
+    expect(await runDueRechecks(env as never, Date.parse("2026-10-30T16:01:00Z"))).toEqual({ ran: ["org_free"], failed: [] });
     expect((await env.d1.prepare("SELECT next_recheck_at FROM schedules WHERE org_id = 'org_free'").first<{ next_recheck_at: string }>())?.next_recheck_at).toBe("2026-11-06T17:00:00.000Z");
   });
 });

@@ -35,7 +35,7 @@ describe("webhook signature", () => {
     const r = await post(c, evt("subscription.active", orgId));
     expect(r).toMatchObject({ status: 200, body: { applied: true } });
     const b = (await c.json("/api/billing")).body as any;
-    expect(b).toMatchObject({ plan: "pro", status: "active", renewsAt: "2026-11-30T02:00:00Z", limits: { checksPerMonth: 500 } });
+    expect(b).toMatchObject({ plan: "pro", status: "active", renewsAt: "2026-11-30T02:00:00Z", limits: { checksPerMonth: 1000 } });
     expect(Me.parse((await c.json("/api/me")).body).org.plan).toBe("pro");
   });
   it("rejects a bad signature, a wrong secret, missing headers and an old timestamp", async () => {
@@ -187,16 +187,16 @@ describe("checkout and portal", () => {
 });
 
 describe("check meter", () => {
-  it("free allows 25 a month, pro 500, atomically; the demo follows the pro limit", async () => {
+  it("free allows 100 a month, Plus 1000, atomically; the demo follows the Plus limit", async () => {
     const { env, orgId } = await owner();
-    expect(await checksLeft(env, orgId)).toBe(25);
-    for (let i = 0; i < 25; i++) expect(await consumeCheck(env, orgId)).toBe(true);
+    expect(await checksLeft(env, orgId)).toBe(100);
+    for (let i = 0; i < 100; i++) expect(await consumeCheck(env, orgId)).toBe(true);
     expect(await consumeCheck(env, orgId)).toBe(false);
     expect(await checksLeft(env, orgId)).toBe(0);
     await env.DB.prepare("UPDATE org_profile SET plan = 'pro', plan_status = 'active', plan_renews_at = NULL WHERE org_id = ?").bind(orgId).run();
-    expect(await checksLeft(env, orgId)).toBe(475);
+    expect(await checksLeft(env, orgId)).toBe(900);
     expect(await consumeCheck(env, orgId)).toBe(true);
-    expect(await checksLeft(env, "org_demo")).toBe(500);
+    expect(await checksLeft(env, "org_demo")).toBe(1000);
   });
 });
 

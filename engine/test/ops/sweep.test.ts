@@ -93,7 +93,7 @@ describe("sweep endpoints", () => {
   it("/limits reflects the session's remaining checks", async () => {
     const env = makeEnv();
     const r = await wrap().request("http://app.test/api/limits", { headers: { "x-probity-session": "sess-abc123" } }, env);
-    expect(await r.json()).toMatchObject({ liveChecksLeftToday: 5, sessionChecksLeft: 3, tavilyBudget: 150, stopped: false });
+    expect(await r.json()).toMatchObject({ liveChecksLeftToday: 5, sessionChecksLeft: 3, tavilyBudget: 600, stopped: false });
   });
 });
 
