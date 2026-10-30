@@ -93,9 +93,10 @@ export async function runOneRecheck(env: IntEnv, d: Due, now: number): Promise<v
   await recordSpend(env, [{ kind: "token_factory", usd: rails.costUsd, orgId, note: "pre-run re-check rails" }]).catch(() => undefined);
   const when = cutoffAfter(sched, now);
   const sum = { cleared: n("APPROVE"), onHold: n("HOLD"), needsCall: n("CALLBACK_VERIFY") };
-  await postSummary(env, orgId, { company: orgId, weekday: when?.weekday ?? null, cutoff: when?.cutoff ?? null, ...sum, flagged: rails.flaggedRequestIds.length });
+  const org = await env.DB.prepare("SELECT name FROM organization WHERE id = ?1").bind(orgId).first<{ name: string }>();
+  await postSummary(env, orgId, { company: org?.name ?? "Your company", weekday: when?.weekday ?? null, cutoff: when?.cutoff ?? null, ...sum, flagged: rails.flaggedRequestIds.length });
   const to = parseJson<string[]>(d.notify_emails_json, []);
-  if (to.length > 0 && when) await sendEmail(env, { to, ...preRunSummaryEmail({ weekday: when.weekday, cutoff: when.cutoff, ...sum, link: `${appUrl(env)}/inbox` }) });
+  if (to.length > 0 && when) await sendEmail(env, { to, ...preRunSummaryEmail({ company: org?.name, weekday: when.weekday, cutoff: when.cutoff, ...sum, link: `${appUrl(env)}/` }) });
 }
 
 /** Cron entry (every 5 minutes): re-checks every company whose final pre-run window has opened, then schedules its next one. */

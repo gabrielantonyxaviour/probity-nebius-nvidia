@@ -9,6 +9,7 @@ import { identify, unwatchMailbox, watchMailbox } from "./identity";
 import { slackCallback, slackDisconnect, slackStart } from "./slack";
 import { connectionList, deleteConn, getConn, saveConn } from "./store";
 import { ensureComposioWebhook } from "./hooks";
+import { syncXero } from "./xero";
 import type { AppEnv } from "../routes/util";
 
 export const connectionRoutes = new Hono<AppEnv>();
@@ -72,11 +73,19 @@ connectionRoutes.get("/connections/callback", async (c) => {
     const who = await identify(env, provider, row.org_id, row.connected_account_id);
     const triggerId = MAIL.has(provider) ? await watchMailbox(env, provider, row.org_id, row.connected_account_id) : null;
     await saveConn(env, row.org_id, provider, { status: "connected", account: who?.account ?? null, detail: MAIL.has(provider) ? "Watching for new mail" : null, connected_account_id: row.connected_account_id, trigger_id: triggerId, meta: who?.meta ? JSON.stringify(who.meta) : null, connected_at: nowIso() });
+    // The vendor master is needed before the first letter arrives, not at the first cut-off.
+    if (provider === "xero") c.executionCtx.waitUntil(syncXero(env, row.org_id, { force: true }));
     return back("connected", provider);
   } catch {
     await saveConn(env, row.org_id, provider, { status: "error", detail: "The account connected but could not be read. Try again." });
     return back("error", provider);
   }
+});
+
+connectionRoutes.post("/connections/xero/sync", requireAdmin, async (c) => {
+  const got = await syncXero(c.env as IntEnv, c.get("orgId"), { force: true });
+  if (!got) return err(c, 502, "Xero could not be read. Check the connection and try again.", "sync_failed");
+  return c.json(got);
 });
 
 connectionRoutes.post("/connections/:provider/disconnect", requireAdmin, async (c) => {

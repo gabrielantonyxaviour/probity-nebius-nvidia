@@ -45,5 +45,5 @@ export function runBlocks(run: Run, o: { amountCents: number | null; appUrl: str
 export function summaryBlocks(p: { company: string; weekday: string | null; cutoff: string | null; cleared: number; onHold: number; needsCall: number; flagged: number; appUrl: string }): { text: string; blocks: Block[] } {
   const when = p.weekday && p.cutoff ? `${p.weekday}'s run, cut-off ${p.cutoff}` : "Next payment run";
   const text = `${when}: ${p.cleared} cleared, ${p.onHold} on hold, ${p.needsCall} need a call${p.flagged ? `, ${p.flagged} flagged by the re-check` : ""}.`;
-  return { text, blocks: [{ type: "section", text: { type: "mrkdwn", text: `:clipboard: *Pre-run re-check · ${esc(p.company)}*\n${text}` } }, { type: "context", elements: [{ type: "mrkdwn", text: `<${p.appUrl}/inbox|Open the inbox>` }] }] };
+  return { text, blocks: [{ type: "section", text: { type: "mrkdwn", text: `:clipboard: *Pre-run re-check · ${esc(p.company)}*\n${text}` } }, { type: "context", elements: [{ type: "mrkdwn", text: `<${p.appUrl}/|Open the inbox>` }] }] };
 }
