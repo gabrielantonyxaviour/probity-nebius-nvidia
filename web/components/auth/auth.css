@@ -1,0 +1,55 @@
+/* Sign-in: full screen, form on the left, the product on the right (the split layout of an auth block, in Probity's style). */
+.au { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); min-height: 100dvh; }
+.au-form { display: grid; grid-template-rows: auto 1fr auto; padding: 28px clamp(24px, 5vw, 72px); }
+.au-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.au-back { text-decoration: none; color: var(--l-muted); }
+.au-back:hover { color: var(--l-fg); }
+.au-body { align-self: center; width: 100%; max-width: 420px; justify-self: center; padding-block: 48px; }
+.au-h1 { font-family: var(--ff-serif), Georgia, serif; font-weight: 300; font-size: clamp(40px, 4.4vw, 56px); line-height: 1; letter-spacing: -.025em; margin: 0; }
+.au-sub { color: var(--l-muted); margin: 16px 0 30px; font-size: 16.5px; }
+.au-sub b { color: var(--l-fg); font-weight: 400; }
+.au-fields { display: grid; gap: 10px; }
+.au-label { font-size: 14px; color: #cfcbc3; }
+.au-input { height: 50px; border-radius: 8px; border: 1px solid var(--l-rule); background: #131312; color: var(--l-fg); padding: 0 16px; font: inherit; font-size: 16px; transition: border-color .2s, box-shadow .2s; }
+.au-input::placeholder { color: var(--l-faint); }
+.au-input:focus, .au-otp input:focus { outline: none; border-color: #ebe8e2aa; box-shadow: 0 0 0 4px #ebe8e214; }
+.au-otp { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.au-otp input { height: 60px; min-width: 0; text-align: center; border-radius: 8px; border: 1px solid var(--l-rule); background: #131312; color: var(--l-fg); font-family: var(--ff-mono), monospace; font-size: 24px; transition: border-color .2s, box-shadow .2s; }
+.au-submit { margin-top: 10px; height: 50px; border-radius: 999px; border: 0; background: var(--l-cream); color: var(--l-ink); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: transform .23s var(--l-ease), opacity .2s; }
+.au-submit:hover:not(:disabled) { transform: translateY(-1px); }
+.au-submit:hover .arr { transform: translateX(3px); }
+.au-submit .arr { transition: transform .23s var(--l-ease); }
+.au-submit:disabled { opacity: .55; cursor: default; }
+.au-submit:focus-visible, .au-link:focus-visible { outline: 2px solid var(--l-fg); outline-offset: 3px; }
+.au-error { margin: 2px 0 0; color: var(--l-hold); font-size: 14px; }
+.au-row { display: flex; justify-content: space-between; gap: 12px; margin-top: 6px; }
+.au-link { background: none; border: 0; padding: 0; color: var(--l-muted); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; font: inherit; font-size: 14px; }
+.au-link:hover { color: var(--l-fg); }
+.au-perks { list-style: none; margin: 34px 0 0; padding: 18px 0 0; border-top: 1px dashed var(--l-rule); display: flex; gap: 18px; flex-wrap: wrap; color: var(--l-faint); font-size: 11px; }
+.au-perks li::before { content: "✓ "; color: var(--l-ok); }
+.au-legal { margin: 0; color: var(--l-faint); font-size: 13px; text-align: center; }
+.au-legal a { color: var(--l-muted); }
+
+.au-art { position: relative; overflow: hidden; border-left: 1px solid var(--l-rule); background: #0f0f0e; display: grid; align-content: center; justify-items: center; gap: 28px; padding: 48px; }
+.au-art-grid { position: absolute; inset: 0; background-image: radial-gradient(#ebe8e21c 1px, transparent 1.2px); background-size: 22px 22px; mask-image: linear-gradient(180deg, #000 55%, transparent); }
+.au-card { position: relative; width: min(440px, 100%); border: 1px solid #ebe8e2; border-radius: 10px; background: #121211; padding: 22px; display: grid; gap: 12px; box-shadow: 16px 16px 0 -1px #0f0f0e, 16px 16px 0 0 #3a3835; transform: rotate(-1.5deg); }
+.au-card-head { display: flex; justify-content: space-between; color: var(--l-faint); font-size: 10.5px; }
+.au-card-hold { margin: 0; font-family: var(--ff-serif), Georgia, serif; font-weight: 300; font-size: 64px; line-height: .95; color: var(--l-hold); letter-spacing: -.02em; }
+.au-card-line { margin: 0; color: #cfcbc3; font-size: 14.5px; }
+.au-card-call { display: grid; gap: 2px; border-top: 1px solid var(--l-rule); padding-top: 12px; }
+.au-card-call span { color: var(--l-faint); font-size: 10.5px; }
+.au-card-call b { font-family: var(--ff-mono), monospace; font-weight: 500; font-size: 26px; }
+.au-card-call s { color: var(--l-faint); font-size: 12.5px; }
+.au-card-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+.au-card-btns span { border: 1px solid var(--l-rule); border-radius: 6px; padding: 6px 9px; font-size: 10.5px; color: #cfcbc3; }
+.au-card-btns .red { border-color: #f0727c77; color: var(--l-hold); }
+.au-quote { position: relative; margin: 0; text-align: center; display: grid; gap: 10px; max-width: 30ch; }
+.au-quote p { margin: 0; font-family: var(--ff-serif), Georgia, serif; font-weight: 300; font-size: clamp(26px, 2.4vw, 34px); line-height: 1.12; letter-spacing: -.015em; }
+.au-quote span { color: var(--l-faint); font-size: 10.5px; }
+.au-field { position: absolute; left: 0; right: 0; bottom: 0; height: 150px; border-top: 1px solid var(--l-rule); opacity: .8; }
+.au-field canvas { width: 100%; height: 100%; display: block; }
+
+@media (max-width: 900px) {
+  .au { grid-template-columns: 1fr; }
+  .au-art { display: none; }
+}

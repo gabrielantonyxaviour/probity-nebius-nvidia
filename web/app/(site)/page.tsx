@@ -1,9 +1,9 @@
 import Link from "next/link";
+import { LogoWall } from "@/components/landing/brands";
 import { MoneyField } from "@/components/landing/money-field";
 import { Catches, Connect, Cta, Measured, Problem, ShowsItsWork } from "@/components/landing/sections";
 import { Story } from "@/components/landing/story";
 
-const WORKS = ["Gmail", "Outlook", "Xero", "Slack", "NVIDIA Nemotron", "Nebius Token Factory", "NVIDIA NeMo Guardrails", "Tavily", "SEC EDGAR", "GLEIF"];
 
 export default function LandingPage() {
   return (
@@ -29,13 +29,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section aria-label="Works with" className="lp-frame" style={{ paddingTop: 0 }}>
-        <div className="lp-works">
-          {WORKS.slice(0, 4).map((w) => <span key={w}>{w}</span>)}
-          <span className="center lp-mono">Works where your <b>AP team</b> already works</span>
-          {WORKS.slice(4).map((w) => <span key={w}>{w}</span>)}
-        </div>
-      </section>
+      <LogoWall />
 
       <Problem />
       <section className="lp-sec" style={{ paddingBottom: 0 }}>
