@@ -7,10 +7,12 @@ import { useData } from "@/lib/use-data";
 import { BillingPanel } from "@/components/settings/billing-panel";
 import { Connections } from "@/components/settings/connections";
 import { ScheduleEditor } from "@/components/settings/schedule-editor";
+import { Vendors } from "@/components/settings/vendors";
 import { ErrorBox, Skeleton } from "@/components/states";
 
 const TABS = [
   { key: "connections", label: "Connections" },
+  { key: "vendors", label: "Vendors" },
   { key: "runs", label: "Payment runs" },
   { key: "billing", label: "Plan and billing" },
 ] as const;
@@ -64,6 +66,7 @@ function Settings() {
         ))}
       </div>
       {tab === "connections" && <Connections canEdit={canEdit} />}
+      {tab === "vendors" && <Vendors canEdit={canEdit} onGoConnections={() => pick("connections")} />}
       {tab === "runs" && <ScheduleEditor canEdit={canEdit} isPro={m.org.plan === "pro"} />}
       {tab === "billing" && <BillingPanel canEdit={canEdit} />}
       {!canEdit && <p className="muted" style={{ marginTop: 18, fontSize: 14 }}>Only owners and admins can change these settings.</p>}

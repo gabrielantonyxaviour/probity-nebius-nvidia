@@ -1,6 +1,7 @@
 import { z } from "zod";
 import {
-  ApiError, Billing, Connection, InboxItem, Limits, Me, RequestDetail, Run, Schedule, SweepReport,
+  ApiError, Billing, Connection, ImportResult, InboxItem, Limits, Me, RequestDetail, Run, SamplesResult, Schedule, SweepReport, Vendor,
+  type ImportResult as ImportResultT, type SamplesResult as SamplesResultT, type Vendor as VendorT, type VendorInput,
   type Billing as BillingT, type Connection as ConnectionT, type Me as MeT, type Provider as ProviderT, type Schedule as ScheduleT,
   type InboxItem as InboxItemT, type Limits as LimitsT, type RequestDetail as RequestDetailT,
   type Run as RunT, type SweepReport as SweepReportT,
@@ -68,6 +69,15 @@ export const account = {
   checkout: () => call("/api/billing/checkout", Url, json({})),
   portal: () => call("/api/billing/portal", Url, json({})),
   redeem: (code: string): Promise<BillingT> => call("/api/billing/redeem", Billing, json({ code })),
+};
+
+/** The company's vendors of record: every check is made against one of them. */
+export const vendors = {
+  list: (): Promise<VendorT[]> => call("/api/vendors", z.array(Vendor)),
+  add: (v: VendorInput): Promise<VendorT> => call("/api/vendors", Vendor, json(v)),
+  importCsv: (csv: string): Promise<ImportResultT> => call("/api/vendors/import", ImportResult, json({ csv })),
+  samples: (): Promise<SamplesResultT> => call("/api/vendors/samples", SamplesResult, json({})),
+  remove: (id: string) => call(`/api/vendors/${encodeURIComponent(id)}`, z.object({ ok: z.literal(true) }), { method: "DELETE" }),
 };
 
 export const fileUrl = (key: string) => `/api/files/${key.split("/").map(encodeURIComponent).join("/")}`;
