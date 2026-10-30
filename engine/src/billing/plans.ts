@@ -65,6 +65,7 @@ export async function getBilling(env: Db, orgId: string): Promise<Billing> {
     plan,
     status,
     renewsAt: p?.plan_renews_at ?? null,
+    hasSubscription: !!p?.dodo_subscription_id,
     priceLabel: PRICE_LABEL,
     limits: { checksPerMonth: PLAN_LIMITS[plan].checksPerMonth, checksUsed: await checksUsed(env, orgId) },
   };

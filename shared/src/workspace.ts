@@ -48,6 +48,7 @@ export const Billing = z.object({
   plan: Plan,
   status: z.enum(["none", "active", "on_hold", "cancelled", "failed"]),
   renewsAt: z.string().nullable(),
+  hasSubscription: z.boolean().default(false), // true once Dodo has created a subscription for this company (paid or the $0 judges' one)
   priceLabel: z.string(), // "$49 / month per company"
   limits: z.object({ checksPerMonth: z.number().int(), checksUsed: z.number().int() }),
 });
@@ -117,7 +118,7 @@ export type SamplesResult = z.infer<typeof SamplesResult>;
 // POST /api/billing/checkout                    -> { url }                  (Dodo hosted checkout)
 // POST /api/billing/portal                      -> { url }
 // POST /api/billing/webhook                     -> 200                      (signed Dodo webhook)
-// POST /api/billing/redeem { code }             -> Billing                  (judge code fallback)
+// POST /api/billing/redeem { code }             -> { url }                  (judge code: the $0 Dodo checkout, never a local grant)
 // GET    /api/vendors                           -> Vendor[]                 (up to 500, A-Z; anyone, scoped to the active company)
 // POST   /api/vendors VendorInput               -> Vendor                   (201; admin; 409 duplicate)
 // POST   /api/vendors/import  text/csv | { csv } -> ImportResult             (admin; columns name,domain,phone,bank_name,routing,account)

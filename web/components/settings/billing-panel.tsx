@@ -5,22 +5,23 @@ import { dateTime } from "@/lib/format";
 import { useData } from "@/lib/use-data";
 import { ErrorBox, Skeleton } from "../states";
 
+const JUDGE_CODE = "NEBIUSJUDGES"; // the public 100%-off code; the engine accepts only this literal
+
 const STATUS: Record<string, string> = {
   none: "", active: "Active", on_hold: "Payment on hold: update your card in the billing portal", cancelled: "Cancelled", failed: "Last payment failed",
 };
 
-/** Plan, usage and the Dodo Payments checkout / portal. Judges can redeem a code instead of paying. */
+/** Plan, usage and the Dodo Payments checkout / portal. A judge's code opens a $0 checkout, so the subscription is real. */
 export function BillingPanel({ canEdit }: { canEdit: boolean }) {
   const b = useData(() => account.billing(), []);
-  const [busy, setBusy] = useState<"checkout" | "portal" | "redeem" | null>(null);
+  const [busy, setBusy] = useState<"checkout" | "portal" | "redeem" | "judge" | null>(null);
   const [code, setCode] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [note, setNote] = useState<string | null>(null);
 
-  async function go(kind: "checkout" | "portal") {
+  async function go(kind: "checkout" | "portal" | "judge") {
     setBusy(kind); setError(null);
     try {
-      const { url } = kind === "checkout" ? await account.checkout() : await account.portal();
+      const { url } = kind === "portal" ? await account.portal() : await account.checkout(kind === "judge" ? JUDGE_CODE : undefined);
       window.location.assign(url);
     } catch (e) {
       setError(e instanceof ApiFailure ? e.message : "Couldn't open the payment page. Try again.");
@@ -32,19 +33,18 @@ export function BillingPanel({ canEdit }: { canEdit: boolean }) {
     if (!code.trim()) return;
     setBusy("redeem"); setError(null);
     try {
-      await account.redeem(code.trim());
-      setNote("Probity Plus is on for this workspace.");
-      setCode("");
-      b.reload();
+      window.location.assign((await account.redeem(code.trim())).url);
     } catch (err) {
       setError(err instanceof ApiFailure ? err.message : "That code didn't work.");
-    } finally { setBusy(null); }
+      setBusy(null);
+    }
   }
 
   if (b.error) return <ErrorBox error={b.error} onRetry={b.reload} />;
   if (!b.data) return <div className="stack"><Skeleton h={80} /></div>;
   const d = b.data;
   const pro = d.plan === "pro";
+  const granted = pro && !d.hasSubscription; // Plus without a Dodo subscription: nothing to renew or manage
   const used = Math.min(1, d.limits.checksPerMonth ? d.limits.checksUsed / d.limits.checksPerMonth : 0);
 
   return (
@@ -55,7 +55,7 @@ export function BillingPanel({ canEdit }: { canEdit: boolean }) {
             <p className="label" style={{ margin: 0 }}>Current plan</p>
             <p className="serif" style={{ fontSize: 30, margin: "4px 0 0" }}>{pro ? "Probity Plus" : "Free"}</p>
           </div>
-          {pro && d.status !== "none" && <span className={`chip ${d.status === "active" ? "approve" : "callback"}`}>{STATUS[d.status]}</span>}
+          {pro && d.hasSubscription && d.status !== "none" && <span className={`chip ${d.status === "active" ? "approve" : "callback"}`}>{STATUS[d.status]}</span>}
         </div>
         <div>
           <div className="between" style={{ fontSize: 14 }}>
@@ -66,9 +66,15 @@ export function BillingPanel({ canEdit }: { canEdit: boolean }) {
             <div style={{ width: `${used * 100}%`, height: "100%", background: used > 0.9 ? "var(--hold)" : "var(--fg)" }} />
           </div>
         </div>
-        {pro && d.renewsAt && <p className="muted" style={{ margin: 0, fontSize: 14 }}>Renews {dateTime(d.renewsAt)} · {d.priceLabel}</p>}
-        {canEdit && (pro ? (
-          d.status !== "none" && <button className="btn" style={{ justifySelf: "start" }} onClick={() => go("portal")} disabled={!!busy}>{busy === "portal" ? "Opening…" : "Manage billing"}</button>
+        {granted && <p className="muted" style={{ margin: 0, fontSize: 14 }}>Plus granted by the judges' code, no subscription yet.</p>}
+        {pro && d.hasSubscription && d.renewsAt && <p className="muted" style={{ margin: 0, fontSize: 14 }}>Renews {dateTime(d.renewsAt)} · {d.priceLabel}</p>}
+        {canEdit && (granted ? (
+          <div className="row" style={{ gap: 12, flexWrap: "wrap" }}>
+            <button className="btn primary" onClick={() => go("judge")} disabled={!!busy}>{busy === "judge" ? "Opening checkout…" : "Create the $0 subscription"}</button>
+            <span className="muted" style={{ fontSize: 13 }}>Free with the judges' code. No card needed.</span>
+          </div>
+        ) : pro ? (
+          d.hasSubscription && d.status !== "none" && <button className="btn" style={{ justifySelf: "start" }} onClick={() => go("portal")} disabled={!!busy}>{busy === "portal" ? "Opening…" : "Manage billing"}</button>
         ) : (
           <div className="row" style={{ gap: 12, flexWrap: "wrap" }}>
             <button className="btn primary" onClick={() => go("checkout")} disabled={!!busy}>{busy === "checkout" ? "Opening checkout…" : `Upgrade to Probity Plus · ${d.priceLabel}`}</button>
@@ -84,7 +90,6 @@ export function BillingPanel({ canEdit }: { canEdit: boolean }) {
         </form>
       )}
       {error && <p role="alert" style={{ margin: 0, color: "var(--hold)" }}>{error}</p>}
-      {note && <p role="status" style={{ margin: 0, color: "var(--approve)" }}>{note}</p>}
     </div>
   );
 }

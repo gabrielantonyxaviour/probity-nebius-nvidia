@@ -87,49 +87,77 @@ describe("subscription lifecycle", () => {
   });
 });
 
-describe("redeem code", () => {
-  it("grants pro for 60 days with the right code, case-insensitively", async () => {
-    const { c, orgId, env } = await owner();
-    const r = await c.json("/api/billing/redeem", { body: { code: " JUDGE-open-sesame " } });
-    expect(r.status).toBe(200);
-    expect(r.body).toMatchObject({ plan: "pro", status: "active" });
-    const days = (Date.parse(r.body.renewsAt) - Date.now()) / 864e5;
-    expect(days).toBeGreaterThan(59.9);
-    expect(days).toBeLessThanOrEqual(60);
-    expect(await getPlan(env, orgId)).toBe("pro");
+type Call = { url: string; method: string; body: any };
+function stubDodo(calls: { url: string; method: string; body: any }[]) {
+  vi.stubGlobal("fetch", async (url: string, init: RequestInit) => {
+    const body = init.body ? JSON.parse(String(init.body)) : undefined;
+    calls.push({ url, method: init.method ?? "GET", body });
+    const u = new URL(url);
+    if (u.pathname === "/products" && init.method === "GET") return Response.json({ items: [{ product_id: "pdt_pro", name: "Probity Pro" }] });
+    if (u.pathname === "/checkouts") return Response.json({ session_id: "cks_1", checkout_url: "https://test.checkout.dodopayments.com/session/cks_1" });
+    if (u.pathname.endsWith("/customer-portal/session")) return Response.json({ link: "https://test.customer.dodopayments.com/p/abc" });
+    return new Response("{}", { status: 404 });
   });
-  it("also accepts the public judge discount code, so a judge never needs a card", async () => {
-    const { c, env, orgId } = await owner();
-    expect((await c.json("/api/billing/redeem", { body: { code: "nebiusjudges" } })).status).toBe(200);
-    expect(await getPlan(env, orgId)).toBe("pro");
+}
+
+const REDEEM_ENV = { DODO_PAYMENTS_API_KEY: "k" };
+const CHECKOUT = "https://test.checkout.dodopayments.com/session/cks_1";
+
+describe("redeem code", () => {
+  it("returns the $0 Dodo checkout with the discount applied and never grants a plan locally", async () => {
+    const calls: Call[] = [];
+    stubDodo(calls);
+    const { c, orgId, env } = await owner(makeTestEnv(REDEEM_ENV));
+    const r = await c.json("/api/billing/redeem", { body: { code: " JUDGE-open-sesame " } });
+    expect(r).toMatchObject({ status: 200, body: { url: CHECKOUT } });
+    const sent = calls.filter((x) => x.url.endsWith("/checkouts")).at(-1)!;
+    expect(sent.body.discount_codes).toEqual(["NEBIUSJUDGES"]);
+    expect(sent.body.metadata).toEqual({ orgId });
+    expect(await getPlan(env, orgId)).toBe("free");
+    expect((await c.json("/api/billing")).body).toMatchObject({ plan: "free", hasSubscription: false });
+  });
+  it("also accepts the public discount code, case-insensitively", async () => {
+    stubDodo([]);
+    const { c } = await owner(makeTestEnv(REDEEM_ENV));
+    expect((await c.json("/api/billing/redeem", { body: { code: "nebiusjudges" } })).body).toEqual({ url: CHECKOUT });
   });
   it("rejects a wrong code, throttles guesses, and needs a signed-in admin", async () => {
-    const { c } = await owner();
+    stubDodo([]);
+    const { c } = await owner(makeTestEnv(REDEEM_ENV));
     for (let i = 0; i < 5; i++) expect((await c.json("/api/billing/redeem", { body: { code: `guess-${i}` } })).status).toBe(422);
     expect((await c.json("/api/billing/redeem", { body: { code: "judge-open-sesame" } })).status).toBe(429);
     const anon = new Client(makeApp(), makeTestEnv());
     expect((await anon.json("/api/billing/redeem", { body: { code: "judge-open-sesame" } })).status).toBe(401);
   });
-  it("a lapsed grant stops counting as pro", async () => {
+  it("reports payments as unavailable instead of granting when Dodo is not configured", async () => {
     const { c, env, orgId } = await owner();
-    await c.json("/api/billing/redeem", { body: { code: "judge-open-sesame" } });
-    await env.DB.prepare("UPDATE org_profile SET plan_renews_at = ? WHERE org_id = ?").bind(new Date(Date.now() - 5 * 864e5).toISOString(), orgId).run();
+    expect((await c.json("/api/billing/redeem", { body: { code: "nebiusjudges" } })).status).toBe(503);
     expect(await getPlan(env, orgId)).toBe("free");
+  });
+  it("the webhook for the $0 subscription is what turns the plan on and records the subscription", async () => {
+    stubDodo([]);
+    const { c, env, orgId } = await owner(makeTestEnv(REDEEM_ENV));
+    await c.json("/api/billing/redeem", { body: { code: "nebiusjudges" } });
+    await post(c, evt("subscription.active", orgId));
+    expect(await getPlan(env, orgId)).toBe("pro");
+    expect((await c.json("/api/billing")).body).toMatchObject({ plan: "pro", status: "active", hasSubscription: true });
+  });
+  it("a workspace granted locally earlier can still create its $0 subscription; one that has a subscription cannot create a second", async () => {
+    const calls: Call[] = [];
+    stubDodo(calls);
+    const { c, env, orgId } = await owner(makeTestEnv(REDEEM_ENV));
+    await env.DB.prepare("UPDATE org_profile SET plan = 'pro', plan_status = 'active', plan_renews_at = ? WHERE org_id = ?").bind(new Date(Date.now() + 30 * 864e5).toISOString(), orgId).run();
+    expect((await c.json("/api/billing")).body).toMatchObject({ plan: "pro", hasSubscription: false });
+    expect((await c.json("/api/billing/checkout", { body: { discountCode: "NEBIUSJUDGES" } })).status).toBe(200);
+    expect((await c.json("/api/billing/portal", { body: {} })).status).toBe(409);
+    await post(c, evt("subscription.active", orgId));
+    const again = await c.json("/api/billing/redeem", { body: { code: "nebiusjudges" } });
+    expect(again).toMatchObject({ status: 409, body: { code: "already_subscribed" } });
+    expect((await c.json("/api/billing/checkout", { body: {} })).status).toBe(409);
   });
 });
 
 describe("checkout and portal", () => {
-  function stubDodo(calls: { url: string; method: string; body: any }[]) {
-    vi.stubGlobal("fetch", async (url: string, init: RequestInit) => {
-      const body = init.body ? JSON.parse(String(init.body)) : undefined;
-      calls.push({ url, method: init.method ?? "GET", body });
-      const u = new URL(url);
-      if (u.pathname === "/products" && init.method === "GET") return Response.json({ items: [{ product_id: "pdt_pro", name: "Probity Pro" }] });
-      if (u.pathname === "/checkouts") return Response.json({ session_id: "cks_1", checkout_url: "https://test.checkout.dodopayments.com/session/cks_1" });
-      if (u.pathname.endsWith("/customer-portal/session")) return Response.json({ link: "https://test.customer.dodopayments.com/p/abc" });
-      return new Response("{}", { status: 404 });
-    });
-  }
   it("creates a checkout with the org id in metadata and the return url", async () => {
     const calls: { url: string; method: string; body: any }[] = [];
     stubDodo(calls);

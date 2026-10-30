@@ -66,9 +66,10 @@ export const account = {
   schedule: (): Promise<ScheduleT> => call("/api/schedule", Schedule),
   saveSchedule: (s: Omit<ScheduleT, "nextRecheckAt">): Promise<ScheduleT> => call("/api/schedule", Schedule, put(s)),
   billing: (): Promise<BillingT> => call("/api/billing", Billing),
-  checkout: () => call("/api/billing/checkout", Url, json({})),
+  checkout: (discountCode?: string) => call("/api/billing/checkout", Url, json(discountCode ? { discountCode } : {})),
   portal: () => call("/api/billing/portal", Url, json({})),
-  redeem: (code: string): Promise<BillingT> => call("/api/billing/redeem", Billing, json({ code })),
+  /** Checks a judge's code and returns the $0 Dodo checkout to redirect to; the webhook turns the plan on afterwards. */
+  redeem: (code: string) => call("/api/billing/redeem", Url, json({ code })),
 };
 
 /** The company's vendors of record: every check is made against one of them. */

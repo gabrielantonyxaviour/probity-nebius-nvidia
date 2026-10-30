@@ -5,7 +5,7 @@ import { account, ApiFailure } from "@/lib/api";
 const FREE = ["100 checks a month", "Every feature: mailboxes, Xero, Slack, pre-run re-checks", "No card needed"];
 const PLUS = ["1,000 checks a month", "Everything in Free", "$49 per company per month, in US dollars", "Cancel any time"];
 
-/** The last setup step: Free goes straight on; Plus opens Dodo checkout; a judge's code turns Plus on without paying. */
+/** The last setup step: Free goes straight on; Plus opens Dodo checkout; a judge's code opens a $0 Dodo checkout. */
 export function PlanStep({ preferPlus, onDone }: { preferPlus: boolean; onDone: () => void }) {
   const [busy, setBusy] = useState<"plus" | "code" | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -20,7 +20,7 @@ export function PlanStep({ preferPlus, onDone }: { preferPlus: boolean; onDone: 
     e.preventDefault();
     if (!code.trim()) return;
     setBusy("code"); setError(null);
-    try { await account.redeem(code.trim()); onDone(); }
+    try { window.location.assign((await account.redeem(code.trim())).url); }
     catch (err) { setError(err instanceof ApiFailure ? err.message : "That code didn't work."); setBusy(null); }
   }
 

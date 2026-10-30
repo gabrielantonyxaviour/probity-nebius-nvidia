@@ -10,7 +10,6 @@ import { applyEvent, parseEvent, verifyWebhook } from "./webhook";
 
 export { checksLeft, consumeCheck } from "./plans";
 
-const JUDGE_DAYS = 60;
 const REDEEM_ATTEMPTS_PER_HOUR = 5;
 const cenv = (c: Ctx) => c.env as CEnv;
 
@@ -26,6 +25,22 @@ function same(a: string, b: string): boolean {
   return d === 0;
 }
 
+/** A Dodo checkout for this company, refused while a live subscription already exists (a second one would bill twice). */
+async function startCheckout(c: Ctx, discountCode?: string) {
+  const env = cenv(c);
+  const { user, orgId } = getResolved(c);
+  const profile = await getProfile(env, orgId);
+  if (profile?.dodo_subscription_id && (profile.plan_status === "active" || profile.plan_status === "on_hold")) {
+    return c.json({ error: "This workspace already has a subscription. Use Manage billing.", code: "already_subscribed" }, 409);
+  }
+  try {
+    const url = await createCheckout(env, { orgId, email: user!.email, name: user!.name, returnUrl: `${env.APP_URL}/settings?billing=done`, discountCode });
+    return c.json({ url });
+  } catch (e) {
+    return payError(c, e);
+  }
+}
+
 export const billingRoutes = new Hono<AppEnv>();
 
 billingRoutes.get("/", async (c) => c.json(await getBilling(cenv(c), c.get("orgId"))));
@@ -33,16 +48,9 @@ billingRoutes.get("/", async (c) => c.json(await getBilling(cenv(c), c.get("orgI
 const CheckoutBody = z.object({ discountCode: z.literal(JUDGE_DISCOUNT_CODE).optional() }).default({});
 
 billingRoutes.post("/checkout", requireMember("admin"), async (c) => {
-  const env = cenv(c);
-  const { user, orgId } = getResolved(c);
   const body = CheckoutBody.safeParse(await c.req.json().catch(() => ({})));
   if (!body.success) return c.json({ error: "That discount code is not valid.", code: "bad_request" }, 400);
-  try {
-    const url = await createCheckout(env, { orgId, email: user!.email, name: user!.name, returnUrl: `${env.APP_URL}/settings?billing=done`, discountCode: body.data.discountCode });
-    return c.json({ url });
-  } catch (e) {
-    return payError(c, e);
-  }
+  return startCheckout(c, body.data.discountCode);
 });
 
 billingRoutes.post("/portal", requireMember("admin"), async (c) => {
@@ -70,12 +78,13 @@ billingRoutes.post("/webhook", async (c) => {
 
 const RedeemBody = z.object({ code: z.string().trim().min(1).max(100) });
 
+// A judge's code never grants a plan locally. It checks the code (rate limited), then returns the Dodo checkout for the
+// 100%-off discount: completing it creates a real $0 subscription, and the signed webhook is what turns the plan on.
 billingRoutes.post("/redeem", requireMember("admin"), async (c) => {
   const env = cenv(c);
-  const { orgId, user } = getResolved(c);
+  const { user } = getResolved(c);
   const body = RedeemBody.safeParse(await c.req.json().catch(() => null));
   if (!body.success) return c.json({ error: "Enter the code you were given.", code: "bad_request" }, 400);
-  // Either the private judge code or the public Dodo discount code unlocks the grant, so judges never need a card.
   const codes = [env.JUDGE_CODE, JUDGE_DISCOUNT_CODE].filter((x): x is string => !!x).map((x) => x.trim().toLowerCase());
   const bucket = `redeem:${user!.id}:${new Date().toISOString().slice(0, 13)}`;
   const tries = Number((await env.CACHE.get(bucket)) ?? 0);
@@ -84,12 +93,5 @@ billingRoutes.post("/redeem", requireMember("admin"), async (c) => {
     await env.CACHE.put(bucket, String(tries + 1), { expirationTtl: 3600 });
     return c.json({ error: "That code is not valid.", code: "invalid_code" }, 422);
   }
-  const now = new Date();
-  const until = new Date(now.getTime() + JUDGE_DAYS * 24 * 3600 * 1000).toISOString();
-  // A paying customer keeps their own renewal date; the grant never shortens it.
-  await env.DB.prepare(
-    `UPDATE org_profile SET plan = 'pro', plan_status = 'active',
-       plan_renews_at = CASE WHEN plan_renews_at IS NOT NULL AND plan_renews_at > ? THEN plan_renews_at ELSE ? END, plan_updated_at = ? WHERE org_id = ?`,
-  ).bind(until, until, now.toISOString(), orgId).run();
-  return c.json(await getBilling(env, orgId));
+  return startCheckout(c, JUDGE_DISCOUNT_CODE);
 });
