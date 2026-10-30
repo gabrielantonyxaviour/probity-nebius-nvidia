@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { StartLink } from "@/components/landing/chrome";
 
 export const metadata = { title: "Pricing · Probity" };
 
@@ -57,7 +57,7 @@ export default function PricingPage() {
               <div className="pr-price"><span className="lp-serif">{p.price}</span><span className="lp-muted">{p.per}</span></div>
               <p className="lp-muted" style={{ margin: 0 }}>{p.lead}</p>
               <ul>{p.items.map((i) => <li key={i}><span aria-hidden="true">✓</span>{i}</li>)}</ul>
-              <Link href={p.href} className={`lp-pill lp-mono${p.featured ? " solid" : ""}`} style={{ justifySelf: "start" }}>{p.cta} <span className="arr">→</span></Link>
+              <span style={{ justifySelf: "start" }}><StartLink className={`lp-pill lp-mono${p.featured ? " solid" : ""}`} out={p.cta} signedIn={p.featured ? "Upgrade to Plus" : "Open Probity"} {...(p.featured ? { plan: "plus" as const } : {})} /></span>
             </div>
           ))}
         </div>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LogoWall } from "@/components/landing/brands";
+import { StartLink } from "@/components/landing/chrome";
 import { MoneyField } from "@/components/landing/money-field";
 import { Catches, Connect, Cta, Measured, Problem, ShowsItsWork } from "@/components/landing/sections";
 import { Story } from "@/components/landing/story";
@@ -17,7 +18,7 @@ export default function LandingPage() {
               <em>It finds a number to call that didn&apos;t come from the request, catches lines no person can see, and tells your team to approve, call back or hold.</em>
             </p>
             <div className="lp-ctas lp-mono">
-              <Link href="/signin" className="lp-pill solid">Start free <span className="arr">→</span></Link>
+              <StartLink className="lp-pill solid" />
               <Link href="/#how" className="lp-pill">See how it works</Link>
             </div>
           </div>

@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Mark } from "@/components/landing/chrome";
 import { MoneyField } from "@/components/landing/money-field";
 import { account, ApiFailure } from "@/lib/api";
@@ -18,6 +18,21 @@ export default function SignInPage() {
   const [sent, setSent] = useState<string | null>(null);
   const boxes = useRef<Array<HTMLInputElement | null>>([]);
   const code = digits.join("");
+  const [checking, setChecking] = useState(true);
+
+  // Already signed in: skip the form and go where this visit was heading.
+  useEffect(() => {
+    account.me().then((me) => { if (me.user) go(me.org.isDemo); else setChecking(false); }).catch(() => setChecking(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function go(needsWorkspace: boolean) {
+    const q = new URLSearchParams(window.location.search);
+    const next = q.get("next");
+    const safe = next && /^\/app(\/[A-Za-z0-9/_?=&.-]*)?$/.test(next) ? next : null;
+    const plus = q.get("plan") === "plus";
+    router.replace(needsWorkspace ? `/app/onboarding${plus ? "?plan=plus" : ""}` : plus ? "/app/settings?tab=billing" : safe ?? "/app");
+  }
 
   async function send(e?: React.FormEvent) {
     e?.preventDefault();
@@ -39,12 +54,7 @@ export default function SignInPage() {
     try {
       await account.signIn(email.trim().toLowerCase(), code);
       const me = await account.me();
-      // Back to the page that sent them here (only paths inside the app), else onboarding for a new account.
-      const q = new URLSearchParams(window.location.search);
-      const next = q.get("next");
-      const safe = next && /^\/app(\/[A-Za-z0-9/_?=&.-]*)?$/.test(next) ? next : null;
-      const plus = q.get("plan") === "plus";
-      router.replace(me.org.isDemo ? `/app/onboarding${plus ? "?plan=plus" : ""}` : safe ?? "/app");
+      go(me.org.isDemo); // back to the page that sent them here (only paths inside the app), else onboarding for a new account
       router.refresh();
     } catch (err) {
       setError(err instanceof ApiFailure && err.status === 401 ? "That code didn't match or has expired. Check the e-mail or send a new one." : "Couldn't sign you in. Try again.");
@@ -72,7 +82,7 @@ export default function SignInPage() {
           <Link href="/" className="lp-mono au-back">← Back to site</Link>
         </div>
 
-        <div className="au-body">
+        <div className="au-body" style={{ visibility: checking ? "hidden" : undefined }}>
           <p className="lp-eyebrow lp-mono">{step === "email" ? "Sign in or create an account" : "Step 2 of 2"}</p>
           <h1 className="au-h1">{step === "email" ? "Welcome to Probity." : "Check your e-mail."}</h1>
           <p className="au-sub">

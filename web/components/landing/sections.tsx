@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BrandTile } from "./brands";
+import { StartLink } from "./chrome";
 import { Ledger } from "./ledger";
 
 const BALTIMORE = "https://s3.amazonaws.com/baltimorecity.gov.if-us-east-1/s3fs-public/2025-10/25-0028-I%20%20R.pdf";
@@ -180,7 +181,7 @@ export function Cta() {
       <div className="lp-frame lp-rv">
         <h2>Before the money moves, prove who is asking.</h2>
         <div className="lp-ctas lp-mono">
-          <Link href="/signin" className="lp-pill solid">Start free <span className="arr">→</span></Link>
+          <StartLink className="lp-pill solid" />
           <Link href="/pricing" className="lp-pill">See pricing</Link>
         </div>
       </div>

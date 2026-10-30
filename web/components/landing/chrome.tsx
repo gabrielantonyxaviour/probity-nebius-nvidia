@@ -14,15 +14,38 @@ export function Mark({ size = 26 }: { size?: number }) {
   );
 }
 
-/** Signed in or not decides the header's right side; the page renders the signed-out version until /api/me answers. */
-function useSignedIn(): boolean {
-  const [signedIn, setSignedIn] = useState(false);
-  useEffect(() => { account.me().then((m) => setSignedIn(!!m.user)).catch(() => undefined); }, []);
-  return signedIn;
+type Session = { state: "loading" | "in" | "out"; hasWorkspace: boolean };
+let cached: Promise<Session> | null = null;
+/** One /api/me call per page view, shared by every session-aware link on it. */
+function loadSession(): Promise<Session> {
+  cached ??= account.me().then((m) => ({ state: m.user ? "in" as const : "out" as const, hasWorkspace: !!m.user && !m.org.isDemo })).catch(() => ({ state: "out" as const, hasWorkspace: false }));
+  return cached;
+}
+export function useSession(): Session {
+  const [s, setS] = useState<Session>({ state: "loading", hasWorkspace: false });
+  useEffect(() => { let alive = true; loadSession().then((v) => { if (alive) setS(v); }); return () => { alive = false; }; }, []);
+  return s;
+}
+
+/** Where "get started" goes: signed out to sign-in; signed in to the app (or to finish setup, or to billing for Plus). */
+export function startHref(s: Session, plan?: "plus"): string {
+  if (s.state !== "in") return plan ? "/signin?plan=plus" : "/signin";
+  if (!s.hasWorkspace) return plan ? "/app/onboarding?plan=plus" : "/app/onboarding";
+  return plan ? "/app/settings?tab=billing" : "/app";
+}
+
+/** A call to action that knows the visitor's session: "Start free" when signed out, "Open Probity" when signed in. */
+export function StartLink({ className, out = "Start free", signedIn = "Open Probity", plan, arrow = true }: { className?: string; out?: string; signedIn?: string; plan?: "plus"; arrow?: boolean }) {
+  const s = useSession();
+  return (
+    <Link href={startHref(s, plan)} className={className}>
+      {s.state === "in" ? signedIn : out}{arrow && <> <span className="arr">→</span></>}
+    </Link>
+  );
 }
 
 export function LandingHeader() {
-  const signedIn = useSignedIn();
+  const signedIn = useSession().state === "in";
   return (
     <header className="lp-hdr">
       <div className="lp-frame">
@@ -35,11 +58,11 @@ export function LandingHeader() {
         </nav>
         <div className="lp-hdr-right lp-mono">
           {signedIn ? (
-            <Link href="/app" className="lp-pill solid">Open Probity <span className="arr">→</span></Link>
+            <StartLink className="lp-pill solid" />
           ) : (
             <>
               <Link href="/signin?next=/app" className="lp-pill hide-sm" style={{ borderColor: "transparent" }}>Sign in</Link>
-              <Link href="/signin" className="lp-pill solid">Start free <span className="arr">→</span></Link>
+              <StartLink className="lp-pill solid" />
             </>
           )}
         </div>
@@ -69,7 +92,7 @@ export function LandingFooter() {
           {COLS.map(([h, links]) => (
             <div key={h}>
               <h4 className="lp-mono">{h}</h4>
-              <ul>{links.map(([t, href]) => <li key={t}><a href={href} {...(href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}>{t}</a></li>)}</ul>
+              <ul>{links.map(([t, href]) => <li key={t}>{href.startsWith("/signin") ? <StartLink out={t} signedIn={t === "Sign in" ? "Open Probity" : "Go to your inbox"} arrow={false} /> : <a href={href} {...(href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}>{t}</a>}</li>)}</ul>
             </div>
           ))}
         </div>
