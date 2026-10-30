@@ -14,11 +14,11 @@ const run = (over: Record<string, unknown> = {}) => ({
 });
 
 describe("slack", () => {
-  it("builds the install URL with the two scopes and the callback", async () => {
+  it("builds the install URL with its scopes (public-channel posting included) and the callback", async () => {
     const env = makeEnv({ seed: true });
     const u = new URL(await slackStart(env as never, "org_acme", "u1"));
     expect(u.origin + u.pathname).toBe("https://slack.com/oauth/v2/authorize");
-    expect(u.searchParams.get("scope")).toBe("chat:write,incoming-webhook");
+    expect(u.searchParams.get("scope")).toBe("chat:write,chat:write.public,incoming-webhook");
     expect(u.searchParams.get("redirect_uri")).toBe("https://probity.test/api/connections/callback");
     expect(u.searchParams.get("state")).toMatch(/^[0-9a-f-]{36}$/);
   });

@@ -18,7 +18,7 @@ export async function slackStart(env: IntEnv, orgId: string, userId: string | nu
   const attempt = crypto.randomUUID();
   await env.DB.prepare("INSERT INTO connection_attempts (id, org_id, provider, user_id, connected_account_id, created_at) VALUES (?1,?2,'slack',?3,NULL,?4)").bind(attempt, orgId, userId, nowIso()).run();
   const u = new URL("https://slack.com/oauth/v2/authorize");
-  u.search = new URLSearchParams({ client_id: env.SLACK_CLIENT_ID, scope: "chat:write,incoming-webhook", redirect_uri: `${appUrl(env)}/api/connections/callback`, state: attempt }).toString();
+  u.search = new URLSearchParams({ client_id: env.SLACK_CLIENT_ID, scope: "chat:write,chat:write.public,incoming-webhook", redirect_uri: `${appUrl(env)}/api/connections/callback`, state: attempt }).toString();
   return u.toString();
 }
 
