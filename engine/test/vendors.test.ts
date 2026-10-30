@@ -279,4 +279,18 @@ describe("ledger account lookup stays inside the company", () => {
     expect(out).toContain("Mine Two Co");
     expect(out).not.toContain("Theirs Secret Co");
   });
+
+  it("another company's rejected requests are not reported as 'already rejected', by account or by phone", async () => {
+    const { ledgerEvidence } = await import("../src/check/ledger");
+    const hash = await sha256Hex("110000000:888800002222");
+    await Promise.all([
+      sql("INSERT INTO vendors (vendor_id, legal_name, legal_name_norm, is_fictional, status, created_at, org_id) VALUES ('rh_mine','Mine Rh Co','MINE RH CO',0,'active','x','org_rh_a')").run(),
+      sql("INSERT INTO vendors (vendor_id, legal_name, legal_name_norm, is_fictional, status, created_at, org_id) VALUES ('rh_theirs','Theirs Rh Co','THEIRS RH CO',0,'active','x','org_rh_b')").run(),
+      sql("INSERT INTO bank_change_history (request_id, vendor_id, claimed_name, new_routing, new_account_last4, new_account_hash, sender_domain, letter_phones, received_at, requested_effective, channel, status) VALUES ('BCR-THEIRS-1','rh_theirs','Theirs Secret Claim','110000000','2222',?1,'x.example','(555) 010-9988','2026-09-01T00:00:00Z',NULL,'email','rejected')", hash).run(),
+    ]);
+    const s = { request: { vendorId: "rh_mine", receivedAt: "2026-10-30T00:00:00Z" }, textAccount: { hash, digitsHash: "d", last4: "2222" }, letterPhones: ["(555) 010-9988"] } as never;
+    const out = JSON.stringify(await ledgerEvidence(E, s));
+    expect(out).not.toContain("BCR-THEIRS-1");
+    expect(out).not.toContain("Theirs Secret Claim");
+  });
 });

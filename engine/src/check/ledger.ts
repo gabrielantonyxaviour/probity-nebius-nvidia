@@ -31,12 +31,12 @@ export async function ledgerEvidence(env: Pick<Env, "DB">, s: Scratch): Promise<
       if (u.vendor_id === request.vendorId) continue;
       f("bank_account", LABEL.accountOnOtherVendor, `••••${last4} is ${u.status} on ${u.vendor_id}${u.legal_name ? ` (${u.legal_name})` : ""} since ${date(u.changed_at)}`);
     }
-    const bad = await env.DB.prepare("SELECT request_id, claimed_name, received_at FROM bank_change_history WHERE new_account_hash = ?1 AND status = 'rejected' LIMIT 1").bind(hash).first<{ request_id: string; claimed_name: string; received_at: string }>();
+    const bad = await env.DB.prepare("SELECT h.request_id, h.claimed_name, h.received_at FROM bank_change_history h JOIN vendors v ON v.vendor_id = h.vendor_id AND v.org_id = (SELECT org_id FROM vendors WHERE vendor_id = ?2) WHERE h.new_account_hash = ?1 AND h.status = 'rejected' LIMIT 1").bind(hash, request.vendorId).first<{ request_id: string; claimed_name: string; received_at: string }>();
     if (bad) f("bank_account", LABEL.knownBad, `account ••••${last4} was in request ${bad.request_id} (${bad.claimed_name}), rejected on ${date(bad.received_at)}`);
   }
 
   if (s.letterPhones.length) {
-    const rej = await env.DB.prepare("SELECT request_id, claimed_name, letter_phones, received_at FROM bank_change_history WHERE status = 'rejected' AND letter_phones IS NOT NULL").all<{ request_id: string; claimed_name: string; letter_phones: string; received_at: string }>();
+    const rej = await env.DB.prepare("SELECT h.request_id, h.claimed_name, h.letter_phones, h.received_at FROM bank_change_history h JOIN vendors v ON v.vendor_id = h.vendor_id AND v.org_id = (SELECT org_id FROM vendors WHERE vendor_id = ?1) WHERE h.status = 'rejected' AND h.letter_phones IS NOT NULL").bind(request.vendorId).all<{ request_id: string; claimed_name: string; letter_phones: string; received_at: string }>();
     const hit = rej.results.find((r) => r.letter_phones.split(/[,;\s]+/).some((p) => !!p && letterKeys.has(key10(p))));
     if (hit) f("phone", LABEL.knownBad, `a phone number in this letter was in request ${hit.request_id} (${hit.claimed_name}), rejected on ${date(hit.received_at)}`);
   }
