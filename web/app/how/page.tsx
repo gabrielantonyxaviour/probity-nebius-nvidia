@@ -24,7 +24,7 @@ export default function HowPage() {
       <header style={{ maxWidth: 820 }}>
         <p className="label" style={{ margin: 0 }}>How it works</p>
         <h1 className="serif" style={{ fontSize: "clamp(30px, 4.4vw, 46px)", lineHeight: 1.1, margin: "10px 0 12px" }}>
-          Two readings, three NVIDIA models, and one rule: no model can approve a payment.
+          Two NVIDIA Nemotron models, NeMo Guardrails, and one rule: no model can approve a payment.
         </h1>
         <p className="muted" style={{ margin: 0, fontSize: 16 }}>
           A bank-change letter is the cheapest way to steal a payment run. Policy says to call the vendor back on a number that didn&apos;t come from the request. Probity finds that number, checks everything else, and tells the clerk what to do before the cut-off.

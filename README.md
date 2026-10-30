@@ -45,7 +45,7 @@ Public registries, queried live and cached: **SEC EDGAR** (registered phone and 
 
 ## Measured
 
-On 30 labelled test letters, the NeMo Guardrails input rail (Nemotron 3.5 Lightning) caught **7 of 7** letters carrying hidden instructions, with **1 false alarm among 23** clean letters. The false alarm is a lookalike-vendor letter that asks the clerk not to contact the vendor's main office: flagged for hiding the request from a person, not for addressing an AI. (Nebius job `aijob-e04aer2esbfeqsgx64`, 30 Oct 2026.)
+On 39 labelled test letters, the NeMo Guardrails input rail (Nemotron 3.5 Lightning) caught **14 of 16** letters carrying instructions aimed at an AI reviewer, with **1 false alarm among 23** clean letters. Nine of the 16 are deliberately hard: zero-width splits, lookalike characters, Spanish and German, an instruction only in an annotation, in the image or in the metadata. The two it missed are an instruction encoded in base64 and one written in plain business voice. The false alarm is a lookalike-vendor letter that asks the clerk not to contact the vendor's main office: flagged for hiding the request from a person, not for addressing an AI. In a check, hidden-text detection in code and the Lightning screen run as well. (Nebius job `aijob-e04h7gjahz57cvkn7a`, 30 Oct 2026; an earlier run on the first 30 letters caught 7 of 7, job `aijob-e04aer2esbfeqsgx64`.)
 
 ## Architecture
 
