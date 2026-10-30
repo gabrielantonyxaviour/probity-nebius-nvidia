@@ -28,7 +28,8 @@ export function ModelsStrip({ run, onOpen }: { run: Run; onOpen?: () => void }) 
         <span className="muted" style={{ fontSize: 12 }}>Nebius Token Factory</span>
       </div>
       <ul style={{ listStyle: "none", margin: "10px 0 0", padding: 0, display: "grid", gap: 12 }}>
-        {Object.keys(JOBS).map((model) => {
+        {/* Super VL was withdrawn from Token Factory on 30 Oct 2026; it is listed only on checks that used it. */}
+        {Object.keys(JOBS).filter((model) => model !== "nvidia/Nemotron-3.5-Super-VL" || groups.has(model)).map((model) => {
           const g = groups.get(model);
           return (
             <li key={model} style={{ display: "grid", gap: 2, opacity: g ? 1 : 0.5 }}>
