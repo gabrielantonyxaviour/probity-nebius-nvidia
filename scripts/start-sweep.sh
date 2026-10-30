@@ -11,7 +11,8 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"; J="$ROOT/job"
 : "${NEBIUS_API_KEY:?export NEBIUS_API_KEY (Token Factory key)}"; : "${JOB_CALLBACK_SECRET:?export JOB_CALLBACK_SECRET}"
 SWEEP_ID="sweep-$(openssl rand -hex 4)"
 FILES=(--inject-file "$J/run.sh:/opt/probity/run.sh" --inject-file "$J/sweep.py:/opt/probity/sweep.py" --inject-file "$J/config/config.yml:/opt/probity/config/config.yml" --inject-file "$J/config/prompts.yml:/opt/probity/config/prompts.yml")
-[ "$MODE" = "eval" ] && FILES+=(--inject-file "$J/testset.json:/opt/probity/testset.json")
+# The job payload is capped near 48 KB of files, so the test set goes in gzipped (sweep.py reads testset.json.gz first).
+if [ "$MODE" = "eval" ]; then GZ="$(mktemp -t probity-testset).json.gz"; gzip -9c "$J/testset.json" > "$GZ"; FILES+=(--inject-file "$GZ:/opt/probity/testset.json.gz"); fi
 JOB_ID="$(nebius --profile hackathon-jobs-sa ai job create --name "probity-$MODE-$(date +%m%d-%H%M)" --image python:3.12-slim --platform cpu-d3 --preset 2vcpu-8gb \
   --disk-size 20Gi --timeout 1h "${FILES[@]}" --env "MODE=$MODE" --env "SWEEP_ID=$SWEEP_ID" --env "APP_URL=$APP" --env "NEBIUS_API_KEY=$NEBIUS_API_KEY" \
   --env "JOB_CALLBACK_SECRET=$JOB_CALLBACK_SECRET" --container-command bash --args /opt/probity/run.sh --async --format json | python3 -c "import json,sys;print(json.load(sys.stdin)['resource_id'])")"

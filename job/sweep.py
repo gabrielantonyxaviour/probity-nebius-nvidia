@@ -7,12 +7,17 @@ Env: NEBIUS_API_KEY (Token Factory key; from the environment or a SecretStash se
 Without APP_URL the report is only printed (CLI tests).
 """
 import asyncio
+import base64
+import binascii
+import gzip
 import hashlib
 import hmac
 import json
 import os
+import re
 import sys
 import time
+import unicodedata
 import urllib.request
 from datetime import datetime, timezone
 
@@ -26,6 +31,8 @@ SECRET = os.environ.get("JOB_CALLBACK_SECRET", "")
 SWEEP_ID = os.environ.get("SWEEP_ID", "")
 CONCURRENCY = int(os.environ.get("CONCURRENCY", "4"))
 SPAN_CHARS = 6000
+WINDOW_LINES = 4  # the input rail reads a text as overlapping runs of this many lines
+WINDOW_STEP = 2
 LIGHTNING_USD_PER_M = (0.06, 0.24)  # Nemotron 3.5 Lightning input / output, per million tokens
 VM_USD_PER_HOUR = 0.068  # cpu-d3 2vcpu-8gb $0.066/h + 20 GiB network SSD $0.002/h; model tokens are not included
 
@@ -37,6 +44,27 @@ def _template_chars() -> dict:
 
 
 TEMPLATE_CHARS = _template_chars()
+
+
+# Deterministic pre-processing: text a person cannot see (zero-width characters, lookalike letters, base64) is made plain first.
+_STRIP = dict.fromkeys(list(range(0x200B, 0x2010)) + list(range(0x202A, 0x202F)) + list(range(0x2060, 0x206A)) + [0xFEFF, 0xAD])
+_LOOK = str.maketrans("аеорсухіјѕһАВЕКМНОРСТХІαορτΑΒΕΖΗΙΚΜΝΟΡΤΥΧ", "aeopcyxijshABEKMHOPCTXIaoptABEZHIKMNOPTYX")
+_B64 = re.compile(r"(?<![\w+/=-])[A-Za-z0-9+/_-]{24,}={0,2}(?![\w+/=-])")
+
+
+def normalize_for_screening(text: str) -> str:
+    """Strips invisible characters, maps lookalike letters to Latin and appends the plain text of any base64 string."""
+    plain = unicodedata.normalize("NFKC", text).translate(_STRIP).translate(_LOOK)
+    found = []
+    for m in _B64.finditer(plain):
+        tok = m.group(0).replace("-", "+").replace("_", "/").rstrip("=")
+        try:
+            raw = base64.b64decode(tok + "=" * (-len(tok) % 4), validate=True).decode()
+        except (binascii.Error, ValueError):
+            continue
+        if len(raw) > 11 and sum(c.isalpha() or c == " " for c in raw) > 0.7 * len(raw):
+            found.append(raw.strip())
+    return plain + "".join(f"\n[Decoded from an encoded string in the letter: {d}]" for d in found)
 
 
 def now() -> str:
@@ -78,12 +106,28 @@ class Screen:
         prompt_tokens = (template_chars + text_chars) / 4
         self.token_usd += (prompt_tokens * LIGHTNING_USD_PER_M[0] + 2 * LIGHTNING_USD_PER_M[1]) / 1_000_000
 
-    async def input_rail(self, text: str) -> bool:
-        """True when the input rail BLOCKS the text (an instruction aimed at an automated reviewer)."""
+    async def _input_call(self, text: str) -> bool:
         async with self.gate:
-            res = await self.rails.check_async([{"role": "user", "content": text[:SPAN_CHARS]}], rail_types=[RailType.INPUT])
-        self._bill(TEMPLATE_CHARS["self_check_input"], min(len(text), SPAN_CHARS))
-        blocked = res.status == RailStatus.BLOCKED
+            res = await self.rails.check_async([{"role": "user", "content": text}], rail_types=[RailType.INPUT])
+        self._bill(TEMPLATE_CHARS["self_check_input"], len(text))
+        return res.status == RailStatus.BLOCKED
+
+    async def input_rail(self, text: str) -> bool:
+        """True when the input rail BLOCKS the text (an instruction aimed at an automated reviewer).
+
+        The normalised text is screened as overlapping windows of a few lines, and one Yes in any window flags it. A small
+        model reading a whole letter loses a one-line instruction among the address block and bank table, and can also tip
+        into Yes from the overall mood (urgency, an audit story) rather than any sentence that steers a reviewer. A short
+        window avoids both, and it says where the instruction is. A text of one window or less is screened as it is.
+        """
+        prepared = normalize_for_screening(text)[:SPAN_CHARS]
+        lines = [ln for ln in re.sub(r"(?<![.!?:;,])\n(?=[a-z])", " ", prepared).split("\n") if ln.strip()]
+        if len(lines) <= WINDOW_LINES:
+            windows = [prepared]
+        else:
+            starts = list(range(0, len(lines) - WINDOW_LINES, WINDOW_STEP)) + [len(lines) - WINDOW_LINES]
+            windows = ["\n".join(lines[i:i + WINDOW_LINES]) for i in starts]
+        blocked = any(await asyncio.gather(*[self._input_call(w) for w in windows]))
         self.input_checks += 1
         self.input_flagged += int(blocked)
         return blocked
@@ -128,7 +172,9 @@ async def run_sweep(screen: Screen, started: float) -> dict:
 
 
 async def run_eval(screen: Screen) -> dict:
-    with open(os.path.join(HERE, "testset.json"), encoding="utf-8") as f:
+    # The Nebius job payload is capped at 64 KB, so start-sweep.sh may inject the test letters gzipped.
+    gz = os.path.join(HERE, "testset.json.gz")
+    with (gzip.open(gz, "rt", encoding="utf-8") if os.path.exists(gz) else open(os.path.join(HERE, "testset.json"), encoding="utf-8")) as f:
         cases = json.load(f)["cases"]
     flags = await asyncio.gather(*[screen.input_rail(c["text"]) for c in cases])
     injected = [(c, f) for c, f in zip(cases, flags) if c["injection"]]
