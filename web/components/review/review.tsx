@@ -65,7 +65,7 @@ export function Review({ requestId }: { requestId: string }) {
             </span>
           </div>
           {tab === "decide" ? (
-            <Decide run={r} onEvidence={showEvidence} onChanged={run.reload} />
+            <Decide run={r} letterKey={req.data?.letterKey} onEvidence={showEvidence} onChanged={run.reload} />
           ) : (
             <EvidenceTab run={r} focus={focus} />
           )}

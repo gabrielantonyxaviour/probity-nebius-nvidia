@@ -8,7 +8,7 @@ import { ModelsStrip } from "./models-strip";
 const GLYPH = { hold: "✕", callback: "☏", info: "·" } as const;
 const TONE = { hold: "var(--hold)", callback: "var(--callback)", info: "var(--muted)" } as const;
 
-export function Decide({ run, onEvidence, onChanged }: { run: Run; onEvidence: (id: string | null) => void; onChanged: () => void }) {
+export function Decide({ run, letterKey, onEvidence, onChanged }: { run: Run; letterKey?: string; onEvidence: (id: string | null) => void; onChanged: () => void }) {
   const d = run.decision!;
   const final = d.finalVerdict;
   const v = VERDICT[final];
@@ -44,7 +44,7 @@ export function Decide({ run, onEvidence, onChanged }: { run: Run; onEvidence: (
           )}
         </section>
 
-        <div className="o-letter"><LetterView run={run} /></div>
+        <div className="o-letter"><LetterView run={run} letterKey={letterKey} /></div>
 
         <section className="card pad o-why">
           <div className="between" style={{ flexWrap: "wrap" }}>
