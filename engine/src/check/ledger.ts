@@ -25,8 +25,8 @@ export async function ledgerEvidence(env: Pick<Env, "DB">, s: Scratch): Promise<
   if (s.textAccount) {
     const { hash, last4 } = s.textAccount;
     const used = await env.DB.prepare(
-      "SELECT a.vendor_id, a.status, a.changed_at, v.legal_name FROM vendor_bank_accounts a LEFT JOIN vendors v ON v.vendor_id = a.vendor_id WHERE a.account_hash = ?1",
-    ).bind(hash).all<{ vendor_id: string; status: string; changed_at: string; legal_name: string | null }>();
+      "SELECT a.vendor_id, a.status, a.changed_at, v.legal_name FROM vendor_bank_accounts a JOIN vendors v ON v.vendor_id = a.vendor_id WHERE a.account_hash = ?1 AND v.org_id = (SELECT org_id FROM vendors WHERE vendor_id = ?2)", // only this company's vendors: never another company's
+    ).bind(hash, request.vendorId).all<{ vendor_id: string; status: string; changed_at: string; legal_name: string | null }>();
     for (const u of used.results) {
       if (u.vendor_id === request.vendorId) continue;
       f("bank_account", LABEL.accountOnOtherVendor, `••••${last4} is ${u.status} on ${u.vendor_id}${u.legal_name ? ` (${u.legal_name})` : ""} since ${date(u.changed_at)}`);

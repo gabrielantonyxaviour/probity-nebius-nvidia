@@ -11,6 +11,7 @@ import { runRoutes } from "./routes/runs";
 import { session } from "./routes/session";
 import { startRoutes } from "./routes/start";
 import { uploadRoutes } from "./routes/upload";
+import { vendorRoutes } from "./routes/vendors";
 import type { AppEnv } from "./routes/util";
 
 const app = new Hono<AppEnv>();
@@ -23,6 +24,7 @@ app.route("/api", integrationRoutes); // B: /api/connections*, /api/hooks/*, /ap
 app.route("/", inboxRoutes);
 app.route("/", startRoutes);
 app.route("/", uploadRoutes);
+app.route("/", vendorRoutes);
 app.route("/", runRoutes);
 app.route("/", fileRoutes);
 // B's ops routes read the session from this engine's pb_sid cookie, set by the session middleware above.

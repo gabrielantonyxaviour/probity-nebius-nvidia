@@ -82,7 +82,7 @@ async function writeMaster(env: IntEnv, orgId: string, contacts: XeroContact[], 
   for (const c of contacts) {
     const id = `xero_${c.ContactID}`;
     const addr = c.Addresses.find((a) => a.AddressType === "STREET" && a.AddressLine1) ?? c.Addresses.find((a) => a.AddressLine1);
-    q("INSERT INTO vendors (vendor_id, legal_name, legal_name_norm, is_fictional, status, remit_line1, remit_unit, remit_city, remit_state, remit_zip, created_at, org_id) VALUES (?1,?2,?3,0,?4,?5,?6,?7,?8,?9,?10,?11) ON CONFLICT(vendor_id) DO UPDATE SET legal_name=excluded.legal_name, legal_name_norm=excluded.legal_name_norm, status=excluded.status, remit_line1=excluded.remit_line1, remit_unit=excluded.remit_unit, remit_city=excluded.remit_city, remit_state=excluded.remit_state, remit_zip=excluded.remit_zip",
+    q("INSERT INTO vendors (vendor_id, legal_name, legal_name_norm, is_fictional, status, remit_line1, remit_unit, remit_city, remit_state, remit_zip, created_at, org_id, source) VALUES (?1,?2,?3,0,?4,?5,?6,?7,?8,?9,?10,?11,'xero') ON CONFLICT(vendor_id) DO UPDATE SET legal_name=excluded.legal_name, legal_name_norm=excluded.legal_name_norm, status=excluded.status, remit_line1=excluded.remit_line1, remit_unit=excluded.remit_unit, remit_city=excluded.remit_city, remit_state=excluded.remit_state, remit_zip=excluded.remit_zip",
       id, c.Name, norm(c.Name), c.ContactStatus === "ACTIVE" || !c.ContactStatus ? "active" : "inactive", addr?.AddressLine1 ?? null, addr?.AddressLine2 ?? null, addr?.City ?? null, addr?.Region ?? null, addr?.PostalCode ?? null, now, orgId);
     q("DELETE FROM vendor_bank_accounts WHERE vendor_id = ?1", id);
     const digits = (c.BankAccountDetails ?? "").replace(/\D/g, "");

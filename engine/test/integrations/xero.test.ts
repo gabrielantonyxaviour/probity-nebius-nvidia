@@ -33,6 +33,7 @@ describe("xero vendor master", () => {
     expect(await syncXero(env as never, "org_acme")).toEqual({ vendors: 2, bills: 2 });
     const v = await env.d1.prepare("SELECT vendor_id, legal_name, org_id, remit_city FROM vendors WHERE vendor_id = 'xero_c-1001'").first<Record<string, string>>();
     expect(v).toMatchObject({ legal_name: "Kettle Point Data Cabling LLC", org_id: "org_acme", remit_city: "Fredericksburg" });
+    expect((await env.d1.prepare("SELECT source FROM vendors WHERE vendor_id = 'xero_c-1001'").first<{ source: string }>())?.source).toBe("xero");
     const acct = await env.d1.prepare("SELECT account_last4, account_hash FROM vendor_bank_accounts WHERE vendor_id = 'xero_c-1001'").first<Record<string, string>>();
     expect(acct?.account_last4).toBe("0412");
     expect(acct?.account_hash).toMatch(/^[0-9a-f]{64}$/);
