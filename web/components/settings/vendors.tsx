@@ -6,6 +6,7 @@ import { useData } from "@/lib/use-data";
 import { Empty, ErrorBox, Skeleton } from "../states";
 import { VendorForm } from "./vendor-form";
 import { VendorImport } from "./vendor-import";
+import { SearchInput } from "../ui/input";
 
 type Panel = "add" | "import" | null;
 const SOURCE: Record<Vendor["source"], { label: string; cls: string }> = {
@@ -86,7 +87,7 @@ export function Vendors({ canEdit, onGoConnections }: { canEdit: boolean; onGoCo
       ) : (
         <>
           {all.length > 8 && (
-            <input className="field" type="search" placeholder="Find a vendor or domain" value={q} onChange={(e) => setQ(e.target.value)} aria-label="Find a vendor" style={{ maxWidth: 360 }} />
+            <SearchInput placeholder="Find a vendor or domain" value={q} onChange={(e) => setQ(e.target.value)} aria-label="Find a vendor" style={{ maxWidth: 360 }} />
           )}
           <div className="card tablewrap">
             <table className="t">

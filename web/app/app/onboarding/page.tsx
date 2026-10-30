@@ -7,6 +7,7 @@ import { useData } from "@/lib/use-data";
 import { Connections } from "@/components/settings/connections";
 import { PlanStep } from "@/components/plan-step";
 import { Skeleton } from "@/components/states";
+import { FormField, Input } from "@/components/ui/input";
 
 export default function OnboardingPage() {
   return <Suspense><Onboarding /></Suspense>;
@@ -48,10 +49,9 @@ function Onboarding() {
           <h1 className="serif" style={{ fontSize: "clamp(28px, 4vw, 38px)", margin: "14px 0 8px" }}>What&apos;s your company called?</h1>
           <p className="muted" style={{ margin: "0 0 20px" }}>Each company gets its own workspace: its mailbox, vendors, checks and team, kept apart from everyone else&apos;s.</p>
           <form onSubmit={create} className="card" style={{ padding: 20, display: "grid", gap: 14, maxWidth: 520 }}>
-            <label style={{ display: "grid", gap: 6 }}>
-              <span style={{ fontWeight: 500 }}>Company name</span>
-              <input className="field" autoFocus value={name} onChange={(e) => setName(e.target.value)} placeholder="Acme Logistics Inc." maxLength={120} autoComplete="organization" />
-            </label>
+            <FormField label="Company name" htmlFor="ws-name">
+              <Input id="ws-name" autoFocus value={name} onChange={(e) => setName(e.target.value)} placeholder="Acme Logistics Inc." maxLength={120} autoComplete="organization" />
+            </FormField>
             {error && <p role="alert" style={{ margin: 0, color: "var(--hold)" }}>{error}</p>}
             <button className="btn primary" disabled={busy}>{busy ? "Creating…" : "Create workspace"}</button>
           </form>

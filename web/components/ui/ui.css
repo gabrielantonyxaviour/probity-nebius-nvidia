@@ -1,0 +1,79 @@
+/* Designed form controls (shadcn/ReUI style). Tokens from app/globals.css only. */
+
+.ui-control {
+  height: 40px; width: 100%; padding: 0 12px; border-radius: 8px;
+  border: 1px solid var(--rule-strong); background: var(--field); color: var(--fg);
+  font: inherit; font-size: 14px; line-height: 1;
+  box-shadow: 0 1px 2px light-dark(rgb(39 37 30 / 0.05), rgb(0 0 0 / 0.3));
+  transition: border-color .15s, box-shadow .15s, background .15s;
+}
+.ui-control.mono { font-family: var(--mono); font-size: 13px; }
+.ui-control::placeholder { color: var(--muted); opacity: .8; }
+.ui-control:hover:not(:disabled) { border-color: light-dark(var(--stone-600), var(--stone-700)); }
+.ui-control:focus-visible, .ui-control:focus {
+  outline: none; border-color: var(--ring);
+  box-shadow: 0 0 0 3px light-dark(rgb(124 119 113 / 0.22), rgb(171 166 157 / 0.22));
+}
+.ui-control:disabled { opacity: .55; cursor: not-allowed; }
+.ui-control[aria-invalid="true"] { border-color: var(--hold-border); }
+.ui-control[aria-invalid="true"]:focus { box-shadow: 0 0 0 3px light-dark(rgb(162 53 68 / 0.16), rgb(248 113 113 / 0.2)); }
+
+.ui-input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; appearance: none; }
+.ui-textarea { height: auto; min-height: 120px; padding: 10px 12px; line-height: 1.5; resize: vertical; }
+
+/* Field: label above, hint or error below */
+.ui-field { display: grid; gap: 6px; align-content: start; min-width: 0; }
+.ui-field-label { font-size: 14px; font-weight: 500; color: var(--fg); }
+.ui-field-hint { font-size: 13px; color: var(--muted); line-height: 1.4; }
+.ui-field-error { font-size: 13px; color: var(--hold); line-height: 1.4; }
+
+/* Search */
+.ui-search { position: relative; width: 100%; }
+.ui-search > svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+.ui-search > .ui-input { padding-left: 36px; }
+
+/* Select */
+.ui-select { position: relative; min-width: 0; max-width: 100%; }
+.ui-trigger {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  text-align: left; cursor: pointer;
+}
+.ui-trigger .ui-value { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ui-trigger .ui-placeholder { color: var(--muted); }
+.ui-trigger[aria-expanded="true"] { border-color: var(--ring); }
+.ui-chevron { flex: none; color: var(--muted); transition: transform .15s; }
+.ui-trigger[aria-expanded="true"] .ui-chevron { transform: rotate(180deg); }
+
+.ui-pop {
+  position: absolute; z-index: 60; top: calc(100% + 6px); left: 0; min-width: 100%; width: max-content; max-width: min(360px, calc(100vw - 32px));
+  max-height: 280px; overflow-y: auto; margin: 0; padding: 4px; list-style: none;
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 8px;
+  box-shadow: 0 12px 32px -8px light-dark(rgb(39 37 30 / 0.18), rgb(0 0 0 / 0.6)), 0 2px 6px light-dark(rgb(39 37 30 / 0.06), rgb(0 0 0 / 0.3));
+  animation: ui-pop-in .12s ease-out both; outline: none; overscroll-behavior: contain;
+}
+@keyframes ui-pop-in { from { opacity: 0; transform: translateY(-4px) scale(.98); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .ui-pop { animation: none; } }
+
+.ui-option {
+  display: flex; align-items: center; gap: 8px; min-height: 34px; padding: 6px 10px 6px 6px;
+  border-radius: 6px; font-size: 14px; color: var(--fg); cursor: pointer; user-select: none; white-space: nowrap;
+}
+.ui-option.mono { font-family: var(--mono); font-size: 13px; }
+.ui-option.active { background: var(--surface-2); }
+.ui-option[aria-selected="true"] { font-weight: 500; }
+.ui-check { flex: none; width: 18px; display: inline-flex; justify-content: center; color: var(--fg); }
+.ui-opt-label { flex: 1; }
+.ui-opt-hint { color: var(--muted); font-size: 12px; font-family: var(--mono); }
+
+/* File drop */
+.ui-drop {
+  display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 8px;
+  border: 1px dashed var(--rule-strong); background: var(--surface-2); color: var(--muted);
+  transition: border-color .15s, background .15s;
+}
+.ui-drop.over { border-color: var(--ring); background: var(--surface-3); }
+.ui-drop > svg { flex: none; }
+.ui-drop-text { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.ui-drop-title { color: var(--fg); font-size: 14px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ui-drop-btn { min-height: 34px; padding: 0 14px; font-size: 14px; flex: none; }
+@media (max-width: 480px) { .ui-drop > svg { display: none; } }

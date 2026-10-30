@@ -2,6 +2,7 @@
 import { useState } from "react";
 import type { ImportResult } from "@probity/shared";
 import { ApiFailure, vendors } from "@/lib/api";
+import { FileDrop, Textarea } from "../ui/input";
 
 const HEADER = "name,domain,phone,bank_name,routing,account";
 const EXAMPLE = `${HEADER}\nHalvorsen Freight Partners LLC,halvorsenfreight.com,(206) 555-0134,Puget Sound Federal,125000105,7730014521`;
@@ -16,9 +17,7 @@ export function VendorImport({ onCancel, onImported }: { onCancel: () => void; o
   const [failure, setFailure] = useState<string | null>(null);
   const [result, setResult] = useState<ImportResult | null>(null);
 
-  async function choose(e: React.ChangeEvent<HTMLInputElement>) {
-    const f = e.target.files?.[0];
-    if (!f) return;
+  async function choose(f: File) {
     if (f.size > MAX_BYTES) { setFailure("That file is over 200 KB. Split it into smaller files."); return; }
     setFailure(null); setResult(null); setFile(f.name); setCsv(await f.text());
   }
@@ -43,15 +42,9 @@ export function VendorImport({ onCancel, onImported }: { onCancel: () => void; o
       <p className="muted" style={{ margin: 0, fontSize: 14 }}>
         One vendor per row, with the header <span className="mono">{HEADER}</span>. Only <span className="mono">name</span> is required. Up to 500 rows; vendors already in your list are skipped.
       </p>
-      <div className="row" style={{ gap: 10, flexWrap: "wrap" }}>
-        <label className="btn" style={{ minHeight: 36 }}>
-          Choose a CSV file
-          <input type="file" accept=".csv,text/csv" onChange={choose} className="sr" />
-        </label>
-        <span className="muted" style={{ fontSize: 14 }}>{file ?? "or paste it below"}</span>
-      </div>
-      <textarea className="field mono" value={csv} onChange={(e) => { setCsv(e.target.value); setFile(null); setResult(null); }} rows={6} spellCheck={false}
-        placeholder={EXAMPLE} aria-label="CSV text" style={{ padding: 12, fontSize: 13, minHeight: 130, resize: "vertical" }} />
+      <FileDrop accept=".csv,text/csv" onFile={choose} fileName={file} prompt="Drop a CSV file here" detail={file ? "Loaded below. Edit before importing if you need to." : "Up to 200 KB, or paste the rows below"} />
+      <Textarea mono value={csv} onChange={(e) => { setCsv(e.target.value); setFile(null); setResult(null); }} rows={6} spellCheck={false}
+        placeholder={EXAMPLE} aria-label="CSV text" style={{ minHeight: 130 }} />
       {failure && <p role="alert" style={{ margin: 0, color: "var(--hold)" }}>{failure}</p>}
       {result && (
         <div role="status" style={{ display: "grid", gap: 6 }}>

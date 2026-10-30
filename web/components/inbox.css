@@ -1,0 +1,50 @@
+/* Inbox: a header with the run cut-off, a strip of counts that doubles as filters, and the request list. */
+.ib { padding: 28px clamp(16px, 3vw, 40px) 32px; display: grid; gap: 18px; align-content: start; min-height: 100dvh; box-sizing: border-box; grid-template-rows: auto auto auto 1fr auto; }
+.ib-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+.ib-head h1 { font-size: clamp(28px, 3.2vw, 38px); line-height: 1.05; margin: 6px 0 0; font-weight: 400; }
+.ib-head-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.ib-run { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--muted); border: 1px solid var(--rule); border-radius: 999px; padding: 7px 12px; background: var(--surface); }
+.ib-run b { color: var(--fg); font-weight: 500; }
+.ib-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--callback); box-shadow: 0 0 0 3px color-mix(in srgb, var(--callback) 25%, transparent); }
+.ib-stats { display: grid; grid-template-columns: 1.5fr repeat(4, 1fr); border: 1px solid var(--rule); border-radius: 12px; background: var(--surface); overflow: hidden; }
+.ib-stat { display: grid; gap: 6px; align-content: start; text-align: left; padding: 16px 18px; border: 0; border-left: 1px solid var(--rule); background: none; color: var(--fg); cursor: pointer; font: inherit; transition: background .15s; }
+.ib-stat:first-child { border-left: 0; }
+.ib-stat:hover { background: var(--surface-2); }
+.ib-stat.on { background: var(--surface-2); box-shadow: inset 0 -2px 0 var(--fg); }
+.ib-stat .label { display: inline-flex; align-items: center; gap: 7px; margin: 0; }
+.ib-stat .label i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+.ib-stat b { font-size: 32px; line-height: 1; font-weight: 400; }
+.ib-risk b { font-size: 36px; }
+.ib-stat .muted { font-size: 13px; }
+.ib-starter { display: flex; gap: 14px; align-items: center; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--info-border); background: var(--info-bg); text-decoration: none; color: var(--fg); }
+.ib-starter span:nth-child(2) { flex: 1; }
+.ib-list { padding: 0; overflow: hidden; display: flex; flex-direction: column; min-height: 320px; }
+.ib-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 14px 12px 18px; border-bottom: 1px solid var(--rule); flex-wrap: wrap; }
+.ib-title { font-weight: 500; }
+.ib-search { max-width: 300px; min-height: 36px; font-size: 14px; }
+.ib-rows { list-style: none; margin: 0; padding: 0; }
+.ib-rows li + li { border-top: 1px solid var(--rule); }
+.ib-row { display: grid; grid-template-columns: 112px minmax(0, 1.6fr) minmax(0, 1fr) 130px 96px minmax(0, 1fr) 16px; gap: 14px; align-items: center; padding: 14px 18px; text-decoration: none; color: var(--fg); transition: background .12s; }
+.ib-row:hover { background: var(--surface-2); }
+.ib-row:focus-visible { outline: 2px solid var(--fg); outline-offset: -2px; }
+.ib-vendor { display: grid; gap: 3px; min-width: 0; }
+.ib-vendor b { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ib-vendor span { font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ib-kind, .ib-when { font-size: 14px; white-space: nowrap; }
+.ib-amt { text-align: right; white-space: nowrap; font-weight: 500; }
+.ib-status { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ib-chev { color: var(--muted); font-size: 20px; line-height: 1; }
+.ib-empty { padding: 36px 24px; display: grid; gap: 10px; justify-items: start; }
+.ib-empty .serif { font-size: 24px; margin: 0; }
+.ib-empty .muted { margin: 0; max-width: 560px; }
+
+@media (max-width: 1100px) { .ib-row { grid-template-columns: 104px minmax(0, 1.6fr) 120px minmax(0, 1fr) 16px; } .ib-kind, .ib-when { display: none; } }
+@media (max-width: 720px) {
+  .ib-stats { grid-template-columns: 1fr 1fr; }
+  .ib-stat { border-left: 0; border-top: 1px solid var(--rule); }
+  .ib-risk { grid-column: 1 / -1; border-top: 0; }
+  .ib-row { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "v a" "n n" "s s"; gap: 6px; }
+  .ib-verdict { grid-area: v; } .ib-amt { grid-area: a; } .ib-vendor { grid-area: n; } .ib-status { grid-area: s; }
+  .ib-chev { display: none; }
+  .ib-search { max-width: none; width: 100%; }
+}

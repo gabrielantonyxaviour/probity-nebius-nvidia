@@ -5,8 +5,12 @@ import { account, ApiFailure } from "@/lib/api";
 import { dateTime } from "@/lib/format";
 import { useData } from "@/lib/use-data";
 import { ErrorBox, Skeleton } from "../states";
+import { Select } from "../ui/select";
+import { TimeSelect } from "../ui/time-select";
+import { FormField, Input } from "../ui/input";
 
 const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const DAY_OPTIONS = DAYS.map((d, n) => ({ value: n, label: d }));
 const LEAD = [[30, "30 minutes"], [60, "1 hour"], [120, "2 hours"], [240, "4 hours"], [1440, "1 day"]] as const;
 const ZONES = ["America/New_York", "America/Chicago", "America/Denver", "America/Los_Angeles", "Europe/London", "Europe/Berlin", "Asia/Singapore", "Asia/Kuala_Lumpur", "Australia/Sydney", "UTC"];
 type Draft = Omit<Schedule, "nextRecheckAt">;
@@ -51,37 +55,33 @@ export function ScheduleEditor({ canEdit }: { canEdit: boolean }) {
         Requests are checked the moment they arrive. Before each payment run, Probity checks every open request again, because registry facts change and fraudsters send follow-ups. Your team gets the summary in Slack and by e-mail.
       </p>
       <fieldset disabled={!edit} style={{ border: 0, padding: 0, margin: 0, display: "grid", gap: 16, opacity: edit ? 1 : 0.6 }}>
-        <label style={{ display: "grid", gap: 6, maxWidth: 360 }}>
-          <span style={{ fontWeight: 500 }}>Time zone of your cut-offs</span>
-          <select className="field" value={draft.timezone} onChange={(e) => set({ timezone: e.target.value })}>
-            {[...new Set([draft.timezone, ...ZONES])].map((z) => <option key={z} value={z}>{z.replace(/_/g, " ")}</option>)}
-          </select>
-        </label>
-        <div style={{ display: "grid", gap: 8 }}>
-          <span style={{ fontWeight: 500 }}>Payment runs</span>
-          {draft.runs.map((r, i) => (
-            <div key={i} className="row" style={{ gap: 8, flexWrap: "wrap" }}>
-              <select className="field" style={{ width: 170 }} value={r.weekday} aria-label="Day" onChange={(e) => set({ runs: draft.runs.map((x, j) => j === i ? { ...x, weekday: Number(e.target.value) } : x) })}>
-                {DAYS.map((d, n) => <option key={d} value={n}>{d}</option>)}
-              </select>
-              <span className="muted">cut-off</span>
-              <input type="time" className="field" style={{ width: 130 }} value={r.cutoff} aria-label="Cut-off time" onChange={(e) => set({ runs: draft.runs.map((x, j) => j === i ? { ...x, cutoff: e.target.value } : x) })} />
-              <button type="button" className="btn" style={{ minHeight: 40 }} onClick={() => set({ runs: draft.runs.filter((_, j) => j !== i) })} aria-label="Remove this run">Remove</button>
-            </div>
-          ))}
-          {draft.runs.length < 14 && <button type="button" className="linkish" style={{ justifySelf: "start" }} onClick={() => set({ runs: [...draft.runs, { weekday: 1, cutoff: "14:00" }] })}>Add a payment run</button>}
+        <FormField label="Time zone of your cut-offs" htmlFor="sched-tz" style={{ maxWidth: 360 }}>
+          <Select id="sched-tz" value={draft.timezone} disabled={!edit} onChange={(v) => set({ timezone: v })}
+            options={[...new Set([draft.timezone, ...ZONES])].map((z) => ({ value: z, label: z.replace(/_/g, " ") }))} />
+        </FormField>
+        <div className="ui-field">
+          <span className="ui-field-label" id="sched-runs">Payment runs</span>
+          <div style={{ display: "grid", gap: 8 }} role="group" aria-labelledby="sched-runs">
+            {draft.runs.map((r, i) => (
+              <div key={i} className="row" style={{ gap: 8, flexWrap: "wrap" }}>
+                <Select width={170} value={r.weekday} options={DAY_OPTIONS} aria-label="Day" disabled={!edit}
+                  onChange={(v) => set({ runs: draft.runs.map((x, j) => j === i ? { ...x, weekday: v } : x) })} />
+                <span className="muted" style={{ fontSize: 14 }}>cut-off</span>
+                <TimeSelect width={130} value={r.cutoff} aria-label="Cut-off time" disabled={!edit}
+                  onChange={(v) => set({ runs: draft.runs.map((x, j) => j === i ? { ...x, cutoff: v } : x) })} />
+                <button type="button" className="btn" style={{ minHeight: 40 }} onClick={() => set({ runs: draft.runs.filter((_, j) => j !== i) })} aria-label="Remove this run">Remove</button>
+              </div>
+            ))}
+            {draft.runs.length < 14 && <button type="button" className="linkish" style={{ justifySelf: "start" }} onClick={() => set({ runs: [...draft.runs, { weekday: 1, cutoff: "14:00" }] })}>Add a payment run</button>}
+          </div>
         </div>
-        <label style={{ display: "grid", gap: 6, maxWidth: 360 }}>
-          <span style={{ fontWeight: 500 }}>Re-check before each cut-off</span>
-          <select className="field" value={draft.recheckMinutesBefore} onChange={(e) => set({ recheckMinutesBefore: Number(e.target.value) })}>
-            {LEAD.map(([m, l]) => <option key={m} value={m}>{l} before</option>)}
-          </select>
-        </label>
-        <label style={{ display: "grid", gap: 6, maxWidth: 560 }}>
-          <span style={{ fontWeight: 500 }}>Send the pre-run summary to</span>
-          <input className="field" value={emails} onChange={(e) => setEmails(e.target.value)} placeholder="controller@yourcompany.com, ap@yourcompany.com" />
-          <span className="muted" style={{ fontSize: 13 }}>Separate addresses with commas. Slack gets it too when it's connected.</span>
-        </label>
+        <FormField label="Re-check before each cut-off" htmlFor="sched-lead" style={{ maxWidth: 360 }}>
+          <Select id="sched-lead" value={draft.recheckMinutesBefore} disabled={!edit} onChange={(v) => set({ recheckMinutesBefore: v })}
+            options={LEAD.map(([m, l]) => ({ value: m as number, label: `${l} before` }))} />
+        </FormField>
+        <FormField label="Send the pre-run summary to" htmlFor="sched-emails" hint="Separate addresses with commas. Slack gets it too when it's connected." style={{ maxWidth: 560 }}>
+          <Input id="sched-emails" value={emails} onChange={(e) => setEmails(e.target.value)} placeholder="controller@yourcompany.com, ap@yourcompany.com" />
+        </FormField>
       </fieldset>
       {edit && (
         <div className="row" style={{ gap: 12, flexWrap: "wrap" }}>

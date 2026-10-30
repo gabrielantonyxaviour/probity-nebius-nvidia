@@ -1,0 +1,45 @@
+/* FileDrop: designed dropzone replacing native file inputs. Tokens only. */
+.fd { display: grid; gap: 8px; min-width: 0; }
+.fd-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.fd-label { font-weight: 500; font-size: 15px; }
+.fd-opt { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+
+.fd-zone { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center;
+  min-height: 196px; padding: 28px 20px; border: 1.5px dashed var(--rule-strong); border-radius: 12px; background: var(--surface);
+  cursor: pointer; transition: background .15s, border-color .15s, box-shadow .15s; outline: none; }
+.fd-zone:hover { background: var(--surface-2); border-color: var(--ring); }
+.fd-zone:focus-visible { border-color: var(--ring); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 28%, transparent); }
+.fd-zone[aria-disabled="true"] { opacity: .55; cursor: not-allowed; }
+.fd.is-over .fd-zone { border-style: solid; border-color: var(--info); background: var(--info-bg); }
+.fd.is-error .fd-zone { border-color: var(--hold-border); }
+
+.fd-icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 12px; background: var(--surface-2);
+  border: 1px solid var(--rule); color: var(--fg-2); transition: transform .2s; }
+.fd.is-over .fd-icon { color: var(--info); border-color: var(--info-border); transform: translateY(-3px); }
+.fd-text { display: grid; gap: 6px; }
+.fd-prompt { font-size: 16px; color: var(--fg); }
+.fd-prompt u { text-decoration-color: var(--rule-strong); text-underline-offset: 3px; }
+.fd-rule { font-size: 12px; color: var(--muted); }
+
+.fd-compact .fd-zone { flex-direction: row; justify-content: flex-start; text-align: left; min-height: 64px; padding: 12px 14px; gap: 12px; }
+.fd-compact .fd-icon { width: 36px; height: 36px; border-radius: 9px; }
+.fd-compact .fd-icon svg { width: 18px; height: 18px; }
+.fd-compact .fd-text { gap: 2px; }
+.fd-compact .fd-prompt { font-size: 14px; }
+
+.fd-file { display: flex; align-items: center; gap: 12px; padding: 12px 12px 12px 14px; border: 1px solid var(--rule);
+  border-radius: 12px; background: var(--surface); min-width: 0; animation: rise .25s ease-out both; }
+.fd-glyph { position: relative; flex: none; display: grid; place-items: center; width: 28px; height: 35px; }
+.fd-glyph svg { position: absolute; inset: 0; }
+.fd-ext { position: relative; top: 5px; font-size: 8px; font-weight: 600; letter-spacing: .04em; color: var(--hold); }
+.fd-meta { display: grid; gap: 2px; min-width: 0; flex: 1; }
+.fd-name { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fd-size { font-size: 12px; color: var(--muted); }
+.fd-x { flex: none; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; border: 1px solid transparent;
+  background: none; color: var(--muted); cursor: pointer; }
+.fd-x:hover { background: var(--surface-2); border-color: var(--rule); color: var(--fg); }
+.fd-x:focus-visible { outline: 2px solid var(--ring); outline-offset: 1px; }
+
+.fd-hint, .fd-err { margin: 0; font-size: 13px; }
+.fd-hint { color: var(--muted); }
+.fd-err { color: var(--hold); }

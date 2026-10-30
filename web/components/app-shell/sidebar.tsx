@@ -38,8 +38,8 @@ const GROUPS: Array<{ label: string; items: Item[] }> = [
     { label: "Plan and billing", href: "/app/settings?tab=billing", icon: "card", match: (p, t) => p === "/app/settings" && t === "billing" },
   ] },
   { label: "Learn", items: [
-    { label: "How it works", href: "/how", icon: "book", match: () => false },
-    { label: "Pricing", href: "/pricing", icon: "tag", match: () => false },
+    { label: "How it works", href: "/app/how", icon: "book", match: (p) => p.startsWith("/app/how") },
+    { label: "Pricing", href: "/app/pricing", icon: "tag", match: (p) => p.startsWith("/app/pricing") },
   ] },
 ];
 
@@ -71,7 +71,6 @@ function SideNav() {
     <>
       <div className="as-top">
         <Link href="/app" className="as-brand"><Mark size={24} /><span>Probity</span></Link>
-        <WorkspaceSwitcher me={me} />
       </div>
       <nav className="as-nav">
         {GROUPS.map((g) => (
@@ -112,40 +111,18 @@ function useOutside(onOut: () => void) {
   return ref;
 }
 
-function WorkspaceSwitcher({ me }: { me: Me | null }) {
-  const [open, setOpen] = useState(false);
-  const ref = useOutside(() => setOpen(false));
-  if (!me?.user) return null;
-  const others = me.orgs.filter((o) => o.id !== me.org.id);
-  async function switchTo(orgId: string) {
-    await account.switchWorkspace(orgId);
-    window.location.assign("/app");
-  }
-  return (
-    <div ref={ref} className="as-ws">
-      <button className="as-wsbtn" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-haspopup="menu">
-        <span className="as-wsav">{(me.org.name || "?").slice(0, 1).toUpperCase()}</span>
-        <span className="as-wsname"><b>{me.org.isDemo ? "Demo company" : me.org.name}</b><span>{me.org.plan === "pro" ? "Probity Plus" : "Free plan"}</span></span>
-        <span aria-hidden="true" className="as-chev">⌄</span>
-      </button>
-      {open && (
-        <div role="menu" className="as-menu">
-          <p className="as-menulabel">Workspaces</p>
-          <span className="as-menuitem current">{me.org.isDemo ? "Demo company" : me.org.name} ✓</span>
-          {others.map((o) => <button key={o.id} role="menuitem" className="as-menuitem" onClick={() => switchTo(o.id)}>{o.name}</button>)}
-          <Link role="menuitem" className="as-menuitem" href="/app/onboarding?new=1">+ New company workspace</Link>
-        </div>
-      )}
-    </div>
-  );
-}
-
 function Profile({ me }: { me: Me | null }) {
   const [open, setOpen] = useState(false);
   const ref = useOutside(() => setOpen(false));
   if (!me?.user) return <div className="as-profile as-skel" />;
   const email = me.user.email;
   const name = me.user.name && me.user.name !== email ? me.user.name : email.split("@")[0];
+  const workspace = me.org.isDemo ? "Demo company" : me.org.name;
+  const others = me.orgs.filter((o) => o.id !== me.org.id);
+  async function switchTo(orgId: string) {
+    await account.switchWorkspace(orgId);
+    window.location.assign("/app");
+  }
   async function signOut() {
     await account.signOut().catch(() => undefined);
     window.location.assign("/");
@@ -155,15 +132,19 @@ function Profile({ me }: { me: Me | null }) {
       {open && (
         <div role="menu" className="as-menu up">
           <p className="as-menulabel">{email}</p>
+          <p className="as-menulabel" style={{ marginTop: 8 }}>Workspaces</p>
+          <span className="as-menuitem current">{workspace} ✓</span>
+          {others.map((o) => <button key={o.id} role="menuitem" className="as-menuitem" onClick={() => switchTo(o.id)}>{o.name}</button>)}
+          <Link role="menuitem" className="as-menuitem" href="/app/onboarding?new=1">+ New company workspace</Link>
+          <div className="as-sep" />
           <Link role="menuitem" className="as-menuitem" href="/app/settings?tab=billing">Plan and billing</Link>
-          <Link role="menuitem" className="as-menuitem" href="/app/settings?tab=connections">Connections</Link>
           <Link role="menuitem" className="as-menuitem" href="/">Probity website</Link>
           <button role="menuitem" className="as-menuitem danger" onClick={signOut}>Sign out</button>
         </div>
       )}
       <button className="as-profile" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-haspopup="menu">
         <span className="as-avatar">{name.slice(0, 1).toUpperCase()}</span>
-        <span className="as-pname"><b>{name}</b><span>{email}</span></span>
+        <span className="as-pname"><b>{name}</b><span>{workspace} · {me.org.plan === "pro" ? "Probity Plus" : "Free"}</span></span>
         <span aria-hidden="true" className="as-chev">⋯</span>
       </button>
     </div>
