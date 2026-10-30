@@ -30,7 +30,7 @@ export default function NewCheckPage() {
     form.set("vendorName", vendor.trim());
     try {
       const { requestId } = await api.upload(form);
-      router.push(`/r/${requestId}`);
+      router.push(`/app/r/${requestId}`);
     } catch (err) {
       setError(err instanceof ApiFailure ? err.message : "Upload failed. Try again.");
       setBusy(false);

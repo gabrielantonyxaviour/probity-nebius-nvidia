@@ -51,7 +51,7 @@ export function Inbox() {
       </section>
 
       {hidden && (
-        <Link href={`/r/${hidden.requestId}`} className="card rise" style={{ display: "flex", gap: 14, alignItems: "center", marginTop: 22, padding: "14px 18px", textDecoration: "none", borderColor: "var(--info-border)", background: "var(--info-bg)" }}>
+        <Link href={`/app/r/${hidden.requestId}`} className="card rise" style={{ display: "flex", gap: 14, alignItems: "center", marginTop: 22, padding: "14px 18px", textDecoration: "none", borderColor: "var(--info-border)", background: "var(--info-bg)" }}>
           <span className="chip info">Start here</span>
           <span style={{ flex: 1 }}>Sable Harbor&apos;s letter looks routine. It hides lines that only an AI would read.</span>
           <span aria-hidden="true">→</span>
@@ -68,8 +68,8 @@ export function Inbox() {
             <p className="serif" style={{ fontSize: 24, margin: 0 }}>No bank-change requests yet.</p>
             <p className="muted" style={{ margin: 0, maxWidth: 560 }}>Connect your AP mailbox and every vendor e-mail asking to change bank or remittance details is checked as it arrives. You can also check a letter by hand.</p>
             <div className="row" style={{ gap: 10, flexWrap: "wrap" }}>
-              <Link href="/settings" className="btn primary">Connect a mailbox</Link>
-              <Link href="/new" className="btn">Check a letter</Link>
+              <Link href="/app/settings" className="btn primary">Connect a mailbox</Link>
+              <Link href="/app/new" className="btn">Check a letter</Link>
             </div>
           </div>
         )}
@@ -91,10 +91,10 @@ function Table({ items }: { items: InboxItem[] }) {
           </thead>
           <tbody>
             {items.map((i) => (
-              <tr key={i.requestId} onClick={() => router.push(`/r/${i.requestId}`)} style={{ cursor: "pointer" }} className="inbox-row">
+              <tr key={i.requestId} onClick={() => router.push(`/app/r/${i.requestId}`)} style={{ cursor: "pointer" }} className="inbox-row">
                 <td><VerdictChip verdict={i.verdict} /></td>
                 <td>
-                  <Link href={`/r/${i.requestId}`} style={{ textDecoration: "none", fontWeight: 500 }}>{i.vendorName}</Link>
+                  <Link href={`/app/r/${i.requestId}`} style={{ textDecoration: "none", fontWeight: 500 }}>{i.vendorName}</Link>
                   <div className="mono muted" style={{ fontSize: 12 }}>{SOURCE[i.source]}{i.requestId} · {i.senderEmail}</div>
                 </td>
                 <td>{KIND[i.kind]}</td>
@@ -109,7 +109,7 @@ function Table({ items }: { items: InboxItem[] }) {
       <ul className="inbox-cards" style={{ listStyle: "none", margin: 0, padding: 0 }}>
         {items.map((i) => (
           <li key={i.requestId} style={{ borderTop: "1px solid var(--rule)" }}>
-            <Link href={`/r/${i.requestId}`} style={{ display: "grid", gap: 6, padding: "14px 16px", textDecoration: "none" }}>
+            <Link href={`/app/r/${i.requestId}`} style={{ display: "grid", gap: 6, padding: "14px 16px", textDecoration: "none" }}>
               <div className="between"><VerdictChip verdict={i.verdict} /><span className="num">{money(i.amountAtRisk)}</span></div>
               <b style={{ fontWeight: 500 }}>{i.vendorName}</b>
               <span className="muted" style={{ fontSize: 13 }}>{KIND[i.kind]} · <Status i={i} /></span>

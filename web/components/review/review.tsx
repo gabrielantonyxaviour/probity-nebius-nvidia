@@ -31,7 +31,7 @@ export function Review({ requestId }: { requestId: string }) {
 
   return (
     <div className="wrap" style={{ paddingTop: 22 }}>
-      <Link href="/" className="muted" style={{ textDecoration: "none", fontSize: 14 }}>← Inbox</Link>
+      <Link href="/app" className="muted" style={{ textDecoration: "none", fontSize: 14 }}>← Inbox</Link>
       {req.error && <div style={{ marginTop: 16 }}><ErrorBox error={req.error} onRetry={req.reload} /></div>}
       {!req.data && !req.error && <div style={{ marginTop: 16 }} className="stack"><Skeleton h={40} w="60%" /><Skeleton h={18} w="40%" /></div>}
       {req.data && (

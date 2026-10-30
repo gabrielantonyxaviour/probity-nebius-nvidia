@@ -15,7 +15,7 @@ export function DemoBanner() {
       <span style={{ flex: 1, minWidth: 220, fontSize: 14 }}>
         Halvorsen Mission Systems and its vendors are synthetic. Registry facts, web results and every model call are live.
       </span>
-      <Link href={me.user ? "/onboarding" : "/signin"} className="btn primary" style={{ minHeight: 34, fontSize: 14 }}>
+      <Link href={me.user ? "/app/onboarding" : "/signin"} className="btn primary" style={{ minHeight: 34, fontSize: 14 }}>
         {me.user ? "Set up your company" : "Connect your own mailbox"}
       </Link>
     </div>

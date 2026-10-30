@@ -33,7 +33,7 @@ export function BillingPanel({ canEdit }: { canEdit: boolean }) {
     setBusy("redeem"); setError(null);
     try {
       await account.redeem(code.trim());
-      setNote("Pro is on for this workspace.");
+      setNote("Probity Plus is on for this workspace.");
       setCode("");
       b.reload();
     } catch (err) {
@@ -53,7 +53,7 @@ export function BillingPanel({ canEdit }: { canEdit: boolean }) {
         <div className="between" style={{ flexWrap: "wrap" }}>
           <div>
             <p className="label" style={{ margin: 0 }}>Current plan</p>
-            <p className="serif" style={{ fontSize: 30, margin: "4px 0 0" }}>{pro ? "Pro" : "Free"}</p>
+            <p className="serif" style={{ fontSize: 30, margin: "4px 0 0" }}>{pro ? "Probity Plus" : "Free"}</p>
           </div>
           {pro && d.status !== "none" && <span className={`chip ${d.status === "active" ? "approve" : "callback"}`}>{STATUS[d.status]}</span>}
         </div>
@@ -71,7 +71,7 @@ export function BillingPanel({ canEdit }: { canEdit: boolean }) {
           d.status !== "none" && <button className="btn" style={{ justifySelf: "start" }} onClick={() => go("portal")} disabled={!!busy}>{busy === "portal" ? "Opening…" : "Manage billing"}</button>
         ) : (
           <div className="row" style={{ gap: 12, flexWrap: "wrap" }}>
-            <button className="btn primary" onClick={() => go("checkout")} disabled={!!busy}>{busy === "checkout" ? "Opening checkout…" : `Upgrade to Pro · ${d.priceLabel}`}</button>
+            <button className="btn primary" onClick={() => go("checkout")} disabled={!!busy}>{busy === "checkout" ? "Opening checkout…" : `Upgrade to Probity Plus · ${d.priceLabel}`}</button>
             <span className="muted" style={{ fontSize: 13 }}>Secure checkout by Dodo Payments. Cancel any time.</span>
           </div>
         ))}

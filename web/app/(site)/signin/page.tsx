@@ -32,7 +32,11 @@ export default function SignInPage() {
     try {
       await account.signIn(email.trim().toLowerCase(), code.trim());
       const me = await account.me();
-      router.replace(me.org.isDemo ? "/onboarding" : "/");
+      // Back to the page that sent them here (only paths inside the app), else onboarding for a new account.
+      const next = new URLSearchParams(window.location.search).get("next");
+      const safe = next && /^\/app(\/[A-Za-z0-9/_?=&.-]*)?$/.test(next) ? next : null;
+      const plus = new URLSearchParams(window.location.search).get("plan") === "plus";
+      router.replace(me.org.isDemo ? `/app/onboarding${plus ? "?plan=plus" : ""}` : safe ?? "/app");
       router.refresh();
     } catch (err) {
       setError(err instanceof ApiFailure && err.status === 401 ? "That code didn't match or has expired. Check the e-mail or send a new one." : "Couldn't sign you in. Try again.");
@@ -72,7 +76,7 @@ export default function SignInPage() {
         </form>
       )}
       <p className="muted" style={{ fontSize: 13, marginTop: 16 }}>
-        Just looking? The <a href="/">demo company</a> is open to everyone, no account needed.
+        New here? The same code creates your account. You start on the free plan, and the shared demo company is there to look around.
       </p>
     </div>
   );

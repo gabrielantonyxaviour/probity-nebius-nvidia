@@ -36,7 +36,7 @@ export function AccountMenu() {
     await account.switchWorkspace(orgId);
     setOpen(false);
     router.refresh();
-    window.location.assign("/");
+    window.location.assign("/app");
   }
   async function signOut() {
     await account.signOut().catch(() => undefined);
@@ -47,19 +47,19 @@ export function AccountMenu() {
     <div ref={ref} style={{ position: "relative" }}>
       <button className="btn" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-haspopup="menu" style={{ minHeight: 34, padding: "0 10px", fontSize: 14, maxWidth: 220 }}>
         <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{me.org.name}</span>
-        {me.org.plan === "pro" && <span className="chip info" style={{ fontSize: 9.5, padding: "0 6px" }}>Pro</span>}
+        {me.org.plan === "pro" && <span className="chip info" style={{ fontSize: 9.5, padding: "0 6px" }}>Plus</span>}
         <span aria-hidden="true">▾</span>
       </button>
       {open && (
         <div role="menu" className="card rise" style={{ position: "absolute", right: 0, top: "calc(100% + 6px)", minWidth: 240, padding: 6, zIndex: 30, boxShadow: "0 8px 30px rgba(0,0,0,.14)" }}>
           <p className="muted" style={{ fontSize: 12.5, margin: "6px 10px 8px", overflowWrap: "anywhere" }}>{me.user.email}</p>
-          <MenuLink href="/settings" onClick={() => setOpen(false)}>Settings and connections</MenuLink>
-          <MenuLink href="/settings?tab=billing" onClick={() => setOpen(false)}>Plan and billing</MenuLink>
+          <MenuLink href="/app/settings" onClick={() => setOpen(false)}>Settings and connections</MenuLink>
+          <MenuLink href="/app/settings?tab=billing" onClick={() => setOpen(false)}>Plan and billing</MenuLink>
           {me.orgs.filter((o) => o.id !== me.org.id).length > 0 && <p className="label" style={{ margin: "10px 10px 4px", fontSize: 10 }}>Switch workspace</p>}
           {me.orgs.filter((o) => o.id !== me.org.id).map((o) => (
             <button key={o.id} role="menuitem" className="menu-item" onClick={() => switchTo(o.id)}>{o.name}</button>
           ))}
-          <MenuLink href="/onboarding?new=1" onClick={() => setOpen(false)}>New company workspace</MenuLink>
+          <MenuLink href="/app/onboarding?new=1" onClick={() => setOpen(false)}>New company workspace</MenuLink>
           <div style={{ borderTop: "1px solid var(--rule)", margin: "6px 0" }} />
           <button role="menuitem" className="menu-item" onClick={signOut}>Sign out</button>
         </div>

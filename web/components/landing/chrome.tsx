@@ -1,0 +1,96 @@
+"use client";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { account } from "@/lib/api";
+
+/** The record on file and the letter, overlapping; the crimson overlap is where they must line up. */
+export function Mark({ size = 26 }: { size?: number }) {
+  return (
+    <svg width={size} height={size * 0.77} viewBox="2 9 60 46" aria-hidden="true">
+      <path d="M30 26h9v7a5 5 0 0 1-5 5H25V31a5 5 0 0 1 5-5z" fill="#E25D6E" />
+      <rect x="7" y="14" width="32" height="24" rx="5" fill="none" stroke="currentColor" strokeWidth="4.5" />
+      <rect x="25" y="26" width="32" height="24" rx="5" fill="none" stroke="currentColor" strokeWidth="4.5" />
+    </svg>
+  );
+}
+
+/** Signed in or not decides the header's right side; the page renders the signed-out version until /api/me answers. */
+function useSignedIn(): boolean {
+  const [signedIn, setSignedIn] = useState(false);
+  useEffect(() => { account.me().then((m) => setSignedIn(!!m.user)).catch(() => undefined); }, []);
+  return signedIn;
+}
+
+export function LandingHeader() {
+  const signedIn = useSignedIn();
+  return (
+    <header className="lp-hdr">
+      <div className="lp-frame">
+        <Link href="/" className="lp-brand" aria-label="Probity home"><Mark /><span>Probity</span></Link>
+        <nav className="lp-nav lp-mono" aria-label="Main">
+          <Link href="/#how">Product</Link>
+          <Link href="/how">How it works</Link>
+          <Link href="/pricing">Pricing</Link>
+          <a href="https://github.com/gabrielantonyxaviour/probity-nebius-nvidia" target="_blank" rel="noreferrer">GitHub</a>
+        </nav>
+        <div className="lp-hdr-right lp-mono">
+          {signedIn ? (
+            <Link href="/app" className="lp-pill solid">Open Probity <span className="arr">→</span></Link>
+          ) : (
+            <>
+              <Link href="/signin?next=/app" className="lp-pill hide-sm" style={{ borderColor: "transparent" }}>Sign in</Link>
+              <Link href="/signin" className="lp-pill solid">Start free <span className="arr">→</span></Link>
+            </>
+          )}
+        </div>
+      </div>
+    </header>
+  );
+}
+
+const COLS: Array<[string, Array<[string, string]>]> = [
+  ["Product", [["How it works", "/how"], ["Pricing", "/pricing"], ["Start free", "/signin"], ["Sign in", "/signin?next=/app"]]],
+  ["Connects to", [["Gmail and Outlook", "/how"], ["Xero", "/how"], ["Slack", "/how"], ["Any PDF letter", "/how"]]],
+  ["Built on", [["NVIDIA Nemotron", "/how"], ["Nebius Token Factory", "/how"], ["NVIDIA NeMo Guardrails", "/how"], ["Nebius AI Cloud", "/how"]]],
+  ["Policies", [["Privacy", "/privacy"], ["Terms", "/terms"], ["MIT licence", "https://github.com/gabrielantonyxaviour/probity-nebius-nvidia/blob/main/LICENSE"], ["Source code", "https://github.com/gabrielantonyxaviour/probity-nebius-nvidia"]]],
+];
+
+export function LandingFooter() {
+  return (
+    <footer className="lp-foot">
+      <div className="lp-frame">
+        <div className="lp-foot-grid">
+          <div style={{ display: "grid", gap: 14, alignContent: "start" }}>
+            <Link href="/" className="lp-brand" aria-label="Probity home"><Mark /><span>Probity</span></Link>
+            <p className="lp-muted" style={{ margin: 0, maxWidth: "34ch", fontSize: 14 }}>
+              Checks every vendor bank-change request before the payment run, and tells your team to approve, call back or hold.
+            </p>
+          </div>
+          {COLS.map(([h, links]) => (
+            <div key={h}>
+              <h4 className="lp-mono">{h}</h4>
+              <ul>{links.map(([t, href]) => <li key={t}><a href={href} {...(href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}>{t}</a></li>)}</ul>
+            </div>
+          ))}
+        </div>
+        <div className="lp-foot-note">
+          <span>Probity&apos;s demo company, its vendors and its letters are synthetic. Your own mailbox, Xero, Slack, registry facts and web results are real.</span>
+          <span className="lp-mono" style={{ fontSize: 11 }}>Built for the Nebius × NVIDIA hackathon, 2026</span>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/** Adds .lp-js to the page and reveals .lp-rv blocks as they scroll in. Without JS everything is simply visible. */
+export function Reveal() {
+  useEffect(() => {
+    const root = document.querySelector(".lp");
+    if (!root || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    root.classList.add("lp-js");
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
+    root.querySelectorAll(".lp-rv").forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+  return null;
+}

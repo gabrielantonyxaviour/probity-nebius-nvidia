@@ -12,7 +12,7 @@ export function SiteHeader() {
     >
       <div className="wrap between" style={{ minHeight: 58, flexWrap: "wrap", rowGap: 6, paddingTop: 6, paddingBottom: 6 }}>
         <div className="row hdr-left" style={{ gap: 22 }}>
-          <Link href="/" className="row" style={{ textDecoration: "none", gap: 9 }} aria-label="Probity inbox">
+          <Link href="/app" className="row" style={{ textDecoration: "none", gap: 9 }} aria-label="Probity inbox">
             <Mark />
             <span className="serif" style={{ fontSize: 23, lineHeight: 1 }}>Probity</span>
           </Link>

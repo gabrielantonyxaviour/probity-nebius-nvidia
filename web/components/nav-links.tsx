@@ -3,8 +3,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const LINKS = [
-  { href: "/", label: "Inbox", short: "Inbox", match: (p: string) => p === "/" || p.startsWith("/r/") },
-  { href: "/new", label: "Check a letter", short: "Check", match: (p: string) => p.startsWith("/new") },
+  { href: "/app", label: "Inbox", short: "Inbox", match: (p: string) => p === "/app" || p.startsWith("/app/r/") },
+  { href: "/app/new", label: "Check a letter", short: "Check", match: (p: string) => p.startsWith("/app/new") },
   { href: "/how", label: "How it works", short: "How", match: (p: string) => p.startsWith("/how") },
 ];
 

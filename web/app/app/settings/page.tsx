@@ -42,12 +42,12 @@ function Settings() {
       <div className="wrap" style={{ paddingTop: 40, maxWidth: 640 }}>
         <h1 className="serif" style={{ fontSize: 34, margin: "0 0 10px" }}>Settings belong to your own company.</h1>
         <p className="muted" style={{ margin: "0 0 18px" }}>The demo company is shared and read-only. Create a workspace to connect your mailbox, your accounting system and Slack.</p>
-        <Link href={m.user ? "/onboarding" : "/signin"} className="btn primary">{m.user ? "Create your workspace" : "Start free"}</Link>
+        <Link href={m.user ? "/app/onboarding" : "/signin"} className="btn primary">{m.user ? "Create your workspace" : "Start free"}</Link>
       </div>
     );
   }
   const canEdit = m.org.role === "owner" || m.org.role === "admin";
-  const pick = (t: Tab) => { setTab(t); router.replace(`/settings?tab=${t}`, { scroll: false }); };
+  const pick = (t: Tab) => { setTab(t); router.replace(`/app/settings?tab=${t}`, { scroll: false }); };
 
   return (
     <div className="wrap" style={{ paddingTop: 26, maxWidth: 980 }}>
@@ -67,7 +67,7 @@ function Settings() {
       </div>
       {tab === "connections" && <Connections canEdit={canEdit} />}
       {tab === "vendors" && <Vendors canEdit={canEdit} onGoConnections={() => pick("connections")} />}
-      {tab === "runs" && <ScheduleEditor canEdit={canEdit} isPro={m.org.plan === "pro"} />}
+      {tab === "runs" && <ScheduleEditor canEdit={canEdit} />}
       {tab === "billing" && <BillingPanel canEdit={canEdit} />}
       {!canEdit && <p className="muted" style={{ marginTop: 18, fontSize: 14 }}>Only owners and admins can change these settings.</p>}
     </div>

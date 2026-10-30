@@ -5,6 +5,7 @@ import { Suspense, useState } from "react";
 import { account, ApiFailure } from "@/lib/api";
 import { useData } from "@/lib/use-data";
 import { Connections } from "@/components/settings/connections";
+import { PlanStep } from "@/components/plan-step";
 import { Skeleton } from "@/components/states";
 
 export default function OnboardingPage() {
@@ -23,6 +24,8 @@ function Onboarding() {
   const m = me.data;
   if (!m.user) { router.replace("/signin"); return null; }
   const needsWorkspace = m.org.isDemo || params.get("new") === "1";
+  const choosingPlan = !needsWorkspace && params.get("step") === "plan";
+  const preferPlus = params.get("plan") === "plus";
 
   async function create(e: React.FormEvent) {
     e.preventDefault();
@@ -30,7 +33,7 @@ function Onboarding() {
     setBusy(true); setError(null);
     try {
       await account.createWorkspace(name.trim());
-      router.replace("/onboarding");
+      router.replace(`/app/onboarding?step=plan${preferPlus ? "&plan=plus" : ""}`);
       me.reload();
     } catch (err) {
       setError(err instanceof ApiFailure ? err.message : "Couldn't create the workspace. Try again.");
@@ -39,7 +42,7 @@ function Onboarding() {
 
   return (
     <div className="wrap" style={{ paddingTop: 34, maxWidth: 760 }}>
-      <Steps at={needsWorkspace ? 1 : 2} />
+      <Steps at={needsWorkspace ? 1 : choosingPlan ? 2 : 3} />
       {needsWorkspace ? (
         <>
           <h1 className="serif" style={{ fontSize: "clamp(28px, 4vw, 38px)", margin: "14px 0 8px" }}>What&apos;s your company called?</h1>
@@ -53,6 +56,12 @@ function Onboarding() {
             <button className="btn primary" disabled={busy}>{busy ? "Creating…" : "Create workspace"}</button>
           </form>
         </>
+      ) : choosingPlan ? (
+        <>
+          <h1 className="serif" style={{ fontSize: "clamp(28px, 4vw, 38px)", margin: "14px 0 8px" }}>Choose how you start.</h1>
+          <p className="muted" style={{ margin: "0 0 22px" }}>Both plans run the same check with every feature. Plus is for teams that check more than 100 requests a month.</p>
+          <PlanStep preferPlus={preferPlus} onDone={() => router.replace("/app/onboarding?step=connect")} />
+        </>
       ) : (
         <>
           <h1 className="serif" style={{ fontSize: "clamp(28px, 4vw, 38px)", margin: "14px 0 8px" }}>Connect where your bank-change requests arrive.</h1>
@@ -61,8 +70,8 @@ function Onboarding() {
           </p>
           <Connections canEdit={m.org.role === "owner" || m.org.role === "admin"} compact />
           <div className="row" style={{ gap: 12, marginTop: 26, flexWrap: "wrap" }}>
-            <Link href="/settings?tab=runs" className="btn">Next: your payment-run schedule</Link>
-            <Link href="/" className="btn primary">Go to your inbox</Link>
+            <Link href="/app/settings?tab=runs" className="btn">Next: your payment-run schedule</Link>
+            <Link href="/app" className="btn primary">Go to your inbox</Link>
           </div>
         </>
       )}
@@ -71,7 +80,7 @@ function Onboarding() {
 }
 
 function Steps({ at }: { at: number }) {
-  const steps = ["Your company", "Connect accounts", "Payment runs"];
+  const steps = ["Your company", "Your plan", "Connect accounts"];
   return (
     <ol className="row" style={{ listStyle: "none", padding: 0, margin: 0, gap: 8, flexWrap: "wrap" }}>
       {steps.map((s, i) => (

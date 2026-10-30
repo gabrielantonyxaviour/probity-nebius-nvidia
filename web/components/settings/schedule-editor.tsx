@@ -12,7 +12,7 @@ const ZONES = ["America/New_York", "America/Chicago", "America/Denver", "America
 type Draft = Omit<Schedule, "nextRecheckAt">;
 
 /** The company's payment runs: Probity re-checks every open request this long before each cut-off. */
-export function ScheduleEditor({ canEdit, isPro }: { canEdit: boolean; isPro: boolean }) {
+export function ScheduleEditor({ canEdit }: { canEdit: boolean }) {
   const s = useData(() => account.schedule(), []);
   const [draft, setDraft] = useState<Draft | null>(null);
   const [emails, setEmails] = useState("");
@@ -29,8 +29,7 @@ export function ScheduleEditor({ canEdit, isPro }: { canEdit: boolean; isPro: bo
 
   if (s.error) return <ErrorBox error={s.error} onRetry={s.reload} />;
   if (!draft) return <div className="stack"><Skeleton h={44} /><Skeleton h={44} /></div>;
-  const locked = !isPro;
-  const edit = canEdit && !locked;
+  const edit = canEdit;
   const set = (patch: Partial<Draft>) => setDraft({ ...draft, ...patch });
 
   async function save() {
@@ -51,7 +50,6 @@ export function ScheduleEditor({ canEdit, isPro }: { canEdit: boolean; isPro: bo
       <p className="muted" style={{ margin: 0 }}>
         Requests are checked the moment they arrive. Before each payment run, Probity checks every open request again, because registry facts change and fraudsters send follow-ups. Your team gets the summary in Slack and by e-mail.
       </p>
-      {locked && <p className="card" style={{ margin: 0, padding: "10px 14px", background: "var(--info-bg)", borderColor: "var(--info-border)" }}>Payment-run re-checks are part of Pro.</p>}
       <fieldset disabled={!edit} style={{ border: 0, padding: 0, margin: 0, display: "grid", gap: 16, opacity: edit ? 1 : 0.6 }}>
         <label style={{ display: "grid", gap: 6, maxWidth: 360 }}>
           <span style={{ fontWeight: 500 }}>Time zone of your cut-offs</span>

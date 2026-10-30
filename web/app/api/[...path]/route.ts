@@ -13,6 +13,11 @@ const PASS_HEADERS = [
   "x-slack-signature", "x-slack-request-timestamp",
 ];
 
+// Reachable without a session: sign-in itself, who-am-I, signed webhooks and callbacks, and the public numbers on How it works.
+const SESSION_COOKIES = ["__Secure-probity.session_token", "probity.session_token"];
+const PUBLIC = [/^auth$/, /^me$/, /^hooks$/, /^connections\/callback$/, /^billing\/webhook$/, /^sweep\/(callback|work|register|latest)$/, /^limits$/, /^health/];
+const isPublic = (path: string[]): boolean => PUBLIC.some((re) => re.test(path[0] === "auth" || path[0] === "hooks" ? path[0] : path.join("/")));
+
 async function forward(req: Request, { params }: Ctx): Promise<Response> {
   const { path } = await params;
   if (!path.every((p) => /^[A-Za-z0-9._-]+$/.test(p))) {
@@ -20,6 +25,9 @@ async function forward(req: Request, { params }: Ctx): Promise<Response> {
   }
   const url = new URL(req.url);
   const target = `/api/${path.join("/")}${url.search}`;
+  if (!isPublic(path) && !SESSION_COOKIES.some((n) => req.headers.get("cookie")?.includes(`${n}=`))) {
+    return Response.json({ error: "Sign in to continue.", code: "unauthorized" }, { status: 401 });
+  }
 
   if (process.env.NODE_ENV !== "production" && process.env.PROBITY_MOCK === "1") {
     const { mockResponse } = await import("@/dev-fixtures/mock");
