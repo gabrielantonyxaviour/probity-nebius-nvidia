@@ -80,7 +80,7 @@ export function LetterView({ run }: { run: Run }) {
                 </div>
               ))}
               <p className="muted" style={{ margin: 0, fontSize: 13 }}>
-                Found in code from the PDF itself (text colour and size), then confirmed by Nemotron 3.5 Super VL reading the page image. No agent ever follows text from a letter.
+                Found in code from the PDF itself: text colour, size and position on the page. No agent ever follows text from a letter.
               </p>
             </div>
           )}

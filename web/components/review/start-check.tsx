@@ -34,7 +34,7 @@ export function StartCheck({ requestId, onStarted, again = false }: { requestId:
         <p className="label" style={{ margin: 0 }}>{again ? "Run it again" : "Not checked yet"}</p>
         <p className="serif" style={{ fontSize: 26, margin: "6px 0 6px", lineHeight: 1.2 }}>Check this request before the payment run.</p>
         <p className="muted" style={{ margin: 0 }}>
-          Probity reads the letter twice (its text and the page image), screens every line for instructions aimed at an AI, looks the vendor up in SEC EDGAR, USAspending, GLEIF and on the vendor&apos;s own website, then applies the payment policy. One to three minutes.
+          Probity reads the letter and checks the PDF for text a person can't see, screens every line for instructions aimed at an AI, looks the vendor up in SEC EDGAR, USAspending, GLEIF and on the vendor&apos;s own website, then applies the payment policy. One to three minutes.
         </p>
       </div>
       <div className="row" style={{ flexWrap: "wrap", gap: 12 }}>

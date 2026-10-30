@@ -2,9 +2,9 @@ import { LiveNumbers } from "@/components/live-numbers";
 
 const PIPELINE = [
   { n: "1", title: "Open the PDF", who: "Code", body: "Pulls the text layer with each line's size, position and colour, and renders every page to an image. White-on-white, 1-point and off-page text are caught here, in code." },
-  { n: "2", title: "Read it twice", who: "Nemotron 3 Ultra · Nemotron 3.5 Super VL", body: "Ultra reads the text layer for what the letter asks. Super VL reads the page image the way a person would. Text that is in the file but not on the page is a red flag." },
+  { n: "2", title: "Read what it asks", who: "Nemotron 3 Ultra", body: "Ultra, with reasoning on, reads the text layer for what the letter asks: the new account, the routing number, who signed, and any push to hurry. Lines the code hid from view are withheld, so they can't steer the reading." },
   { n: "3", title: "Screen every line", who: "Nemotron 3.5 Lightning", body: "Every line of the letter, the e-mail and every web page is screened for instructions aimed at an AI reviewer. Flagged lines become evidence, never instructions." },
-  { n: "4", title: "Find the vendor", who: "Nemotron 3.5 Super VL · Tavily", body: "Super VL plans the lookups by tool call: SEC EDGAR, USAspending, GLEIF, our vendor records, and the vendor's own website through Tavily, for a number to call that didn't come from the letter." },
+  { n: "4", title: "Find the vendor", who: "Nemotron 3.5 Lightning · Tavily", body: "Lightning plans the lookups by tool call: SEC EDGAR, USAspending, GLEIF, our vendor records, and the vendor's own website through Tavily, for a number to call that didn't come from the letter." },
   { n: "5", title: "Compare", who: "Nemotron 3 Ultra", body: "Ultra, with reasoning on, links each claim in the letter to the evidence and names every conflict." },
   { n: "6", title: "Decide", who: "Code · Nemotron 3.5 Lightning", body: "The payment policy is code: approve, call back or hold. Lightning writes the reason up, and code checks every number in it against the evidence." },
 ];
@@ -14,7 +14,7 @@ const LIMITS = [
   "Registries cover US companies. A private vendor has no public phone number, so the number to call comes from our own records, never from the letter.",
   "Web lookups share a small free budget. Results are cached, and each visitor gets three new lookups.",
   "Live checks are capped per day and per visitor so the demo stays up through judging. Recorded checks are free to open.",
-  "Handwritten letters and poor scans have not been tested. Super VL reads one page image per call.",
+  "Nebius withdrew Nemotron 3.5 Super VL from Token Factory on 30 October and serves no other NVIDIA vision model, so Probity no longer reads the page image. A scan with no text layer is passed to the clerk to read. Checks recorded before then show Super VL's reading.",
   "The pre-run re-check runs a full check again only when a registry fact has changed; otherwise it screens and re-checks the reasoning.",
 ];
 

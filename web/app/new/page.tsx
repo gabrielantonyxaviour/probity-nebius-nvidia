@@ -46,7 +46,7 @@ export default function NewCheckPage() {
       </p>
 
       <form onSubmit={submit} className="card" style={{ padding: 22, display: "grid", gap: 18 }}>
-        <Field label="The letter (PDF, up to 10 MB)" hint={pdf ? `${pdf.name} · ${(pdf.size / 1024).toFixed(0)} KB` : "A scan works too: Nemotron 3.5 Super VL reads the page image."}>
+        <Field label="The letter (PDF, up to 10 MB)" hint={pdf ? `${pdf.name} · ${(pdf.size / 1024).toFixed(0)} KB` : "A PDF with a text layer. A scan without one goes to the clerk to read."}>
           <input type="file" accept="application/pdf,.pdf" required onChange={(e) => setPdf(e.target.files?.[0] ?? null)} />
         </Field>
         <Field label="The e-mail it came with (.eml, optional)" hint={eml ? eml.name : "Adds the sender's domain and the mail-server checks to the evidence."}>

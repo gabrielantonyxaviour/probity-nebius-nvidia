@@ -4,14 +4,14 @@ import type { AgentKey, Run, Step } from "@probity/shared";
 import { dollars, MODEL_SHORT, seconds } from "@/lib/format";
 
 const AGENT_MODELS: Record<AgentKey, string[]> = {
-  letter_reader: ["Nemotron 3 Ultra", "Nemotron 3.5 Super VL"],
-  registry_scout: ["Nemotron 3.5 Super VL", "Tavily"],
+  letter_reader: ["Nemotron 3 Ultra"],
+  registry_scout: ["Nemotron 3.5 Lightning", "Tavily"],
   identity_examiner: ["Nemotron 3 Ultra"],
   gate_officer: ["Nemotron 3.5 Lightning"],
   screen: ["Nemotron 3.5 Lightning"],
 };
 const STEP_MODELS: Record<string, string[]> = {
-  read_text: ["Nemotron 3 Ultra"], read_image: ["Nemotron 3.5 Super VL"], pdf: ["code"], gate: ["code"],
+  read_text: ["Nemotron 3 Ultra"], pdf: ["code"], gate: ["code"],
 };
 
 export function Progress({ run }: { run: Run }) {
