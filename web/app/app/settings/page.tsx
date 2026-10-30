@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense } from "react";
 import { account } from "@/lib/api";
 import { useData } from "@/lib/use-data";
 import { BillingPanel } from "@/components/settings/billing-panel";
@@ -17,6 +17,7 @@ const TABS = [
   { key: "billing", label: "Plan and billing" },
 ] as const;
 type Tab = (typeof TABS)[number]["key"];
+const billingDoneTab = (p: URLSearchParams): Tab | null => (p.get("billing") === "done" ? "billing" : null);
 const NAMES: Record<string, string> = { gmail: "Gmail", outlook: "Outlook", xero: "Xero", slack: "Slack" };
 
 export default function SettingsPage() {
@@ -27,12 +28,13 @@ function Settings() {
   const params = useSearchParams();
   const router = useRouter();
   const me = useData(() => account.me(), []);
-  const [tab, setTab] = useState<Tab>((params.get("tab") as Tab) ?? "connections");
+  // The sidebar links straight to each tab, so the tab follows the URL.
+  const asked = params.get("tab") as Tab | null;
+  const tab: Tab = billingDoneTab(params) ?? (asked && TABS.some((t) => t.key === asked) ? asked : "connections");
   const connected = params.get("connected");
   const failed = params.get("error");
   const billingDone = params.get("billing") === "done";
 
-  useEffect(() => { if (billingDone) setTab("billing"); }, [billingDone]);
 
   if (me.error) return <div className="wrap" style={{ paddingTop: 28 }}><ErrorBox error={me.error} onRetry={me.reload} /></div>;
   if (!me.data) return <div className="wrap stack" style={{ paddingTop: 28 }}><Skeleton h={40} w="40%" /><Skeleton h={200} /></div>;
@@ -47,24 +49,15 @@ function Settings() {
     );
   }
   const canEdit = m.org.role === "owner" || m.org.role === "admin";
-  const pick = (t: Tab) => { setTab(t); router.replace(`/app/settings?tab=${t}`, { scroll: false }); };
+  const pick = (t: Tab) => router.replace(`/app/settings?tab=${t}`, { scroll: false });
 
   return (
     <div className="wrap" style={{ paddingTop: 26, maxWidth: 980 }}>
       <p className="label" style={{ margin: 0 }}>{m.org.name}</p>
-      <h1 className="serif" style={{ fontSize: "clamp(28px, 4vw, 38px)", margin: "6px 0 18px" }}>Settings</h1>
+      <h1 className="serif" style={{ fontSize: "clamp(28px, 4vw, 38px)", margin: "6px 0 18px" }}>{TABS.find((t) => t.key === tab)?.label}</h1>
       {connected && <Notice ok>{NAMES[connected] ?? connected} is connected.</Notice>}
       {failed && <Notice>{NAMES[failed] ?? "The"} connection didn&apos;t finish. Try again.</Notice>}
       {billingDone && <Notice ok>Thanks. Your plan updates as soon as the payment is confirmed, usually within a minute.</Notice>}
-      <div role="tablist" className="row" style={{ gap: 4, borderBottom: "1px solid var(--rule)", marginBottom: 22, overflowX: "auto" }}>
-        {TABS.map((t) => (
-          <button key={t.key} role="tab" aria-selected={tab === t.key} onClick={() => pick(t.key)}
-            style={{ background: "none", border: 0, padding: "10px 14px", cursor: "pointer", fontSize: 15, whiteSpace: "nowrap", fontWeight: tab === t.key ? 600 : 400,
-              color: tab === t.key ? "var(--fg)" : "var(--muted)", borderBottom: `2px solid ${tab === t.key ? "var(--fg)" : "transparent"}`, marginBottom: -1 }}>
-            {t.label}
-          </button>
-        ))}
-      </div>
       {tab === "connections" && <Connections canEdit={canEdit} />}
       {tab === "vendors" && <Vendors canEdit={canEdit} onGoConnections={() => pick("connections")} />}
       {tab === "runs" && <ScheduleEditor canEdit={canEdit} />}
