@@ -59,7 +59,7 @@ function Onboarding() {
       ) : choosingPlan ? (
         <>
           <h1 className="serif" style={{ fontSize: "clamp(28px, 4vw, 38px)", margin: "14px 0 8px" }}>Choose how you start.</h1>
-          <p className="muted" style={{ margin: "0 0 22px" }}>Both plans run the same check with every feature. Plus is for teams that check more than 100 requests a month.</p>
+          <p className="muted" style={{ margin: "0 0 22px" }}>Both plans run the same check with every feature. Pro is for teams that check more than 100 requests a month.</p>
           <PlanStep preferPlus={preferPlus} onDone={() => router.replace("/app/onboarding?step=connect")} />
         </>
       ) : (

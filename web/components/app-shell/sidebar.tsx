@@ -90,7 +90,7 @@ function SideNav() {
       <div className="as-bottom">
         {me?.user && !me.org.isDemo && me.org.plan !== "pro" && (
           <div className="as-promo">
-            <b>Probity Plus</b>
+            <b>Probity Pro</b>
             <span>1,000 checks a month for teams that pay vendors every week.</span>
             <Link href="/app/settings?tab=billing">Upgrade</Link>
           </div>
@@ -144,7 +144,7 @@ function Profile({ me }: { me: Me | null }) {
       )}
       <button className="as-profile" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-haspopup="menu">
         <span className="as-avatar">{name.slice(0, 1).toUpperCase()}</span>
-        <span className="as-pname"><b>{name}</b><span>{workspace} · {me.org.plan === "pro" ? "Probity Plus" : "Free"}</span></span>
+        <span className="as-pname"><b>{name}</b><span>{workspace} · {me.org.plan === "pro" ? "Probity Pro" : "Free"}</span></span>
         <span aria-hidden="true" className="as-chev">⋯</span>
       </button>
     </div>

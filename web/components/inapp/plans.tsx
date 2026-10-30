@@ -10,7 +10,7 @@ const BILLING = "/app/settings?tab=billing";
 
 const PLANS = [
   { key: "free", name: "Free", price: "$0", per: "per month", lead: "Every feature, for an AP team getting started.", items: ["100 checks a month", "Every feature included", "Unlimited mailboxes"] },
-  { key: "pro", name: "Probity Plus", price: "$49", per: "per company, per month", lead: "For a team that pays vendors every week.", items: ["1,000 checks a month", "Everything in Free", "Cancel any time from Settings"] },
+  { key: "pro", name: "Probity Pro", price: "$49", per: "per company, per month", lead: "For a team that pays vendors every week.", items: ["1,000 checks a month", "Everything in Free", "Cancel any time from Settings"] },
 ] as const;
 
 const ROWS: Array<[string, string, string]> = [
@@ -24,8 +24,8 @@ const ROWS: Array<[string, string, string]> = [
 
 const FAQ: Array<[string, string]> = [
   ["What counts as a check?", "One request run through the whole check. Opening a finished check or logging a call is free. A full re-check before a payment run, made when a registry fact has changed, counts as one."],
-  ["What happens at the limit?", "New requests still arrive and wait in your inbox, marked not checked yet. Nothing is deleted. Checks resume next month, or straight away on Probity Plus."],
-  ["Who handles payment?", "Dodo Payments is the merchant of record. Prices are in US dollars; tax is calculated at checkout. Cancel and Plus stays active until the end of the month you paid for."],
+  ["What happens at the limit?", "New requests still arrive and wait in your inbox, marked not checked yet. Nothing is deleted. Checks resume next month, or straight away on Probity Pro."],
+  ["Who handles payment?", "Dodo Payments is the merchant of record. Prices are in US dollars; tax is calculated at checkout. Cancel and Pro stays active until the end of the month you paid for."],
 ];
 
 /** In-app pricing: the two plans with the workspace's current plan marked. Upgrades go through Settings. */
@@ -66,7 +66,7 @@ export function Plans() {
       <div className="ia-lower">
         <div className="card" style={{ overflowX: "auto" }}>
           <table className="ia-cmp">
-            <thead><tr><th>Compare</th><th className={current === "free" ? "on" : undefined}>Free</th><th className={current === "pro" ? "on" : undefined}>Plus</th></tr></thead>
+            <thead><tr><th>Compare</th><th className={current === "free" ? "on" : undefined}>Free</th><th className={current === "pro" ? "on" : undefined}>Pro</th></tr></thead>
             <tbody>
               {ROWS.map(([f, a, b]) => (
                 <tr key={f}>
@@ -106,7 +106,7 @@ function Status({ me, billing, loading }: { me: Me | null; billing: Billing | nu
     <div className="card pad ia-usage">
       <div>
         <p className="label" style={{ margin: 0 }}>{me.org.name}</p>
-        <b style={{ fontWeight: 500 }}>{billing.plan === "pro" ? "Probity Plus" : "Free"}</b>
+        <b style={{ fontWeight: 500 }}>{billing.plan === "pro" ? "Probity Pro" : "Free"}</b>
       </div>
       <div style={{ display: "grid", gap: 6 }}>
         <div className="between" style={{ fontSize: 13.5 }}>
@@ -122,7 +122,7 @@ function Status({ me, billing, loading }: { me: Me | null; billing: Billing | nu
 
 function Cta({ plan, current, me }: { plan: "free" | "pro"; current: string | null; me: Me | null }) {
   if (current === plan) return <Link className="btn" href={BILLING} style={{ justifySelf: "start" }}>Manage plan</Link>;
-  if (!me?.user) return <Link className={`btn${plan === "pro" ? " primary" : ""}`} href={plan === "pro" ? "/signin?plan=plus" : "/signin"} style={{ justifySelf: "start" }}>{plan === "pro" ? "Start with Plus" : "Start free"}</Link>;
-  if (plan === "pro") return <Link className="btn primary" href={BILLING} style={{ justifySelf: "start" }}>Upgrade to Plus</Link>;
+  if (!me?.user) return <Link className={`btn${plan === "pro" ? " primary" : ""}`} href={plan === "pro" ? "/signin?plan=plus" : "/signin"} style={{ justifySelf: "start" }}>{plan === "pro" ? "Start with Pro" : "Start free"}</Link>;
+  if (plan === "pro") return <Link className="btn primary" href={BILLING} style={{ justifySelf: "start" }}>Upgrade to Pro</Link>;
   return <span className="muted" style={{ fontSize: 13.5 }}>Switch any time from Plan and billing.</span>;
 }

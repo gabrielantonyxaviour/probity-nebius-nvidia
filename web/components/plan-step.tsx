@@ -5,7 +5,7 @@ import { account, ApiFailure } from "@/lib/api";
 const FREE = ["100 checks a month", "Every feature: mailboxes, Xero, Slack, pre-run re-checks", "No card needed"];
 const PLUS = ["1,000 checks a month", "Everything in Free", "$49 per company per month, in US dollars", "Cancel any time"];
 
-/** The last setup step: Free goes straight on; Plus opens Dodo checkout; a judge's code opens a $0 Dodo checkout. */
+/** The last setup step: Free goes straight on; Pro opens Dodo checkout; a judge's code opens a $0 Dodo checkout. */
 export function PlanStep({ preferPlus, onDone }: { preferPlus: boolean; onDone: () => void }) {
   const [busy, setBusy] = useState<"plus" | "code" | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -33,8 +33,8 @@ export function PlanStep({ preferPlus, onDone }: { preferPlus: boolean; onDone: 
           <ul>{FREE.map((i) => <li key={i}><span aria-hidden="true">✓</span>{i}</li>)}</ul>
           <button className={`btn${preferPlus ? "" : " primary"}`} onClick={onDone} disabled={!!busy}>Start free</button>
         </section>
-        <section className="card plan" aria-label="Probity Plus" style={{ borderColor: "var(--fg)" }}>
-          <p className="label" style={{ margin: 0 }}>Probity Plus</p>
+        <section className="card plan" aria-label="Probity Pro" style={{ borderColor: "var(--fg)" }}>
+          <p className="label" style={{ margin: 0 }}>Probity Pro</p>
           <p className="serif plan-price">$49<span className="muted"> / month</span></p>
           <ul>{PLUS.map((i) => <li key={i}><span aria-hidden="true">✓</span>{i}</li>)}</ul>
           <button className={`btn${preferPlus ? " primary" : ""}`} onClick={plus} disabled={!!busy}>{busy === "plus" ? "Opening checkout…" : "Continue to checkout"}</button>

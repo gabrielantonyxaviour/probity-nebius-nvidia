@@ -47,7 +47,7 @@ export function AccountMenu() {
     <div ref={ref} style={{ position: "relative" }}>
       <button className="btn" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-haspopup="menu" style={{ minHeight: 34, padding: "0 10px", fontSize: 14, maxWidth: 220 }}>
         <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{me.org.name}</span>
-        {me.org.plan === "pro" && <span className="chip info" style={{ fontSize: 9.5, padding: "0 6px" }}>Plus</span>}
+        {me.org.plan === "pro" && <span className="chip info" style={{ fontSize: 9.5, padding: "0 6px" }}>Pro</span>}
         <span aria-hidden="true">▾</span>
       </button>
       {open && (

@@ -27,7 +27,7 @@ export function useSession(): Session {
   return s;
 }
 
-/** Where "get started" goes: signed out to sign-in; signed in to the app (or to finish setup, or to billing for Plus). */
+/** Where "get started" goes: signed out to sign-in; signed in to the app (or to finish setup, or to billing for Pro). */
 export function startHref(s: Session, plan?: "plus"): string {
   if (s.state !== "in") return plan ? "/signin?plan=plus" : "/signin";
   if (!s.hasWorkspace) return plan ? "/app/onboarding?plan=plus" : "/app/onboarding";

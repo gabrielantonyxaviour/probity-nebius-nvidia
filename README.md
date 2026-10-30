@@ -24,7 +24,7 @@ A company signs up with an e-mail code, creates its workspace, and connects what
 | **Vendors** | No Xero? Add vendors one by one, import a CSV, or load 35 sample vendors to try it. |
 | **Payment runs** | The company sets its run days and cut-offs. Before each cut-off Probity re-checks every open request and sends the summary to Slack and by e-mail. A hold also e-mails the controller. |
 
-Plans: **Free** has every feature with 100 checks a month; **Probity Plus** is $49 per company per month for 1,000 checks, billed through Dodo Payments. Judges: sign up, and on the plan step (or **Plan and billing**) enter `NEBIUSJUDGES`. It opens a Dodo checkout with a 100% discount, so a real $0 subscription is created and Plus turns on when Dodo confirms it.
+Plans: **Free** has every feature with 100 checks a month; **Probity Pro** is $49 per company per month for 1,000 checks, billed through Dodo Payments. Judges: sign up, and on the plan step (or **Plan and billing**) enter `NEBIUSJUDGES`. It opens a Dodo checkout with a 100% discount, so a real $0 subscription is created and Pro turns on when Dodo confirms it.
 
 The product lives under `/app` behind sign-in: a sidebar with the inbox, Check a letter, Vendors, Payment runs, Connections, Plan and billing, and in-app How it works and Pricing.
 

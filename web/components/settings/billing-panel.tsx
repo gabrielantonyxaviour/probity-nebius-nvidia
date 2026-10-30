@@ -44,7 +44,7 @@ export function BillingPanel({ canEdit }: { canEdit: boolean }) {
   if (!b.data) return <div className="stack"><Skeleton h={80} /></div>;
   const d = b.data;
   const pro = d.plan === "pro";
-  const granted = pro && !d.hasSubscription; // Plus without a Dodo subscription: nothing to renew or manage
+  const granted = pro && !d.hasSubscription; // Pro without a Dodo subscription: nothing to renew or manage
   const used = Math.min(1, d.limits.checksPerMonth ? d.limits.checksUsed / d.limits.checksPerMonth : 0);
 
   return (
@@ -53,7 +53,7 @@ export function BillingPanel({ canEdit }: { canEdit: boolean }) {
         <div className="between" style={{ flexWrap: "wrap" }}>
           <div>
             <p className="label" style={{ margin: 0 }}>Current plan</p>
-            <p className="serif" style={{ fontSize: 30, margin: "4px 0 0" }}>{pro ? "Probity Plus" : "Free"}</p>
+            <p className="serif" style={{ fontSize: 30, margin: "4px 0 0" }}>{pro ? "Probity Pro" : "Free"}</p>
           </div>
           {pro && d.hasSubscription && d.status !== "none" && <span className={`chip ${d.status === "active" ? "approve" : "callback"}`}>{STATUS[d.status]}</span>}
         </div>
@@ -66,7 +66,7 @@ export function BillingPanel({ canEdit }: { canEdit: boolean }) {
             <div style={{ width: `${used * 100}%`, height: "100%", background: used > 0.9 ? "var(--hold)" : "var(--fg)" }} />
           </div>
         </div>
-        {granted && <p className="muted" style={{ margin: 0, fontSize: 14 }}>Plus granted by the judges' code, no subscription yet.</p>}
+        {granted && <p className="muted" style={{ margin: 0, fontSize: 14 }}>Pro granted by the judges' code, no subscription yet.</p>}
         {pro && d.hasSubscription && d.renewsAt && <p className="muted" style={{ margin: 0, fontSize: 14 }}>Renews {dateTime(d.renewsAt)} · {d.priceLabel}</p>}
         {canEdit && (granted ? (
           <div className="row" style={{ gap: 12, flexWrap: "wrap" }}>
@@ -77,7 +77,7 @@ export function BillingPanel({ canEdit }: { canEdit: boolean }) {
           d.hasSubscription && d.status !== "none" && <button className="btn" style={{ justifySelf: "start" }} onClick={() => go("portal")} disabled={!!busy}>{busy === "portal" ? "Opening…" : "Manage billing"}</button>
         ) : (
           <div className="row" style={{ gap: 12, flexWrap: "wrap" }}>
-            <button className="btn primary" onClick={() => go("checkout")} disabled={!!busy}>{busy === "checkout" ? "Opening checkout…" : `Upgrade to Probity Plus · ${d.priceLabel}`}</button>
+            <button className="btn primary" onClick={() => go("checkout")} disabled={!!busy}>{busy === "checkout" ? "Opening checkout…" : `Upgrade to Probity Pro · ${d.priceLabel}`}</button>
             <span className="muted" style={{ fontSize: 13 }}>Secure checkout by Dodo Payments. Cancel any time.</span>
           </div>
         ))}

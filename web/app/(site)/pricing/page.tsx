@@ -9,7 +9,7 @@ const PLANS = [
     items: ["100 checks a month", "Gmail and Outlook, as many mailboxes as you need", "Xero vendor list, bank details and open bills", "Slack verdicts with buttons to log the call", "A re-check before every payment run", "The full evidence trail for every check"],
   },
   {
-    name: "Probity Plus", price: "$49", per: "per company, per month", cta: "Start with Plus", href: "/signin?plan=plus", featured: true,
+    name: "Probity Pro", price: "$49", per: "per company, per month", cta: "Start with Pro", href: "/signin?plan=plus", featured: true,
     lead: "For a team that pays vendors every week.",
     items: ["1,000 checks a month", "Everything in Free", "Billed monthly in US dollars", "Cancel any time from Settings"],
   },
@@ -29,10 +29,10 @@ const ROWS: Array<[string, string, string]> = [
 
 const FAQ: Array<[string, string]> = [
   ["What counts as a check?", "One request run through the whole check: reading the letter, screening every line, the registry and web lookups, and the decision. Opening a finished check or logging a call is free. A full re-check before a payment run, made when a registry fact has changed, counts as one."],
-  ["What happens when I reach the limit?", "New requests still arrive and wait in your inbox, marked not checked yet. Nothing is deleted. Checks resume at the start of the next month, or straight away on Probity Plus."],
-  ["How do I choose a plan?", "Create your account and your company's workspace first. The last step of setup asks you to pick Free or Probity Plus; you can change your mind later under Settings, Plan and billing."],
-  ["Judging the Nebius × NVIDIA hackathon?", "Enter the code NEBIUSJUDGES at the plan step, or under Settings, Plan and billing, for Probity Plus at no charge."],
-  ["Who handles payment?", "Dodo Payments is the merchant of record. Prices are in US dollars; tax is calculated at checkout. Cancel and Plus stays active until the end of the month you paid for."],
+  ["What happens when I reach the limit?", "New requests still arrive and wait in your inbox, marked not checked yet. Nothing is deleted. Checks resume at the start of the next month, or straight away on Probity Pro."],
+  ["How do I choose a plan?", "Create your account and your company's workspace first. The last step of setup asks you to pick Free or Probity Pro; you can change your mind later under Settings, Plan and billing."],
+  ["Judging the Nebius × NVIDIA hackathon?", "Enter the code NEBIUSJUDGES at the plan step, or under Settings, Plan and billing, for Probity Pro at no charge."],
+  ["Who handles payment?", "Dodo Payments is the merchant of record. Prices are in US dollars; tax is calculated at checkout. Cancel and Pro stays active until the end of the month you paid for."],
 ];
 
 export default function PricingPage() {
@@ -57,7 +57,7 @@ export default function PricingPage() {
               <div className="pr-price"><span className="lp-serif">{p.price}</span><span className="lp-muted">{p.per}</span></div>
               <p className="lp-muted" style={{ margin: 0 }}>{p.lead}</p>
               <ul>{p.items.map((i) => <li key={i}><span aria-hidden="true">✓</span>{i}</li>)}</ul>
-              <span style={{ justifySelf: "start" }}><StartLink className={`lp-pill lp-mono${p.featured ? " solid" : ""}`} out={p.cta} signedIn={p.featured ? "Upgrade to Plus" : "Open Probity"} {...(p.featured ? { plan: "plus" as const } : {})} /></span>
+              <span style={{ justifySelf: "start" }}><StartLink className={`lp-pill lp-mono${p.featured ? " solid" : ""}`} out={p.cta} signedIn={p.featured ? "Upgrade to Pro" : "Open Probity"} {...(p.featured ? { plan: "plus" as const } : {})} /></span>
             </div>
           ))}
         </div>
@@ -68,7 +68,7 @@ export default function PricingPage() {
           <p className="lp-eyebrow lp-mono lp-rv">Compare</p>
           <div className="lp-rv" style={{ overflowX: "auto" }}>
             <table className="pr-table">
-              <thead><tr><th /><th className="lp-mono">Free</th><th className="lp-mono">Probity Plus</th></tr></thead>
+              <thead><tr><th /><th className="lp-mono">Free</th><th className="lp-mono">Probity Pro</th></tr></thead>
               <tbody>{ROWS.map(([f, a, b]) => <tr key={f}><td>{f}</td><td>{a}</td><td>{b}</td></tr>)}</tbody>
             </table>
           </div>

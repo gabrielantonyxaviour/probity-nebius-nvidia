@@ -104,7 +104,7 @@ const CONNECT: Array<[string, Row[]]> = [
   ]],
   ["When money moves", [
     { name: "Payment runs", line: "Your run days and cut-offs, with a re-check before each", icon: "calendar" },
-    { name: "Billing", line: "Start free; Probity Plus through Dodo Payments", tiles: [["/brands/dodo.svg", "Dodo Payments"]] },
+    { name: "Billing", line: "Start free; Probity Pro through Dodo Payments", tiles: [["/brands/dodo.svg", "Dodo Payments"]] },
   ]],
 ];
 
