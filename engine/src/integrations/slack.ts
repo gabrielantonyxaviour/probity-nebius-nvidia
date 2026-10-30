@@ -77,7 +77,7 @@ export async function notifyRunFinished(env: IntEnv, orgId: string, runId: strin
     const slack = parseMeta(await getConn(env, orgId, "slack"));
     if (slack) {
       const msg = runBlocks(run, { amountCents: req?.amount_cents ?? null, appUrl: appUrl(env) });
-      const r = await api(env, slack, "chat.postMessage", { channel: slack.channelId, ...msg });
+      const r = await api(env, slack, "chat.postMessage", { channel: slack.channelId, unfurl_links: false, unfurl_media: false, ...msg });
       if (r.ok && r.ts) await env.DB.prepare("INSERT OR REPLACE INTO slack_posts (run_id, org_id, request_id, channel, ts, created_at) VALUES (?1,?2,?3,?4,?5,?6)").bind(runId, orgId, run.requestId, slack.channelId, r.ts, nowIso()).run();
     }
     if (decision.verdict === "HOLD") {
@@ -95,7 +95,7 @@ export async function notifyRunFinished(env: IntEnv, orgId: string, runId: strin
 /** The pre-run summary to Slack (e-mail is sent by the caller). */
 export async function postSummary(env: IntEnv, orgId: string, p: Omit<Parameters<typeof summaryBlocks>[0], "appUrl">): Promise<void> {
   const slack = parseMeta(await getConn(env, orgId, "slack"));
-  if (slack) await api(env, slack, "chat.postMessage", { channel: slack.channelId, ...summaryBlocks({ ...p, appUrl: appUrl(env) }) });
+  if (slack) await api(env, slack, "chat.postMessage", { channel: slack.channelId, unfurl_links: false, unfurl_media: false, ...summaryBlocks({ ...p, appUrl: appUrl(env) }) });
 }
 
 /** Slack signs `v0:{timestamp}:{raw body}`; reject anything older than five minutes. */
