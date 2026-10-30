@@ -11,7 +11,7 @@ const AGENT_MODELS: Record<AgentKey, string[]> = {
   screen: ["Nemotron 3.5 Lightning"],
 };
 const STEP_MODELS: Record<string, string[]> = {
-  read_text: ["Nemotron 3 Ultra"], pdf: ["code"], gate: ["code"],
+  read_text: ["Nemotron 3 Ultra"], read_image: ["Nemotron 3.5 Super VL"], pdf: ["code"], gate: ["code"],
 };
 
 export function Progress({ run }: { run: Run }) {

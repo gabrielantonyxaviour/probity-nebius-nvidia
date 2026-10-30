@@ -22,7 +22,7 @@ export function LetterView({ run, letterKey }: { run: Run; letterKey?: string })
   const [page, setPage] = useState(0);
   if (!letter) return null;
   const imageless = letter.pageImages.length === 0;
-  // "Not visible" compares each claim with a reading of the page image; checks since the vision model was withdrawn have none.
+  // "Not visible" compares each claim with a reading of the page image; a check that skipped that reading has none.
   const imageRead = letter.claims.some((c) => c.inImage);
   const hidden = letter.hidden.filter((h) => h.page === page);
   const [pw, ph] = letter.pageSize;

@@ -1,8 +1,8 @@
 // Steps `read_text` (Nemotron 3 Ultra, thinking on) and `read_image` (a Nemotron vision model): two independent readings of the letter.
-// Token Factory withdrew Nemotron 3.5 Super VL on 30 Oct 2026 and serves no other NVIDIA vision model, so `read_image` is skipped
-// until VISION_MODEL is set again; the text layer and the PDF checks (white text, off-page text, invisible characters) still run.
+// Nemotron 3.5 Super VL was briefly unavailable on Token Factory on 30 Oct 2026. If the model is missing again (404), `read_image`
+// is skipped rather than failing the check; the text layer and the PDF checks (white text, off-page text, invisible characters) still run.
 import type { Claim, HiddenText, Run, Screen } from "@probity/shared";
-import { imagePart, type ChatOptions } from "../models/client";
+import { imagePart, ModelError, type ChatOptions } from "../models/client";
 import { sniffImage } from "../pdf/image";
 import { callJson } from "../models/structured";
 import { digits, validAba } from "../policy/normalise";
@@ -14,7 +14,7 @@ import { accountOf, collapseRuns, sameClaimValue, toClaims } from "./claims";
 import { ImageReading, TextReading, type RawClaim } from "./schemas";
 import type { Ctx, Scratch, StageOut } from "./types";
 
-export const VISION_MODEL: "nvidia/Nemotron-3.5-Super-VL" | null = null;
+export const VISION_MODEL: "nvidia/Nemotron-3.5-Super-VL" | null = "nvidia/Nemotron-3.5-Super-VL";
 
 const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
 const words = (s: string) => (s.toLowerCase().match(/[a-z0-9]{3,}/g) ?? []) as string[];
@@ -92,7 +92,13 @@ export async function readImageStage(ctx: Ctx, s: Scratch): Promise<StageOut> {
   if (s.pageKeys.length === 0) return { scratch: s, summary: "No page image: the e-mail itself is the letter", skipped: true };
   if (!VISION_MODEL) return { scratch: s, summary: "No NVIDIA vision model is available on Token Factory today, so the page image is not read; the text layer and the PDF checks are", skipped: true };
   const total = s.pageKeys.length;
-  let pages: Pages = await Promise.all(s.pageKeys.map((k, i) => readPage(ctx, k, i + 1, total)));
+  let pages: Pages;
+  try {
+    pages = await Promise.all(s.pageKeys.map((k, i) => readPage(ctx, k, i + 1, total)));
+  } catch (e) {
+    if (e instanceof ModelError && e.status === 404) return { scratch: s, summary: "The vision model is not available on Token Factory right now, so the page image is not read; the text layer and the PDF checks are", skipped: true };
+    throw e;
+  }
   const calls = pages.flatMap((p) => p.calls);
   let raw: RawClaim[] = pages.flatMap((p) => p.data.claims);
   let { acct, disagree } = await compareMoney(s, raw);

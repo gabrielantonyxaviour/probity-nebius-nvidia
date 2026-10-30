@@ -31,6 +31,7 @@ Billing is Dodo Payments (Pro, $49/month). Judges: the code `NEBIUSJUDGES` makes
 | Sponsor technology | What Probity does with it | Where you see it |
 |---|---|---|
 | **NVIDIA Nemotron 3 Ultra** (`nvidia/Nemotron-3-Ultra-550b-a55b`) on **Nebius Token Factory** | The serious reasoning, thinking on: reads what the request asks (account, routing, signer, pressure), then examines the vendor's identity against the evidence | The reasons on the Decide view |
+| **NVIDIA Nemotron 3.5 Super VL** (`nvidia/Nemotron-3.5-Super-VL`) on Token Factory | Reads the picture of each page as a second, independent reading; anything in the text layer that the picture does not show is flagged as hidden | "What an AI reads" on the letter; the "not visible" tags |
 | **NVIDIA Nemotron 3.5 Lightning** (`nvidia/Nemotron-3_5-Lightning`) on Token Factory | Screens every untrusted line (letter, e-mail, web pages) with thinking off; plans the registry and web lookups by tool calling; writes the decision up, and code checks every number it writes; classifies incoming mail | The instruction screen; the Scout's tool calls in Evidence; "Why, in full" |
 | **Token Factory features** | Thinking switched per call (`chat_template_kwargs.enable_thinking`), structured output with a tool-call fallback, tool calling, automatic prompt caching, with tokens in / cached / out and cost recorded per call | Every call, with its cost, in Evidence. A typical check costs about $0.02. |
 | **NVIDIA NeMo Guardrails 0.24.1** on a **Nebius AI Cloud Serverless Job** | An input rail (`self check input`, our prompt) screens every line of every open request for instructions aimed at an automated reviewer; an output rail tests each written reason against its evidence. Both rails run Nemotron 3.5 Lightning on Token Factory. The job is started from the Nebius CLI (`scripts/start-sweep.sh`) for the measured evaluation and bulk re-screens, and posts signed results back | "Before every payment run" on How it works, with the job id and measured rates |
@@ -41,7 +42,7 @@ Public registries, queried live and cached: **SEC EDGAR** (registered phone and 
 
 **The verdict is code, not a model.** No model can approve a payment. Text found inside a request is evidence, never an instruction: flagged lines reach later agents only as quoted data.
 
-**A note on vision.** Until 30 October 2026, Nemotron 3.5 Super VL read each page image as a second, independent reading and ran the lookups. Nebius withdrew it from Token Factory that day, and no other NVIDIA model there takes images, so the lookups moved to Lightning and the page-image reading is paused. Hidden text is still caught in code from the PDF itself; a scan with no text layer is passed to the clerk to read. Checks recorded before then still show Super VL's calls.
+**Two readings.** Nemotron 3 Ultra reads the text layer; Nemotron 3.5 Super VL reads the picture of each page on its own, and anything in the text that the picture does not show is flagged. On 30 October 2026 Super VL was briefly unavailable on Token Factory; the read is now skipped (not failed) whenever the model is missing, and the registry lookups run on Lightning either way.
 
 ## Measured
 
@@ -78,7 +79,7 @@ PDF handling runs inside the Worker: `unpdf` for text with size and position, an
 - Registries cover US companies. A private vendor has no public phone number, so the number to call comes from the company's own records, never from the request.
 - New mail reaches Probity through Composio's Gmail and Outlook triggers, which poll; in testing a Gmail message took about 10 minutes to arrive.
 - Outlook is built the same way as Gmail but has not been tested against a live Microsoft mailbox.
-- No page-image reading for now (see "A note on vision"). Handwritten letters are untested.
+- If Token Factory stops serving Super VL, the page-image reading is skipped and a scan with no text layer goes to the clerk. Handwritten letters are untested.
 - The demo company caps live checks per day and per visitor, and web lookups share a small monthly budget. Recorded checks are free to open.
 
 ## Run it locally

@@ -2,7 +2,7 @@ import { LiveNumbers } from "@/components/live-numbers";
 
 const PIPELINE = [
   { n: "1", title: "Open the PDF", who: "Code", body: "Pulls the text layer with each line's size, position and colour, and renders every page to an image. White-on-white, 1-point and off-page text are caught here, in code." },
-  { n: "2", title: "Read what it asks", who: "Nemotron 3 Ultra", body: "Ultra, with reasoning on, reads the text layer for what the letter asks: the new account, the routing number, who signed, and any push to hurry. Lines the code hid from view are withheld, so they can't steer the reading." },
+  { n: "2", title: "Read it twice", who: "Nemotron 3 Ultra · Nemotron 3.5 Super VL", body: "Ultra, with reasoning on, reads the text layer for what the letter asks: the new account, the routing number, who signed, and any push to hurry. Super VL reads the picture of each page on its own. Lines the code hid from view are withheld, so they can't steer either reading, and anything in the text that the picture doesn't show is flagged." },
   { n: "3", title: "Screen every line", who: "Nemotron 3.5 Lightning", body: "Every line of the letter, the e-mail and every web page is screened for instructions aimed at an AI reviewer. Flagged lines become evidence, never instructions." },
   { n: "4", title: "Find the vendor", who: "Nemotron 3.5 Lightning · Tavily", body: "Lightning plans the lookups by tool call: SEC EDGAR, USAspending, GLEIF, our vendor records, and the vendor's own website through Tavily, for a number to call that didn't come from the letter." },
   { n: "5", title: "Compare", who: "Nemotron 3 Ultra", body: "Ultra, with reasoning on, links each claim in the letter to the evidence and names every conflict." },
@@ -14,7 +14,7 @@ const LIMITS = [
   "Registries cover US companies. A private vendor has no public phone number, so the number to call comes from our own records, never from the letter.",
   "Web lookups share a small free budget. Results are cached, and each visitor gets three new lookups.",
   "Live checks are capped per day and per visitor so the demo stays up through judging. Recorded checks are free to open.",
-  "Nebius withdrew Nemotron 3.5 Super VL from Token Factory on 30 October and serves no other NVIDIA vision model, so Probity no longer reads the page image. A scan with no text layer is passed to the clerk to read. Checks recorded before then show Super VL's reading.",
+  "If Token Factory stops serving the vision model (it was briefly unavailable on 30 October), the page-image reading is skipped and the check carries on with the text layer and the PDF checks. A scan with no text layer then goes to the clerk to read.",
   "The pre-run re-check runs a full check again only when a registry fact has changed; otherwise it screens and re-checks the reasoning.",
 ];
 
@@ -24,7 +24,7 @@ export default function HowPage() {
       <header style={{ maxWidth: 820 }}>
         <p className="label" style={{ margin: 0 }}>How it works</p>
         <h1 className="serif" style={{ fontSize: "clamp(30px, 4.4vw, 46px)", lineHeight: 1.1, margin: "10px 0 12px" }}>
-          Two NVIDIA Nemotron models, NeMo Guardrails, and one rule: no model can approve a payment.
+          Two readings, three NVIDIA Nemotron models, and one rule: no model can approve a payment.
         </h1>
         <p className="muted" style={{ margin: 0, fontSize: 16 }}>
           A bank-change letter is the cheapest way to steal a payment run. Policy says to call the vendor back on a number that didn&apos;t come from the request. Probity finds that number, checks everything else, and tells the clerk what to do before the cut-off.

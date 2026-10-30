@@ -3,7 +3,7 @@ import { dollars, MODEL_SHORT, seconds } from "@/lib/format";
 
 const JOBS: Record<string, string> = {
   "nvidia/Nemotron-3-Ultra-550b-a55b": "Read the letter's claims and examined the vendor's identity",
-  "nvidia/Nemotron-3.5-Super-VL": "Read the page image and planned the registry and web lookups",
+  "nvidia/Nemotron-3.5-Super-VL": "Read the picture of each page, a second reading independent of the text",
   "nvidia/Nemotron-3_5-Lightning": "Screened every untrusted line, planned the registry and web lookups, and wrote the decision up",
 };
 
@@ -28,7 +28,7 @@ export function ModelsStrip({ run, onOpen }: { run: Run; onOpen?: () => void }) 
         <span className="muted" style={{ fontSize: 12 }}>Nebius Token Factory</span>
       </div>
       <ul style={{ listStyle: "none", margin: "10px 0 0", padding: 0, display: "grid", gap: 12 }}>
-        {/* Super VL was withdrawn from Token Factory on 30 Oct 2026; it is listed only on checks that used it. */}
+        {/* Super VL is listed only on checks that read a page image (an e-mailed request has none). */}
         {Object.keys(JOBS).filter((model) => model !== "nvidia/Nemotron-3.5-Super-VL" || groups.has(model)).map((model) => {
           const g = groups.get(model);
           return (
