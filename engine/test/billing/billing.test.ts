@@ -98,6 +98,11 @@ describe("redeem code", () => {
     expect(days).toBeLessThanOrEqual(60);
     expect(await getPlan(env, orgId)).toBe("pro");
   });
+  it("also accepts the public judge discount code, so a judge never needs a card", async () => {
+    const { c, env, orgId } = await owner();
+    expect((await c.json("/api/billing/redeem", { body: { code: "nebiusjudges" } })).status).toBe(200);
+    expect(await getPlan(env, orgId)).toBe("pro");
+  });
   it("rejects a wrong code, throttles guesses, and needs a signed-in admin", async () => {
     const { c } = await owner();
     for (let i = 0; i < 5; i++) expect((await c.json("/api/billing/redeem", { body: { code: `guess-${i}` } })).status).toBe(422);

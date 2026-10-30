@@ -75,11 +75,12 @@ billingRoutes.post("/redeem", requireMember("admin"), async (c) => {
   const { orgId, user } = getResolved(c);
   const body = RedeemBody.safeParse(await c.req.json().catch(() => null));
   if (!body.success) return c.json({ error: "Enter the code you were given.", code: "bad_request" }, 400);
-  if (!env.JUDGE_CODE) return c.json({ error: "That code is not valid.", code: "invalid_code" }, 422);
+  // Either the private judge code or the public Dodo discount code unlocks the grant, so judges never need a card.
+  const codes = [env.JUDGE_CODE, JUDGE_DISCOUNT_CODE].filter((x): x is string => !!x).map((x) => x.trim().toLowerCase());
   const bucket = `redeem:${user!.id}:${new Date().toISOString().slice(0, 13)}`;
   const tries = Number((await env.CACHE.get(bucket)) ?? 0);
   if (tries >= REDEEM_ATTEMPTS_PER_HOUR) return c.json({ error: "Too many attempts. Try again in an hour.", code: "rate_limited" }, 429);
-  if (!same(body.data.code.toLowerCase(), env.JUDGE_CODE.trim().toLowerCase())) {
+  if (!codes.some((k) => same(body.data.code.toLowerCase(), k))) {
     await env.CACHE.put(bucket, String(tries + 1), { expirationTtl: 3600 });
     return c.json({ error: "That code is not valid.", code: "invalid_code" }, 422);
   }
