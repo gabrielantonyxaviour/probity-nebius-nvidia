@@ -20,6 +20,8 @@ export function computeReasons(i: GateInput): Reason[] {
     ...disguiseReasons(i),
     ...conductReasons(i),
   ];
+  if (i.letter.scanned && i.letter.claims.length === 0)
+    rs.push({ code: "C14", severity: "callback", text: "This letter is a scan with no text layer and could not be read automatically. Read the bank details on it yourself before the call-back.", evidenceIds: [] });
   if (!callbackOnRecord(i)) rs.push({ code: "C1", severity: "callback", text: "No call-back to an independent number is on record for this request.", evidenceIds: [] });
   if (!card.phone && !callbackOnRecord(i))
     rs.push({ code: "C9", severity: "callback", text: `No independent phone number was found for ${i.request.vendorName}. Escalate to the contracting officer for a verified contact.`, evidenceIds: [] });

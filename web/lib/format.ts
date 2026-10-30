@@ -47,5 +47,5 @@ export const SOURCE_LABEL: Record<Source, string> = {
 export const MODEL_SHORT: Record<string, { name: string; role: string }> = {
   "nvidia/Nemotron-3-Ultra-550b-a55b": { name: "Nemotron 3 Ultra", role: "reasons" },
   "nvidia/Nemotron-3.5-Super-VL": { name: "Nemotron 3.5 Super VL", role: "sees and plans" },
-  "nvidia/Nemotron-3_5-Lightning": { name: "Nemotron 3.5 Lightning", role: "screens and writes" },
+  "nvidia/Nemotron-3_5-Lightning": { name: "Nemotron 3.5 Lightning", role: "screens, looks up, writes" },
 };

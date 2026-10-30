@@ -4,7 +4,7 @@ import { dollars, MODEL_SHORT, seconds } from "@/lib/format";
 const JOBS: Record<string, string> = {
   "nvidia/Nemotron-3-Ultra-550b-a55b": "Read the letter's claims and examined the vendor's identity",
   "nvidia/Nemotron-3.5-Super-VL": "Read the page image and planned the registry and web lookups",
-  "nvidia/Nemotron-3_5-Lightning": "Screened every untrusted line and wrote the decision up",
+  "nvidia/Nemotron-3_5-Lightning": "Screened every untrusted line, planned the registry and web lookups, and wrote the decision up",
 };
 
 export function byModel(calls: ModelCall[]) {

@@ -34,9 +34,9 @@ function memoryStore(run: Run): RunStore {
 function fakeFetch(scoutScript: Array<string[]>, flagWeb: boolean): typeof fetch {
   let round = 0;
   return (async (_u: string, init: RequestInit) => {
-    const body = JSON.parse(String(init.body)) as { model: string };
+    const body = JSON.parse(String(init.body)) as { model: string; tools?: unknown[] };
     const usage = { prompt_tokens: 100, completion_tokens: 10 };
-    if (body.model.includes("Lightning"))
+    if (!body.tools)
       return new Response(JSON.stringify({ id: "s", choices: [{ message: { content: JSON.stringify({ flagged: flagWeb ? [{ id: 1, why: "addresses the reviewer" }] : [] }) } }], usage }));
     const names = scoutScript[round++] ?? [];
     return new Response(

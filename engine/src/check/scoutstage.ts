@@ -1,4 +1,4 @@
-// Step `scout`: Nemotron 3.5 Super VL runs a tool loop over the evidence lookups (at most 8 tool calls),
+// Step `scout`: Nemotron 3.5 Lightning runs a tool loop over the evidence lookups (at most 8 tool calls),
 // then the engine adds what only it can see: our own ledger of accounts, rejections and call-backs.
 import type { Evidence, ModelCall, Run, Screen } from "@probity/shared";
 import { z } from "zod";
@@ -99,7 +99,7 @@ export async function scoutStage(ctx: Ctx, s: Scratch): Promise<StageOut> {
   ];
   const used: string[] = [];
   for (let round = 0; round < MAX_ROUNDS && toolCount < MAX_TOOL_CALLS; round++) {
-    const r = await chat(ctx.env, { model: "nvidia/Nemotron-3.5-Super-VL", thinking: false, agent: "registry_scout", stepKey: "scout", messages, tools: scoutTools, toolChoice: "auto", maxTokens: 900 });
+    const r = await chat(ctx.env, { model: "nvidia/Nemotron-3_5-Lightning", thinking: false, agent: "registry_scout", stepKey: "scout", messages, tools: scoutTools, toolChoice: "auto", maxTokens: 900 });
     calls.push(r.call);
     if (r.toolCalls.length === 0) break;
     messages.push({ role: "assistant", content: r.content || null, tool_calls: r.toolCalls });
