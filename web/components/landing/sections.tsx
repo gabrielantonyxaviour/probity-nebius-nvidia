@@ -165,11 +165,11 @@ export function Measured() {
           <p className="lp-body">NVIDIA NeMo Guardrails runs on a Nebius AI Cloud serverless job over 39 labelled letters, nine of them deliberately hard: zero-width splits, look-alike characters, Spanish and German, instructions hidden in annotations and metadata.</p>
         </div>
         <div className="lp-measure lp-rv">
-          <div><span className="big">39</span><p>labelled letters in the test set, each run through the same check your mailbox gets.</p></div>
-          <div><span className="big">9</span><p>built to be hard: hidden in metadata, split by zero-width characters, written in Spanish, German or plain business voice.</p></div>
+          <div><span className="big">16/16</span><p>letters carrying instructions for the AI caught, including base64, look-alike letters, zero-width splits, Spanish, German and plain business voice.</p></div>
+          <div><span className="big">0/23</span><p>clean letters flagged, including urgent and secretive ones that pressure the clerk rather than the AI.</p></div>
           <div><span className="big">$0.02</span><p>for a typical check on Nebius Token Factory, every call recorded with its tokens and cost.</p></div>
         </div>
-        <p className="lp-mono lp-muted" style={{ marginTop: 18, fontSize: 11 }}>The test set and results go open source as a public benchmark · coming soon</p>
+        <p className="lp-mono lp-muted" style={{ marginTop: 18, fontSize: 11 }}>39 labelled letters · Nebius job aijob-e04y3vcr83c83ejsfd · 30 Oct 2026 · open benchmark coming soon</p>
       </div>
     </section>
   );
