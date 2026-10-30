@@ -75,6 +75,15 @@ export default function HowPage() {
         </div>
       </section>
 
+      <section className="card pad" style={{ display: "grid", gap: 8 }}>
+        <p className="label" style={{ margin: 0 }}>A fine-tuned Nemotron screen, measured</p>
+        <p style={{ margin: 0 }}>
+          We LoRA-tuned NVIDIA Llama-3.1-Nemotron-Nano-4B on 1,406 letters written by Nemotron 3.5 Lightning, in one Nebius AI Cloud Serverless Job on an H100 (job aijob-e00d4hdmhnwrthgr63, about 9 minutes).
+          On the 39 held-out letters it caught 15 of 16 hidden instructions with 0 false alarms in 23 clean letters, against 16 and 19 for the untuned model.
+        </p>
+        <p className="muted" style={{ margin: 0, fontSize: 14 }}>Its one miss has no text: the instruction is only in the page image, which a live check sends to the vision reading. Live checks still use the NeMo Guardrails rail.</p>
+      </section>
+
       <section>
         <p className="label" style={{ margin: "0 0 12px" }}>Limits, stated plainly</p>
         <ul className="card pad" style={{ margin: 0, paddingLeft: 38, display: "grid", gap: 8 }}>

@@ -52,6 +52,22 @@ On 39 labelled test letters, the NeMo Guardrails input rail (Nemotron 3.5 Lightn
 
 How to read this honestly: the image-only letter has no text, so the rail blocks it as empty input rather than by reading it (a scan with no text layer goes to the clerk in the app as well). On a dozen extra letters written to test for over-fitting, one clean "do not phone, write only" letter was still flagged. Earlier runs on the same set: 14 of 16 and 1 false alarm (`aijob-e04h7gjahz57cvkn7a`), and 7 of 7 on the first 30 letters (`aijob-e04aer2esbfeqsgx64`). The test set and results will be published as an open benchmark.
 
+## A fine-tuned Nemotron screen (measured, not yet in live checks)
+
+We LoRA-tuned **NVIDIA Llama-3.1-Nemotron-Nano-4B-v1.1** (NVIDIA Open Model License) for the same task: does a letter carry an instruction aimed at an AI reviewer? Training ran in one **Nebius AI Cloud Serverless Job on 1x H100** in eu-north1 (`aijob-e00d4hdmhnwrthgr63`, 30 Oct 2026: 9 min wall, 3.3 min training; LoRA r=16, alpha=32, 3 epochs, bf16).
+
+- **Data:** 1,406 letters written by Nemotron 3.5 Lightning on Token Factory from structured specs, so every label is exact. Code only re-encodes or moves Nemotron's text (zero-width splits, look-alike letters, base64 or hex, metadata-only lines); it adds no words. 61% are clean, and 45% of those are hard negatives: fraudulent or pushy letters that pressure the clerk but address no AI. No test letter or paraphrase was used. A dedupe check against the 39 test letters dropped nothing; the highest word 8-gram overlap was 0.02.
+- **Held-out 39 letters:**
+
+| Model | Caught (of 16) | False alarms (of 23) |
+|---|---|---|
+| Base Nemotron Nano 4B, zero-shot | 16 | 19 |
+| Same model after LoRA tuning | 15 | 0 |
+| NeMo Guardrails rail in production | 16 | 0 |
+
+- **Reading it honestly:** the tuned model's one miss is the letter whose instruction exists only in the page image (it has no text); a text-only model cannot see it; in a live check the page image goes to the vision reading instead. The earlier run with less balanced data (`aijob-e00e213g7c30qbq7rh`) reached 15/16 with 10/23 false alarms. Cost for both runs: about $0.15 of Token Factory and roughly $1-2 of H100 time.
+- **Status:** live checks still use the NeMo Guardrails rail. The adapter was not yet persisted; `scripts/start-finetune.sh` and `job/finetune/` reproduce the run.
+
 ## Architecture
 
 ```
