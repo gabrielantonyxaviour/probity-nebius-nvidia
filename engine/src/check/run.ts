@@ -51,6 +51,7 @@ const setStep = (run: Run, key: string, patch: Partial<Step>) => {
 
 /** What the clerk may see when a step fails: plain words, no stack, no provider detail. */
 export function plainError(e: unknown): string {
+  if (e instanceof ModelError && e.code === "limit") return e.message; // the daily cap or the kill switch, said plainly
   if (e instanceof ModelError) return e.code === "timeout" ? "A model took too long to answer." : "A model service did not answer correctly.";
   return e instanceof Error && e.message && e.message.length < 140 ? e.message : "The check stopped because of an internal error.";
 }

@@ -2,6 +2,7 @@
 // and every call leaves a ModelCall record with real usage, cached tokens and cost.
 import type { AgentKey, ModelCall, ModelId } from "@probity/shared";
 import { z } from "zod";
+import { hasDb, isStopped, LIMIT_MESSAGE, reserve, settle, STOPPED_MESSAGE, worstCaseUsd } from "./daycap";
 import { costUsd } from "./prices";
 
 export type ModelEnv = { NEBIUS_API_KEY: string; NEBIUS_BASE_URL?: string; fetchImpl?: typeof fetch };
@@ -40,7 +41,7 @@ export interface ChatResult {
 export class ModelError extends Error {
   /** Calls that were billed before the failure, so the run still counts their cost. */
   calls: ModelCall[] = [];
-  constructor(message: string, readonly status: number | null, readonly code: "http" | "timeout" | "network" | "parse") {
+  constructor(message: string, readonly status: number | null, readonly code: "http" | "timeout" | "network" | "parse" | "limit") {
     super(message);
   }
 }
@@ -119,9 +120,15 @@ export async function chat(env: ModelEnv, o: ChatOptions): Promise<ChatResult> {
   const startedAt = new Date().toISOString();
   const t0 = Date.now();
   let lastErr: ModelError | null = null;
+  // The daily cap and the kill switch apply to every call made with the Worker's env (it carries the database).
+  const capped = hasDb(env);
+  if (capped && (await isStopped(env))) throw new ModelError(STOPPED_MESSAGE, null, "limit");
+  const worst = capped ? worstCaseUsd(o.model, o.messages, o.maxTokens) : 0;
 
   for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
     if (attempt > 0) await sleep(Math.min(8000, 600 * 2 ** (attempt - 1)) + Math.random() * 250);
+    if (capped && !(await reserve(env, worst))) throw new ModelError(LIMIT_MESSAGE, null, "limit");
+    let actual = 0; // what this attempt cost; settled against the reservation in `finally`
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
     try {
@@ -141,11 +148,14 @@ export async function chat(env: ModelEnv, o: ChatOptions): Promise<ChatResult> {
       try {
         json = JSON.parse(text);
       } catch {
+        actual = worst;
         throw new ModelError("Token Factory returned a body that is not JSON", res.status, "parse");
       }
       const parsed = Wire.safeParse(json);
-      if (!parsed.success) throw new ModelError("Token Factory response had an unexpected shape", res.status, "parse");
-      return toResult(o, parsed.data, startedAt, Date.now() - t0);
+      if (!parsed.success) { actual = worst; throw new ModelError("Token Factory response had an unexpected shape", res.status, "parse"); }
+      const result = toResult(o, parsed.data, startedAt, Date.now() - t0);
+      actual = result.call.costUsd;
+      return result;
     } catch (e) {
       if (e instanceof ModelError) {
         if (e.code === "http" && !retryable(e.status ?? 0)) throw e;
@@ -155,10 +165,12 @@ export async function chat(env: ModelEnv, o: ChatOptions): Promise<ChatResult> {
         continue;
       }
       const aborted = e instanceof Error && e.name === "AbortError";
+      if (aborted) actual = worst; // a timed-out call may still have been billed
       lastErr = new ModelError(aborted ? "Token Factory timed out after 90 s" : "Token Factory was unreachable", null, aborted ? "timeout" : "network");
       if (attempt === MAX_RETRIES) throw lastErr;
     } finally {
       clearTimeout(timer);
+      if (capped) await settle(env, worst, actual).catch(() => undefined);
     }
   }
   throw lastErr ?? new ModelError("Token Factory call failed", null, "network");

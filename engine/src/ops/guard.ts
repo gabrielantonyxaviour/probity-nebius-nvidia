@@ -2,13 +2,17 @@
 // All counters live in D1 `usage`; a consume is one conditional UPSERT, so two requests can never both take the last slot.
 import { DEMO_ORG_ID, type Limits } from "@probity/shared";
 import { budgetReached } from "./spend";
+import { DAILY_CAP_USD, today as dayCapToday } from "../models/daycap";
+
+/** Roughly the most one full check can cost (Ultra twice with thinking, Super VL, about ten Lightning calls). */
+const CHECK_HEADROOM_USD = 0.05;
 
 export const CAPS = { liveChecksPerDay: 5, liveChecksPerSession: 3, tavilyCreditsPerMonth: 600, tavilyLookupsPerSession: 12 } as const;
 /** A fresh lookup is one basic Search plus one basic Extract = 2 credits at the documented price. */
 export const TAVILY_LOOKUP_CREDITS = 2;
 
 export type GuardEnv = { DB: D1Database };
-export type GuardResult = { ok: true } | { ok: false; code: "cap_reached" | "session_cap" | "stopped" | "budget_reached" };
+export type GuardResult = { ok: true } | { ok: false; code: "cap_reached" | "session_cap" | "stopped" | "budget_reached" | "daily_cap" };
 
 const today = (): string => new Date().toISOString().slice(0, 10);
 const month = (): string => new Date().toISOString().slice(0, 7);
@@ -37,6 +41,8 @@ export async function isStopped(env: GuardEnv): Promise<boolean> {
 export async function guardLiveCheck(env: GuardEnv, sessionId: string, orgId: string = DEMO_ORG_ID): Promise<GuardResult> {
   if (await isStopped(env)) return { ok: false, code: "stopped" };
   if (await budgetReached(env)) return { ok: false, code: "budget_reached" };
+  // A full check needs room for its worst case under the daily model cap; refuse up front instead of failing halfway.
+  if ((await dayCapToday(env)).usd + CHECK_HEADROOM_USD > DAILY_CAP_USD) return { ok: false, code: "daily_cap" };
   if (orgId !== DEMO_ORG_ID) return { ok: true };
   if (!(await consume(env, today(), "*", "live_check", CAPS.liveChecksPerDay))) return { ok: false, code: "cap_reached" };
   if (!(await consume(env, SESSION, sessionId, "live_check", CAPS.liveChecksPerSession))) {

@@ -17,4 +17,5 @@ export const GUARD_TEXT: Record<string, string> = {
   session_cap: "You have used your live checks for this visit. Recorded checks are still available.",
   stopped: "Live checks are switched off for now. Recorded checks are still available.",
   budget_reached: "Live checks have reached their budget and are switched off. Recorded checks are still available.",
+  daily_cap: "Daily limit reached. Try again after 08:00 MYT.",
 };
